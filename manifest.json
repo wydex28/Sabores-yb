@@ -1,0 +1,17 @@
+{
+  "name": "Sabores Y&B",
+  "short_name": "Sabores Y&B",
+  "description": "Las Mejores Empanadas Venezolanas y Bebidas Refrescantes",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FDFFFC",
+  "theme_color": "#00A859",
+  "icons": [
+    {
+      "src": "assets/images/logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

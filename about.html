@@ -4,7 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Conoce la historia detrás de Sabores Y&B. Tradición, familia y las mejores empanadas venezolanas hechas con amor.">
+    <meta name="keywords" content="historia sabores y&b, empanadas, familia, tradición venezolana, comida con amor">
+    <meta name="author" content="Sabores Y&B">
+    <meta property="og:title" content="Sabores Y&B | Nuestra Historia">
+    <meta property="og:description"
+        content="Descubre cómo nació Sabores Y&B, una tradición familiar de las mejores empanadas.">
+    <meta property="og:image" content="assets/images/logo.png">
+    <meta property="og:type" content="website">
     <title>Sabores Y&B | Nuestra Historia</title>
+
+    <!-- Favicon & PWA -->
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00A859">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sabores">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +37,7 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#FF9F1C',    /* Orange */
+                        primary: '#00A859',    /* Green (Logo) */
                         secondary: '#FFBF69',  /* Light Orange */
                         accent: '#E71D36',     /* Redish */
                         dark: '#2EC4B6',       /* Teal accent */
@@ -86,33 +104,39 @@
 
 <body class="font-sans antialiased overflow-x-hidden relative">
 
+    <!-- Floating Install App Button -->
+    <button id="pwa-install-btn" class="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 bg-white p-1 rounded-full shadow-2xl transition-transform hover:scale-110 hidden items-center justify-center border-2 border-primary group">
+        <img src="assets/images/logo.png" alt="Instalar Sabores Y&B" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover group-hover:rotate-12 transition-transform duration-300">
+        <span class="absolute -top-3 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm animate-pulse">Instalar</span>
+    </button>
+
     <!-- Navbar -->
     <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-40 top-0 left-0 transition-all duration-300"
         id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <a href="nosotros.html" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
+                <a href="about.html" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
                     <img class="h-14 w-auto drop-shadow-md" src="assets/images/logo.png" alt="Sabores Y&B Logo">
                     <span class="font-display tracking-wide text-xl text-primary drop-shadow-sm hidden sm:block">Sabores
                         Y&B</span>
                 </a>
 
                 <!-- Navbar BCV Rate Display -->
-                <div class="flex-grow flex justify-center md:flex-initial mx-2">
+                <div class="flex-grow flex flex-col items-center justify-center md:flex-initial mx-2">
                     <div id="bcv-rate-navbar"
-                        class="bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-full shadow-sm flex items-center gap-2 whitespace-nowrap">
+                        class="bg-blue-50 border border-blue-100 px-3 py-1 rounded-full shadow-sm flex items-center gap-2 whitespace-nowrap leading-none">
                         <span class="text-blue-800 font-bold text-sm sm:text-base">
-                            <i class="fas fa-money-bill-wave mr-1 text-green-600"></i> Tasa oficial BCV: <span
+                            <i class="fas fa-money-bill-wave mr-1 text-green-600"></i> Tasa BCV: <span
                                 class="rate-val text-green-600 ml-1">...</span>
                         </span>
                     </div>
+                    <span id="bcv-date" class="text-[10px] sm:text-xs text-gray-500 font-medium mt-1"></span>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="nosotros.html#inicio"
-                        class="text-gray-800 hover:text-primary font-semibold transition border-b-2 border-primary">Inicio</a>
-                    <a href="nosotros.html#historia"
-                        class="text-gray-800 hover:text-primary font-semibold transition">Nuestra Historia</a>
                     <a href="index.html" class="text-gray-800 hover:text-primary font-semibold transition">Menú</a>
+                    <a href="about.html"
+                        class="text-gray-800 hover:text-primary font-semibold transition border-b-2 border-primary">Nuestra
+                        Historia</a>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button class="text-gray-800 hover:text-primary focus:outline-none" id="mobile-menu-btn">
@@ -126,15 +150,15 @@
         <div class="bg-primary py-1.5 border-t border-white/10">
             <div
                 class="max-w-7xl mx-auto px-4 flex justify-center items-center gap-4 text-xs sm:text-sm font-bold text-white whitespace-nowrap overflow-x-auto scrollbar-hide">
-                <span class="flex items-center gap-1.5">
-                    <i class="fas fa-clock text-white/80"></i> Abierto Lunes a Sábado: 6am - 12pm
+                <span id="schedule-text" class="flex items-center gap-1.5">
+                    <i class="fas fa-clock text-white/80"></i> Lunes a Sábado de 6:00 am a 12:00 pm
                 </span>
                 <span class="opacity-30">|</span>
                 <a href="https://maps.app.goo.gl/q1pFAsYWsYEuoX4i6" target="_blank"
                     class="flex items-center gap-1.5 hover:text-white/80 transition group">
-                    <i class="fas fa-map-marker-alt text-white/80 group-hover:animate-bounce"></i>
+                    <i class="fas fa-map-marker-alt text-red-500/80 group-hover:animate-bounce"></i>
                     <span
-                        class="underline decoration-2 underline-offset-4 decoration-white/30 group-hover:decoration-white">Ubícanos
+                        class="underline decoration-2 underline-offset-4 decoration-red-500/30 group-hover:decoration-red-500">Ubícanos
                         aquí</span>
                 </a>
             </div>
@@ -146,9 +170,8 @@
         class="fixed inset-0 bg-white z-50 flex flex-col justify-center items-center text-3xl space-y-8 font-display hidden opacity-0 transition-opacity duration-300">
         <button id="close-mobile-menu" class="absolute top-6 right-8 text-4xl text-gray-800"><i
                 class="fas fa-times"></i></button>
-        <a href="nosotros.html#inicio" class="text-textMain hover:text-primary transition">Inicio</a>
-        <a href="nosotros.html#historia" class="text-textMain hover:text-primary transition">Nuestra Historia</a>
         <a href="index.html" class="text-textMain hover:text-primary transition">Menú</a>
+        <a href="about.html" class="text-textMain hover:text-primary transition">Nuestra Historia</a>
     </div>
 
     <!-- Hero Section -->
@@ -261,8 +284,11 @@
             </p>
 
             <div class="flex justify-center flex-wrap gap-6 text-gray-300 font-light mb-6 text-sm">
-                <a href="#" class="hover:text-primary transition"><i class="fab fa-instagram mr-2"></i>@sabores.yb</a>
-                <a href="#" class="hover:text-primary transition"><i class="fab fa-whatsapp mr-2"></i>+1 234 567 890</a>
+                <a href="https://www.instagram.com/saboresyb/" target="_blank" class="hover:text-primary transition"><i
+                        class="fab fa-instagram mr-2"></i>@saboresyb</a>
+                <a href="https://wa.me/584128853518?text=%C2%A1Hola%20Sabores%20Y%26B!%20Quiero%20hacerles%20una%20consulta."
+                    target="_blank" class="hover:text-primary transition"><i class="fab fa-whatsapp mr-2"></i>+58
+                    412-8853518</a>
             </div>
 
             <div class="border-t border-gray-700 pt-6 text-xs text-gray-500">
@@ -284,6 +310,10 @@
                     if (data && data.promedio) {
                         bcvRate = data.promedio;
                         $('#bcv-rate-navbar .rate-val').text(`Bs. ${bcvRate.toFixed(2)}`);
+                        if (data.fechaActualizacion) {
+                            let dateObj = new Date(data.fechaActualizacion);
+                            $('#bcv-date').text('Actualizado: ' + dateObj.toLocaleString('es-VE', { dateStyle: 'short', timeStyle: 'short' }));
+                        }
                     }
                 } catch (error) {
                     console.error("Error fetching BCV rate:", error);
@@ -333,6 +363,48 @@
                     }, 600, 'swing');
                 }
             });
+        });
+    </script>
+    <!-- Service Worker Registration & PWA Install -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').then(reg => {
+                    console.log('PWA ServiceWorker registrado con éxito:', reg.scope);
+                }).catch(err => {
+                    console.log('Fallo al registrar PWA SW:', err);
+                });
+            });
+        }
+
+        let deferredPrompt;
+        const installBtn = document.getElementById('pwa-install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.classList.remove('hidden');
+            installBtn.classList.add('flex');
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('Instalación aceptada');
+                }
+                deferredPrompt = null;
+                installBtn.classList.remove('flex');
+                installBtn.classList.add('hidden');
+            }
+        });
+
+        window.addEventListener('appinstalled', () => {
+            installBtn.classList.remove('flex');
+            installBtn.classList.add('hidden');
+            deferredPrompt = null;
+            console.log('App PWA instalada exitosamente');
         });
     </script>
 </body>
