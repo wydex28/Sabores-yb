@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sabores Y&B | Las Mejores Empanadas Venezolanas</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Lilita+One&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Lilita+One&display=swap"
+        rel="stylesheet">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -49,6 +51,7 @@
             transform: translateY(30px);
             transition: all 0.8s ease-out;
         }
+
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
@@ -61,7 +64,7 @@
             right: -100px;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(255,159,28,0.2) 0%, rgba(255,159,28,0) 70%);
+            background: radial-gradient(circle, rgba(255, 159, 28, 0.2) 0%, rgba(255, 159, 28, 0) 70%);
             border-radius: 50%;
             z-index: -1;
         }
@@ -69,56 +72,99 @@
         .food-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .food-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        
+
         .counter-btn:active {
             transform: scale(0.9);
         }
     </style>
 </head>
+
 <body class="font-sans antialiased overflow-x-hidden relative">
 
     <!-- Floating Cart Button -->
-    <button id="cart-toggle-btn" class="fixed bottom-6 right-6 bg-accent text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-2xl z-40 hover:bg-red-700 transition hover:scale-110">
+    <button id="cart-toggle-btn"
+        class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 bg-accent text-white w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-2xl flex items-center justify-center text-xl sm:text-2xl z-50 hover:bg-red-700 transition hover:scale-110">
         <i class="fas fa-shopping-cart"></i>
-        <span id="cart-badge" class="absolute -top-2 -right-2 bg-yellow-400 text-textMain text-sm font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-white scale-0 transition-transform duration-300">0</span>
+        <span id="cart-badge"
+            class="absolute -top-2 -right-2 bg-yellow-400 text-textMain text-sm font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-white scale-0 transition-transform duration-300">0</span>
     </button>
 
     <!-- Cart Dropup -->
-    <div id="cart-dropdown" class="fixed bottom-24 right-6 w-80 lg:w-96 bg-white rounded-3xl shadow-2xl border border-gray-100 z-50 transform scale-0 origin-bottom-right transition-transform duration-300 flex flex-col max-h-[70vh]">
+    <div id="cart-dropdown"
+        class="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-80 lg:w-96 bg-white rounded-3xl shadow-2xl border border-gray-100 z-50 transform scale-0 origin-bottom-right transition-transform duration-300 flex flex-col max-h-[70vh]">
         <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-3xl">
-            <h3 class="font-display text-xl text-textMain"><i class="fas fa-shopping-basket text-primary mr-2"></i>Tu Orden</h3>
-            <button id="close-cart-btn" class="text-gray-400 hover:text-red-500 transition"><i class="fas fa-times text-xl"></i></button>
+            <h3 class="font-display text-xl text-textMain"><i class="fas fa-shopping-basket text-primary mr-2"></i>Tu
+                Orden</h3>
+            <div class="flex items-center gap-4">
+                <button id="clear-cart-btn" class="text-xs text-red-500 font-bold hover:underline hidden"><i class="fas fa-trash-alt mr-1"></i>Vaciar</button>
+                <button id="close-cart-btn" class="text-gray-400 hover:text-red-500 transition"><i
+                        class="fas fa-times text-xl"></i></button>
+            </div>
         </div>
         <div id="cart-items" class="p-5 overflow-y-auto flex-grow space-y-4">
             <div class="text-center text-gray-400 py-4" id="empty-cart-msg">Tu carrito está vacío</div>
         </div>
         <div class="p-5 border-t border-gray-100 bg-gray-50 rounded-b-3xl">
-            <div class="flex justify-between items-center mb-4">
-                <span class="font-bold text-gray-600">Total:</span>
-                <span id="cart-total" class="font-display text-2xl text-accent">$0.00</span>
+            <div class="flex justify-between items-start mb-4">
+                <span class="font-bold text-gray-600 mt-1">Total:</span>
+                <span id="cart-total" class="font-display text-2xl text-accent text-right leading-none">Bs.
+                    0.00<br><span class="text-xs text-gray-400 mt-1 block">Ref: $0.00</span></span>
             </div>
-            <button id="btn-comprar" class="w-full bg-green-500 text-white font-bold py-3 rounded-full hover:bg-green-600 transition shadow-lg shadow-green-500/30 flex justify-center items-center">
+            <button id="btn-comprar"
+                class="w-full bg-green-500 text-white font-bold py-3 rounded-full hover:bg-green-600 transition shadow-lg shadow-green-500/30 flex justify-center items-center">
                 <i class="fab fa-whatsapp text-xl mr-2"></i> Pedir por WhatsApp
             </button>
         </div>
     </div>
 
+    <!-- Modal de Disponibilidad -->
+    <div id="availability-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300">
+            <div class="w-16 h-16 bg-yellow-100 text-yellow-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="text-2xl font-display text-textMain text-center mb-2">¡Aviso Importante!</h3>
+            <p class="text-gray-600 text-center mb-6 text-base"><b>Confirma la disponibilidad de los sabores por WhatsApp</b> antes de realizar cualquier pago.</p>
+            <button id="btn-confirm-whatsapp" class="w-full bg-green-500 text-white font-bold py-3 rounded-full hover:bg-green-600 transition shadow-lg shadow-green-500/30 flex justify-center items-center">
+                <i class="fab fa-whatsapp text-xl mr-2"></i> Ir a WhatsApp
+            </button>
+            <button id="btn-cancel-modal" class="w-full mt-3 text-gray-400 font-bold py-2 rounded-full hover:text-gray-600 transition">
+                Volver al menú
+            </button>
+        </div>
+    </div>
+
     <!-- Navbar -->
-    <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-40 top-0 left-0 transition-all duration-300" id="navbar">
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-40 top-0 left-0 transition-all duration-300"
+        id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <img class="h-16 w-auto drop-shadow-md" src="assets/images/logo.png" alt="Sabores Y&B Logo">
-                    <span class="font-display tracking-wide text-2xl text-primary drop-shadow-sm hidden sm:block">Sabores Y&B</span>
+                <a href="nosotros.html" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
+                    <img class="h-14 w-auto drop-shadow-md" src="assets/images/logo.png" alt="Sabores Y&B Logo">
+                    <span class="font-display tracking-wide text-xl text-primary drop-shadow-sm hidden sm:block">Sabores
+                        Y&B</span>
+                </a>
+
+                <!-- Navbar BCV Rate Display -->
+                <div class="flex-grow flex justify-center md:flex-initial mx-2">
+                    <div id="bcv-rate-navbar"
+                        class="bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-full shadow-sm flex items-center gap-2 whitespace-nowrap">
+                        <span class="text-blue-800 font-bold text-sm sm:text-base">
+                            <i class="fas fa-money-bill-wave mr-1 text-green-600"></i> Tasa oficial BCV: <span
+                                class="rate-val text-green-600 ml-1">...</span>
+                        </span>
+                    </div>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#inicio" class="text-gray-800 hover:text-primary font-semibold transition">Inicio</a>
-                    <a href="#historia" class="text-gray-800 hover:text-primary font-semibold transition">Nuestra Historia</a>
-                    <a href="#menu" class="text-gray-800 hover:text-primary font-semibold transition">Menú</a>
+                    <a href="#menu"
+                        class="text-gray-800 hover:text-primary font-semibold transition border-b-2 border-primary">Menú</a>
+                    <a href="nosotros.html#historia"
+                        class="text-gray-800 hover:text-primary font-semibold transition">Nuestra Historia</a>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button class="text-gray-800 hover:text-primary focus:outline-none" id="mobile-menu-btn">
@@ -127,106 +173,48 @@
                 </div>
             </div>
         </div>
+
+        <!-- Schedule & Location Banner -->
+        <div class="bg-primary py-1.5 border-t border-white/10">
+            <div
+                class="max-w-7xl mx-auto px-4 flex justify-center items-center gap-4 text-xs sm:text-sm font-bold text-white whitespace-nowrap overflow-x-auto scrollbar-hide">
+                <span class="flex items-center gap-1.5">
+                    <i class="fas fa-clock text-white/80"></i> Abierto Lunes a Sábado: 6:00 am - 12:00 pm
+                </span>
+                <span class="opacity-30">|</span>
+                <a href="https://maps.app.goo.gl/q1pFAsYWsYEuoX4i6" target="_blank"
+                    class="flex items-center gap-1.5 hover:text-white/80 transition group">
+                    <i class="fas fa-map-marker-alt text-red-500/80 group-hover:animate-bounce"></i>
+                    <span
+                        class="underline decoration-2 underline-offset-4 decoration-red-500/30 group-hover:decoration-red-500">Ubícanos
+                        aquí</span>
+                </a>
+            </div>
+        </div>
     </nav>
-    
+
     <!-- Mobile Menu Layer -->
-    <div id="mobile-menu" class="fixed inset-0 bg-white z-50 flex flex-col justify-center items-center text-3xl space-y-8 font-display hidden opacity-0 transition-opacity duration-300">
-        <button id="close-mobile-menu" class="absolute top-6 right-8 text-4xl text-gray-800"><i class="fas fa-times"></i></button>
-        <a href="#inicio" class="text-textMain hover:text-primary transition">Inicio</a>
-        <a href="#historia" class="text-textMain hover:text-primary transition">Nuestra Historia</a>
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-white z-50 flex flex-col justify-center items-center text-3xl space-y-8 font-display hidden opacity-0 transition-opacity duration-300">
+        <button id="close-mobile-menu" class="absolute top-6 right-8 text-4xl text-gray-800"><i
+                class="fas fa-times"></i></button>
         <a href="#menu" class="text-textMain hover:text-primary transition">Menú</a>
+        <a href="nosotros.html#historia" class="text-textMain hover:text-primary transition">Nuestra Historia</a>
     </div>
 
-    <!-- Hero Section -->
-    <section id="inicio" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <div class="hero-blob"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-center lg:text-left reveal active">
-                    <span class="inline-block py-1 px-3 rounded-full bg-secondary text-primary font-semibold text-sm mb-4 tracking-wide uppercase">Tradición Venezolana</span>
-                    <h1 class="text-5xl md:text-7xl font-display text-textMain leading-tight mb-6">
-                        El auténtico sabor <br/> <span class="text-primary">en cada bocado</span>
-                    </h1>
-                    <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-lg mx-auto lg:mx-0">
-                        Croocantes por fuera, rellenas de amor y tradición por dentro. Disfruta de las mejores empanadas venezolanas hechas como en casa.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <a href="#menu" class="px-8 py-4 bg-primary text-white font-bold rounded-full shadow-lg hover:bg-orange-500 hover:shadow-primary/50 hover:-translate-y-1 transition-all duration-300 text-center">
-                            Ver el Menú Completo
-                        </a>
-                        <a href="#historia" class="px-8 py-4 bg-white text-textMain border-2 border-gray-200 font-bold rounded-full hover:border-primary hover:text-primary transition duration-300 text-center">
-                            Conocer Nuestra Historia
-                        </a>
-                    </div>
-                </div>
-                <div class="relative reveal active lg:ml-10">
-                    <div class="absolute inset-0 bg-secondary rounded-full transform -rotate-6 scale-105 opacity-50 blur-xl"></div>
-                    <img src="assets/images/pabellon.png" alt="Empanada de Pabellón" class="relative rounded-3xl shadow-2xl object-cover h-[500px] w-full border-4 border-white transform hover:scale-[1.02] transition duration-500">
-                    
-                    <!-- Floating badge -->
-                    <div class="absolute -right-6 top-10 bg-white p-4 rounded-xl shadow-xl border border-gray-100 flex items-center space-x-3 bounce-slow">
-                        <div class="bg-yellow-100 p-2 rounded-full text-yellow-500">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div>
-                            <p class="font-bold text-sm leading-none">¡Receta de la Abuela!</p>
-                            <p class="text-xs text-gray-500 mt-1">100% Caseras</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="historia" class="py-20 bg-orange-50 relative">
-        <div class="absolute top-0 left-0 w-full overflow-hidden leading-none z-0 rotate-180">
-            <svg class="relative block w-full h-[60px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#FDFFFC"></path>
-            </svg>
-        </div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-10">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-4xl text-primary font-display mb-4">La Receta de Mamá</h2>
-                <div class="w-24 h-1 bg-accent mx-auto rounded-full"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div class="order-2 md:order-1 reveal">
-                    <img src="assets/images/logo.png" alt="Sabores Y&B" class="w-full max-w-md mx-auto drop-shadow-2xl">
-                </div>
-                <div class="order-1 md:order-2 reveal text-lg text-gray-700 space-y-6">
-                    <p>
-                        <strong class="text-primary font-bold text-xl">Sabores Y&B</strong> nace del corazón de nuestra cocina familiar. Hace más de 20 años, mi mamá preparaba estas mismas empanadas los domingos por la mañana, llenando la casa de un aroma incomparable que despertaba a toda la familia.
-                    </p>
-                    <p>
-                        Con la misma masa de maíz amarillo, el guiso preparado a fuego lento y "ese toquecito secreto" de la abuela, hoy queremos compartir nuestra tradición contigo. Cada empanada que pruebas aquí está hecha a mano, con amor, dedicación y los mejores ingredientes frescos.
-                    </p>
-                    <p class="font-semibold text-textMain border-l-4 border-primary pl-4 italic">
-                        "No es solo comida, es un viaje a los domingos en familia, es el sabor a hogar en cada mordisco." - Mamá Y&B
-                    </p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-0">
-            <svg class="relative block w-full h-[60px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#FDFFFC"></path>
-            </svg>
-        </div>
-    </section>
+    <!-- Padding for fixed navbar + banner -->
+    <div class="pt-32"></div>
 
     <!-- Menu Section -->
-    <section id="menu" class="py-24">
+    <section id="menu" class="py-2">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
-                <h2 class="text-5xl text-textMain font-display mb-4">Nuestro Menú</h2>
-                <p class="text-gray-500 text-lg max-w-2xl mx-auto">¡Arma tu pedido! Selecciona las cantidades, agrégalas a tu bandeja visual y prepárate para disfrutar.</p>
+                <h2 class="text-5xl text-textMain font-display mb-4">Menú</h2>
+                <p class="text-gray-500 text-lg max-w-2xl mx-auto">Selecciona tus empanadas y cantidades. Luego <b>confirma la disponibilidad</b> en WhatsApp antes de realizar tu pago.</p>
                 <div class="w-24 h-1 bg-accent mx-auto rounded-full mt-6"></div>
             </div>
 
-            <!-- Empanadas Category -->
+            <!-- Empanadas Clásicas Category -->
             <div class="mb-20">
                 <div class="flex items-center gap-4 mb-10 reveal">
                     <i class="fas fa-fire text-3xl text-primary"></i>
@@ -234,110 +222,465 @@
                     <div class="h-px bg-gray-200 flex-grow"></div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    
+                <div
+                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6">
+
                     <!-- Item 1: Mechada -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
-                        <div class="relative h-56 overflow-hidden bg-gray-100">
-                            <img src="assets/images/carne_mechada.png" alt="Empanada de Carne Mechada" class="w-full h-full object-cover">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <!-- Badge Special -->
+                            <div
+                                class="absolute top-4 xl:left-4 z-10 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                Más Vendida</div>
+                            <img src="assets/images/carne_mechada.png" alt="Empanada de Mechada"
+                                class="w-full h-full object-cover">
                         </div>
-                        <div class="p-6">
-                            <h4 class="text-xl font-bold text-textMain mb-2">Carne Mechada</h4>
-                            <p class="text-gray-500 text-sm mb-4 h-10">Suave mechada guisada con tomates, cebolla y pimientos dulces.</p>
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="font-display text-2xl text-accent">$2.50</span>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Mechada</h4>
+
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $2.00</span></div>
                             </div>
-                            
-                            <!-- Cart Controls -->
-                            <div class="flex flex-col gap-3">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1">
-                                    <button class="qty-btn minus w-10 h-10 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-mechada">-</button>
-                                    <input type="number" id="qty-mechada" class="w-12 text-center bg-transparent border-none font-bold text-lg focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-10 h-10 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-mechada">+</button>
+                            <div class="flex flex-col gap-1.5 sm:gap-3">
+                                <div
+                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-0.5 sm:p-1">
+                                    <button
+                                        class="qty-btn minus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
+                                        data-target="qty-mechada">-</button>
+                                    <input type="number" id="qty-mechada"
+                                        class="w-6 sm:w-12 text-center bg-transparent border-none font-bold text-sm sm:text-lg px-0 mx-0 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
+                                        data-target="qty-mechada">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-full bg-primary text-white font-bold py-3 rounded-full hover:bg-orange-500 transition shadow-md shadow-primary/30" data-qty="qty-mechada" data-name="Empanada de Carne Mechada" data-price="2.50">
-                                    Añadir
-                                </button>
+                                <button
+                                    class="add-to-cart-btn w-full bg-primary text-white font-bold py-1.5 sm:py-3 text-[10px] sm:text-base leading-tight rounded-full hover:bg-orange-500 transition shadow-sm shadow-primary/30"
+                                    data-qty="qty-mechada" data-name="Empanada de Mechada"
+                                    data-price="2.00">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 4: Jamón con Queso -->
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
+                        style="transition-delay: 50ms;">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <!-- Badge Special -->
+                            <div
+                                class="absolute top-4 xl:left-4 z-10 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                Más Vendida</div>
+                            <img src="assets/images/queso.png" alt="Empanada Jamón y Queso"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Jamón con Queso</h4>
+
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $2.00</span></div>
+                            </div>
+                            <div class="flex flex-col gap-1.5 sm:gap-3">
+                                <div
+                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-0.5 sm:p-1">
+                                    <button
+                                        class="qty-btn minus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
+                                        data-target="qty-jamonq">-</button>
+                                    <input type="number" id="qty-jamonq"
+                                        class="w-6 sm:w-12 text-center bg-transparent border-none font-bold text-sm sm:text-lg px-0 mx-0 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
+                                        data-target="qty-jamonq">+</button>
+                                </div>
+                                <button
+                                    class="add-to-cart-btn w-full bg-primary text-white font-bold py-1.5 sm:py-3 text-[10px] sm:text-base leading-tight rounded-full hover:bg-orange-500 transition shadow-sm shadow-primary/30"
+                                    data-qty="qty-jamonq" data-name="Empanada Jamón con Queso"
+                                    data-price="2.00">Añadir</button>
                             </div>
                         </div>
                     </div>
 
                     <!-- Item 2: Pollo -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal" style="transition-delay: 100ms;">
-                        <div class="relative h-56 overflow-hidden bg-gray-100">
-                            <img src="assets/images/pollo.png" alt="Empanada de Pollo" class="w-full h-full object-cover">
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
+                        style="transition-delay: 100ms;">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <img src="assets/images/pollo.png" alt="Empanada de Pollo"
+                                class="w-full h-full object-cover">
                         </div>
-                        <div class="p-6">
-                            <h4 class="text-xl font-bold text-textMain mb-2">Pollo Guisado</h4>
-                            <p class="text-gray-500 text-sm mb-4 h-10">Pechuga de pollo desmechada con un sofrito criollo espectacular.</p>
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="font-display text-2xl text-accent">$2.50</span>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Pollo</h4>
+
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $2.00</span></div>
                             </div>
-                            
-                            <!-- Cart Controls -->
-                            <div class="flex flex-col gap-3">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1">
-                                    <button class="qty-btn minus w-10 h-10 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-pollo">-</button>
-                                    <input type="number" id="qty-pollo" class="w-12 text-center bg-transparent border-none font-bold text-lg focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-10 h-10 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-pollo">+</button>
+                            <div class="flex flex-col gap-1.5 sm:gap-3">
+                                <div
+                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-0.5 sm:p-1">
+                                    <button
+                                        class="qty-btn minus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
+                                        data-target="qty-pollo">-</button>
+                                    <input type="number" id="qty-pollo"
+                                        class="w-6 sm:w-12 text-center bg-transparent border-none font-bold text-sm sm:text-lg px-0 mx-0 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
+                                        data-target="qty-pollo">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-full bg-primary text-white font-bold py-3 rounded-full hover:bg-orange-500 transition shadow-md shadow-primary/30" data-qty="qty-pollo" data-name="Empanada de Pollo" data-price="2.50">
-                                    Añadir
-                                </button>
+                                <button
+                                    class="add-to-cart-btn w-full bg-primary text-white font-bold py-1.5 sm:py-3 text-[10px] sm:text-base leading-tight rounded-full hover:bg-orange-500 transition shadow-sm shadow-primary/30"
+                                    data-qty="qty-pollo" data-name="Empanada de Pollo" data-price="2.00">Añadir</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Item 3: Queso -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal" style="transition-delay: 200ms;">
-                        <div class="relative h-56 overflow-hidden bg-gray-100">
-                            <img src="assets/images/queso.png" alt="Empanada de Queso" class="w-full h-full object-cover border-b">
+                    <!-- Item 3: Molida -->
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
+                        style="transition-delay: 200ms;">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <img src="assets/images/carne_mechada.png" alt="Empanada Molida"
+                                class="w-full h-full object-cover grayscale-[30%]">
                         </div>
-                        <div class="p-6">
-                            <h4 class="text-xl font-bold text-textMain mb-2">Doble Queso</h4>
-                            <p class="text-gray-500 text-sm mb-4 h-10">Rellena de auténtico queso blanco venezolano derretido.</p>
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="font-display text-2xl text-accent">$2.00</span>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Molida</h4>
+
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $2.00</span></div>
                             </div>
-                            
-                            <!-- Cart Controls -->
-                            <div class="flex flex-col gap-3">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1">
-                                    <button class="qty-btn minus w-10 h-10 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-queso">-</button>
-                                    <input type="number" id="qty-queso" class="w-12 text-center bg-transparent border-none font-bold text-lg focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-10 h-10 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-queso">+</button>
+                            <div class="flex flex-col gap-1.5 sm:gap-3">
+                                <div
+                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-0.5 sm:p-1">
+                                    <button
+                                        class="qty-btn minus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
+                                        data-target="qty-molida">-</button>
+                                    <input type="number" id="qty-molida"
+                                        class="w-6 sm:w-12 text-center bg-transparent border-none font-bold text-sm sm:text-lg px-0 mx-0 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
+                                        data-target="qty-molida">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-full bg-primary text-white font-bold py-3 rounded-full hover:bg-orange-500 transition shadow-md shadow-primary/30" data-qty="qty-queso" data-name="Empanada de Queso" data-price="2.00">
-                                    Añadir
-                                </button>
+                                <button
+                                    class="add-to-cart-btn w-full bg-primary text-white font-bold py-1.5 sm:py-3 text-[10px] sm:text-base leading-tight rounded-full hover:bg-orange-500 transition shadow-sm shadow-primary/30"
+                                    data-qty="qty-molida" data-name="Empanada Molida" data-price="2.00">Añadir</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Item 4: Pabellon -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal" style="transition-delay: 300ms;">
-                        <div class="relative h-56 overflow-hidden bg-gray-100">
-                            <!-- Badge Special -->
-                            <div class="absolute top-4 xl:left-4 z-10 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">Más Vendida</div>
-                            <img src="assets/images/pabellon.png" alt="Empanada de Pabellón" class="w-full h-full object-cover">
+                </div>
+
+                <div
+                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6 mt-8">
+                    <!-- Item 5: Pabellon -->
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <img src="assets/images/pabellon.png" alt="Empanada de Pabellón"
+                                class="w-full h-full object-cover">
                         </div>
-                        <div class="p-6">
-                            <h4 class="text-xl font-bold text-textMain mb-2">Pabellón Criollo</h4>
-                            <p class="text-gray-500 text-sm mb-4 h-10">Carne mechada, caraotas negras, tajadas y queso blanco.</p>
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="font-display text-2xl text-accent">$3.50</span>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Pabellón</h4>
+
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $2.00</span></div>
                             </div>
-                            
-                            <!-- Cart Controls -->
-                            <div class="flex flex-col gap-3">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1">
-                                    <button class="qty-btn minus w-10 h-10 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-pabellon">-</button>
-                                    <input type="number" id="qty-pabellon" class="w-12 text-center bg-transparent border-none font-bold text-lg focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-10 h-10 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-pabellon">+</button>
+                            <div class="flex flex-col gap-1.5 sm:gap-3">
+                                <div
+                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-0.5 sm:p-1">
+                                    <button
+                                        class="qty-btn minus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
+                                        data-target="qty-pabellon">-</button>
+                                    <input type="number" id="qty-pabellon"
+                                        class="w-6 sm:w-12 text-center bg-transparent border-none font-bold text-sm sm:text-lg px-0 mx-0 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
+                                        data-target="qty-pabellon">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-full bg-primary text-white font-bold py-3 rounded-full hover:bg-orange-500 transition shadow-md shadow-primary/30" data-qty="qty-pabellon" data-name="Empanada de Pabellón" data-price="3.50">
-                                    Añadir
-                                </button>
+                                <button
+                                    class="add-to-cart-btn w-full bg-primary text-white font-bold py-1.5 sm:py-3 text-[10px] sm:text-base leading-tight rounded-full hover:bg-orange-500 transition shadow-sm shadow-primary/30"
+                                    data-qty="qty-pabellon" data-name="Empanada de Pabellón"
+                                    data-price="2.00">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 6: Guiso Navideño -->
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
+                        style="transition-delay: 100ms;">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <img src="assets/images/pabellon.png" alt="Empanada Guiso Navideño"
+                                class="w-full h-full object-cover grayscale-[20%] sepia-[10%]">
+                        </div>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Guiso Navideño</h4>
+
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $2.00</span></div>
+                            </div>
+                            <div class="flex flex-col gap-1.5 sm:gap-3">
+                                <div
+                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-0.5 sm:p-1">
+                                    <button
+                                        class="qty-btn minus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
+                                        data-target="qty-navideno">-</button>
+                                    <input type="number" id="qty-navideno"
+                                        class="w-6 sm:w-12 text-center bg-transparent border-none font-bold text-sm sm:text-lg px-0 mx-0 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
+                                        data-target="qty-navideno">+</button>
+                                </div>
+                                <button
+                                    class="add-to-cart-btn w-full bg-primary text-white font-bold py-1.5 sm:py-3 text-[10px] sm:text-base leading-tight rounded-full hover:bg-orange-500 transition shadow-sm shadow-primary/30"
+                                    data-qty="qty-navideno" data-name="Empanada Guiso Navideño"
+                                    data-price="2.00">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 7: Macabi -->
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
+                        style="transition-delay: 200ms;">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <img src="assets/images/queso.png" alt="Empanada Margariteña"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Macabí (Pescado)</h4>
+
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $2.00</span></div>
+                            </div>
+                            <div class="flex flex-col gap-1.5 sm:gap-3">
+                                <div
+                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-0.5 sm:p-1">
+                                    <button
+                                        class="qty-btn minus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
+                                        data-target="qty-macabi">-</button>
+                                    <input type="number" id="qty-macabi"
+                                        class="w-6 sm:w-12 text-center bg-transparent border-none font-bold text-sm sm:text-lg px-0 mx-0 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
+                                        data-target="qty-macabi">+</button>
+                                </div>
+                                <button
+                                    class="add-to-cart-btn w-full bg-primary text-white font-bold py-1.5 sm:py-3 text-[10px] sm:text-base leading-tight rounded-full hover:bg-orange-500 transition shadow-sm shadow-primary/30"
+                                    data-qty="qty-macabi" data-name="Empanada de Macabí"
+                                    data-price="2.00">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 8: Queso -->
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
+                        style="transition-delay: 300ms;">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <img src="assets/images/queso.png" alt="Empanada de Queso"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Queso Llanero</h4>
+
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $2.00</span></div>
+                            </div>
+                            <div class="flex flex-col gap-1.5 sm:gap-3">
+                                <div
+                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-0.5 sm:p-1">
+                                    <button
+                                        class="qty-btn minus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
+                                        data-target="qty-queso">-</button>
+                                    <input type="number" id="qty-queso"
+                                        class="w-6 sm:w-12 text-center bg-transparent border-none font-bold text-sm sm:text-lg px-0 mx-0 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
+                                        data-target="qty-queso">+</button>
+                                </div>
+                                <button
+                                    class="add-to-cart-btn w-full bg-primary text-white font-bold py-1.5 sm:py-3 text-[10px] sm:text-base leading-tight rounded-full hover:bg-orange-500 transition shadow-sm shadow-primary/30"
+                                    data-qty="qty-queso" data-name="Empanada de Queso" data-price="2.00">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empanadas Especiales Category -->
+            <div class="mb-20">
+                <div class="flex items-center gap-4 mb-10 reveal">
+                    <i class="fas fa-star text-3xl text-accent"></i>
+                    <h3 class="text-3xl font-display text-textMain">Empanadas Especiales</h3>
+                    <div class="h-px bg-gray-400 opacity-20 flex-grow"></div>
+                </div>
+
+                <div
+                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6">
+
+                    <!-- Especial 1: Especial -->
+                    <div
+                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <div
+                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                <i class="fas fa-crown mr-1"></i> Especial
+                            </div>
+                            <img src="assets/images/carne_mechada.png" alt="Especial Mechada con Queso"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Mechada y Queso Amarillo (Pelúa)</h4>
+
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="3.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $3.50</span></div>
+                            </div>
+                            <div class="flex flex-col gap-1.5 sm:gap-3">
+                                <div
+                                    class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-0.5 sm:p-1">
+                                    <button
+                                        class="qty-btn minus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn"
+                                        data-target="qty-esp-mech">-</button>
+                                    <input type="number" id="qty-esp-mech"
+                                        class="w-6 sm:w-12 text-center bg-transparent border-none font-bold text-sm sm:text-lg px-0 mx-0 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
+                                        data-target="qty-esp-mech">+</button>
+                                </div>
+                                <button
+                                    class="add-to-cart-btn w-full bg-primary text-white font-bold py-1.5 sm:py-3 text-[10px] sm:text-base leading-tight rounded-full hover:bg-orange-500 transition shadow-sm shadow-primary/30"
+                                    data-qty="qty-esp-mech" data-name="Mechada y Queso (Pelúa)"
+                                    data-price="3.50">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Especial 2: Pollo con Queso -->
+                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal"
+                        style="transition-delay: 100ms;">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <div
+                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                <i class="fas fa-crown mr-1"></i> Especial
+                            </div>
+                            <img src="assets/images/pollo.png" alt="Pollo con Queso" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Pollo con Queso (Catira)</h4>
+
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="3.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $3.50</span></div>
+                            </div>
+                            <div class="flex flex-col gap-1.5 sm:gap-3">
+                                <div
+                                    class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-0.5 sm:p-1">
+                                    <button
+                                        class="qty-btn minus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn"
+                                        data-target="qty-esp-pollo">-</button>
+                                    <input type="number" id="qty-esp-pollo"
+                                        class="w-6 sm:w-12 text-center bg-transparent border-none font-bold text-sm sm:text-lg px-0 mx-0 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
+                                        data-target="qty-esp-pollo">+</button>
+                                </div>
+                                <button
+                                    class="add-to-cart-btn w-full bg-primary text-white font-bold py-1.5 sm:py-3 text-[10px] sm:text-base leading-tight rounded-full hover:bg-orange-500 transition shadow-sm shadow-primary/30"
+                                    data-qty="qty-esp-pollo" data-name="Pollo con Queso"
+                                    data-price="3.50">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Especial 3: Molida con Queso Amarillo -->
+                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal"
+                        style="transition-delay: 200ms;">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <div
+                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                <i class="fas fa-crown mr-1"></i> Especial
+                            </div>
+                            <img src="assets/images/carne_mechada.png" alt="Molida con Queso Amarillo"
+                                class="w-full h-full object-cover grayscale-[30%]">
+                        </div>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Molida con Queso Amarillo</h4>
+
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="3.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $3.50</span></div>
+                            </div>
+                            <div class="flex flex-col gap-1.5 sm:gap-3">
+                                <div
+                                    class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-0.5 sm:p-1">
+                                    <button
+                                        class="qty-btn minus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn"
+                                        data-target="qty-esp-molida">-</button>
+                                    <input type="number" id="qty-esp-molida"
+                                        class="w-6 sm:w-12 text-center bg-transparent border-none font-bold text-sm sm:text-lg px-0 mx-0 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-7 h-7 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
+                                        data-target="qty-esp-molida">+</button>
+                                </div>
+                                <button
+                                    class="add-to-cart-btn w-full bg-primary text-white font-bold py-1.5 sm:py-3 text-[10px] sm:text-base leading-tight rounded-full hover:bg-orange-500 transition shadow-sm shadow-primary/30"
+                                    data-qty="qty-esp-molida" data-name="Molida con Queso Amarillo"
+                                    data-price="3.50">Añadir</button>
                             </div>
                         </div>
                     </div>
@@ -353,26 +696,44 @@
                     <div class="h-px bg-gray-200 flex-grow"></div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
+                <div
+                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6">
+
                     <!-- Drink 1: Papelon -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
-                        <div class="relative h-64 overflow-hidden bg-gray-100">
-                            <img src="assets/images/papelon.png" alt="Papelón con Limón" class="w-full h-full object-cover">
+                        <div class="relative h-32 sm:h-40 lg:h-44 overflow-hidden bg-gray-100">
+                            <img src="assets/images/papelon.png" alt="Papelón con Limón"
+                                class="w-full h-full object-cover">
                         </div>
-                        <div class="p-6">
-                            <h4 class="text-xl font-bold text-textMain mb-2">Papelón con Limón</h4>
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="font-display text-2xl text-dark">$1.50</span>
-                            </div>
-                            
-                            <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition" data-target="qty-papelon">-</button>
-                                    <input type="number" id="qty-papelon" class="w-8 text-center bg-transparent border-none font-bold text-lg focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-dark bg-teal-50 hover:bg-teal-100 transition" data-target="qty-papelon">+</button>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Papelón con Limón</h4>
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div>
+                                    <span class="price-display font-display text-2xl text-dark block"
+                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span>
+                                    <span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.50</span>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-dark text-white font-bold py-2 rounded-full hover:bg-teal-600 transition shadow-md" data-qty="qty-papelon" data-name="Papelón con Limón" data-price="1.50">
+                            </div>
+
+                            <div class="flex gap-2">
+                                <div
+                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button
+                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition"
+                                        data-target="qty-papelon">-</button>
+                                    <input type="number" id="qty-papelon"
+                                        class="w-8 text-center bg-transparent border-none font-bold text-lg focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-dark bg-teal-50 hover:bg-teal-100 transition"
+                                        data-target="qty-papelon">+</button>
+                                </div>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-dark text-white font-bold py-2 rounded-full hover:bg-teal-600 transition shadow-md"
+                                    data-qty="qty-papelon" data-name="Papelón con Limón" data-price="1.50">
                                     Añadir
                                 </button>
                             </div>
@@ -380,23 +741,41 @@
                     </div>
 
                     <!-- Drink 2: Malta -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal" style="transition-delay: 100ms;">
-                        <div class="relative h-64 overflow-hidden bg-gray-100">
-                            <img src="assets/images/malta.png" alt="Malta Venezolana" class="w-full h-full object-cover">
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
+                        style="transition-delay: 100ms;">
+                        <div class="relative h-32 sm:h-40 lg:h-44 overflow-hidden bg-gray-100">
+                            <img src="assets/images/malta.png" alt="Malta Venezolana"
+                                class="w-full h-full object-cover">
                         </div>
-                        <div class="p-6">
-                            <h4 class="text-xl font-bold text-textMain mb-2">Malta Venezolana</h4>
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="font-display text-2xl text-dark">$2.00</span>
-                            </div>
-                            
-                            <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition" data-target="qty-malta">-</button>
-                                    <input type="number" id="qty-malta" class="w-8 text-center bg-transparent border-none font-bold text-lg focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-dark bg-teal-50 hover:bg-teal-100 transition" data-target="qty-malta">+</button>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Malta Venezolana</h4>
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div>
+                                    <span class="price-display font-display text-2xl text-dark block"
+                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span>
+                                    <span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $2.00</span>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-dark text-white font-bold py-2 rounded-full hover:bg-teal-600 transition shadow-md" data-qty="qty-malta" data-name="Malta Venezolana" data-price="2.00">
+                            </div>
+
+                            <div class="flex gap-2">
+                                <div
+                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button
+                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition"
+                                        data-target="qty-malta">-</button>
+                                    <input type="number" id="qty-malta"
+                                        class="w-8 text-center bg-transparent border-none font-bold text-lg focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-dark bg-teal-50 hover:bg-teal-100 transition"
+                                        data-target="qty-malta">+</button>
+                                </div>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-dark text-white font-bold py-2 rounded-full hover:bg-teal-600 transition shadow-md"
+                                    data-qty="qty-malta" data-name="Malta Venezolana" data-price="2.00">
                                     Añadir
                                 </button>
                             </div>
@@ -404,23 +783,41 @@
                     </div>
 
                     <!-- Drink 3: Chicha -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal" style="transition-delay: 200ms;">
-                        <div class="relative h-64 overflow-hidden bg-gray-100">
-                            <img src="assets/images/chicha.png" alt="Chicha Venezolana" class="w-full h-full object-cover">
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
+                        style="transition-delay: 200ms;">
+                        <div class="relative h-32 sm:h-40 lg:h-44 overflow-hidden bg-gray-100">
+                            <img src="assets/images/chicha.png" alt="Chicha Venezolana"
+                                class="w-full h-full object-cover">
                         </div>
-                        <div class="p-6">
-                            <h4 class="text-xl font-bold text-textMain mb-2">Chicha Casera</h4>
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="font-display text-2xl text-dark">$2.50</span>
-                            </div>
-                            
-                            <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition" data-target="qty-chicha">-</button>
-                                    <input type="number" id="qty-chicha" class="w-8 text-center bg-transparent border-none font-bold text-lg focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-dark bg-teal-50 hover:bg-teal-100 transition" data-target="qty-chicha">+</button>
+                        <div class="p-3 sm:p-5">
+                            <h4
+                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
+                                Chicha Casera</h4>
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div>
+                                    <span class="price-display font-display text-2xl text-dark block"
+                                        data-dolar="2.50"><i class="fas fa-spinner fa-spin text-sm"></i></span>
+                                    <span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $2.50</span>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-dark text-white font-bold py-2 rounded-full hover:bg-teal-600 transition shadow-md" data-qty="qty-chicha" data-name="Chicha Casera" data-price="2.50">
+                            </div>
+
+                            <div class="flex gap-2">
+                                <div
+                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button
+                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition"
+                                        data-target="qty-chicha">-</button>
+                                    <input type="number" id="qty-chicha"
+                                        class="w-8 text-center bg-transparent border-none font-bold text-lg focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-dark bg-teal-50 hover:bg-teal-100 transition"
+                                        data-target="qty-chicha">+</button>
+                                </div>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-dark text-white font-bold py-2 rounded-full hover:bg-teal-600 transition shadow-md"
+                                    data-qty="qty-chicha" data-name="Chicha Casera" data-price="2.50">
                                     Añadir
                                 </button>
                             </div>
@@ -437,61 +834,100 @@
     <section id="pagos" class="py-24 bg-gray-50 hidden">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 text-center active">
-                <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
+                <div
+                    class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
                     <i class="fas fa-money-bill-wave"></i>
                 </div>
                 <h2 class="text-3xl font-display text-textMain mb-4">¡Casi listo! Realiza tu Pago</h2>
-                <p class="text-gray-500 mb-8">Por favor realiza el pago por el monto total de tu orden y sube el comprobante (capture) para completar tu pedido.</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-left">
-                    <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100">
-                        <h3 class="font-bold text-blue-800 text-lg mb-3"><i class="fas fa-mobile-alt mr-2"></i>Pago Móvil</h3>
-                        <p class="text-sm text-gray-700 mb-1"><strong>Banco:</strong> Banesco (0134)</p>
-                        <p class="text-sm text-gray-700 mb-1"><strong>Teléfono:</strong> 0414-1234567</p>
-                        <p class="text-sm text-gray-700"><strong>Cédula:</strong> V-12.345.678</p>
-                    </div>
-                    <div class="bg-purple-50 rounded-2xl p-6 border border-purple-100">
-                        <h3 class="font-bold text-purple-800 text-lg mb-3"><i class="fas fa-university mr-2"></i>Transferencia Bancaria</h3>
-                        <p class="text-sm text-gray-700 mb-1"><strong>Titular:</strong> Sabores Y&B C.A.</p>
-                        <p class="text-sm text-gray-700 mb-1"><strong>Cuenta:</strong> 0134-0000-00-0000000000</p>
-                        <p class="text-sm text-gray-700"><strong>RIF:</strong> J-12345678-9</p>
+                <p class="text-gray-500 mb-8">Por favor realiza el pago por el monto total de tu orden y sube el
+                    comprobante (capture) para completar tu pedido.</p>
+
+                <div class="mb-8 max-w-md mx-auto">
+                    <div
+                        class="bg-red-50 rounded-3xl p-6 md:p-8 border-2 border-red-200 text-left relative overflow-hidden shadow-lg shadow-red-100/50">
+                        <!-- Decorative circle -->
+                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-red-100 rounded-full opacity-50"></div>
+
+                        <div class="flex justify-between items-end mb-6 relative z-10">
+                            <h3 class="font-bold text-red-800 text-xl flex items-center gap-2">
+                                <i class="fas fa-mobile-alt text-2xl"></i> Pago Móvil
+                            </h3>
+                            <span
+                                class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-md font-bold uppercase tracking-wide">Bco.
+                                Venezuela</span>
+                        </div>
+
+                        <div
+                            class="space-y-3 relative z-10 bg-white/70 p-4 rounded-2xl border border-red-100 mb-6 shadow-inner">
+                            <div class="flex justify-between items-center border-b border-red-50 pb-2">
+                                <span class="text-gray-500 text-sm">Banco</span>
+                                <strong class="text-red-900 font-display text-lg">Venezuela (0102)</strong>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-red-50 pb-2">
+                                <span class="text-gray-500 text-sm">Teléfono</span>
+                                <strong class="text-red-900 font-display text-lg">04161071344</strong>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-red-50 pb-2">
+                                <span class="text-gray-500 text-sm">Cédula</span>
+                                <strong class="text-red-900 font-display text-lg">V-12993940</strong>
+                            </div>
+                            <div class="flex justify-between items-center pt-2 mt-2">
+                                <span class="text-red-800 text-sm font-bold">Monto a Transferir</span>
+                                <strong class="text-red-600 font-display text-2xl drop-shadow-sm" id="pago-total-bs">Bs.
+                                    0.00</strong>
+                            </div>
+                        </div>
+
+                        <button id="btn-copy-data"
+                            class="relative z-10 w-full bg-white text-red-600 border border-red-200 font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition hover:bg-red-600 hover:text-white hover:border-red-600 shadow-sm group">
+                            <i class="fas fa-copy group-hover:scale-110 transition-transform"></i> <span
+                                id="text-copy-data">Copiar datos del pago</span>
+                        </button>
                     </div>
                 </div>
 
-                <div class="border-2 border-dashed border-gray-300 rounded-2xl p-8 mb-8 relative hover:bg-gray-50 transition cursor-pointer">
-                    <input type="file" id="capture-upload" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*">
+                <div
+                    class="border-2 border-dashed border-gray-300 rounded-2xl p-8 mb-8 relative hover:bg-gray-50 transition cursor-pointer">
+                    <input type="file" id="capture-upload"
+                        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*">
                     <div class="text-gray-500" id="upload-placeholder">
                         <i class="fas fa-cloud-upload-alt text-4xl mb-3 text-primary"></i>
                         <p class="font-bold">Toca aquí para subir tu capture</p>
                         <p class="text-xs mt-1">Formatos: JPG, PNG</p>
                     </div>
                     <div class="hidden flex-col items-center" id="upload-preview-container">
-                        <p class="text-green-500 font-bold mb-2"><i class="fas fa-check-circle mr-1"></i> Capture subido exitosamente</p>
+                        <p class="text-green-500 font-bold mb-2"><i class="fas fa-check-circle mr-1"></i> Capture subido
+                            exitosamente</p>
                         <p class="text-sm text-gray-500" id="upload-filename"></p>
                     </div>
                 </div>
 
-                <button id="btn-completar-pedido" class="w-full bg-primary text-white font-bold py-4 rounded-full hover:bg-orange-500 transition shadow-lg shadow-primary/30 text-lg flex items-center justify-center opacity-50 cursor-not-allowed" disabled>
+                <button id="btn-completar-pedido"
+                    class="w-full bg-primary text-white font-bold py-4 rounded-full hover:bg-orange-500 transition shadow-lg shadow-primary/30 text-lg flex items-center justify-center opacity-50 cursor-not-allowed"
+                    disabled>
                     <i class="fab fa-whatsapp text-2xl mr-2"></i> Enviar Comprobante al WhatsApp
                 </button>
-                <p class="text-xs text-gray-400 mt-4">* Serás redirigido a WhatsApp donde debes enviar la imagen manualmente si la ventana no la adjunta.</p>
+                <p class="text-xs text-gray-400 mt-4">* Serás redirigido a WhatsApp donde debes enviar la imagen
+                    manualmente si la ventana no la adjunta.</p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-textMain py-12 text-white text-center">
+    <footer class="bg-textMain py-8 text-white text-center">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <img src="assets/images/logo.png" alt="Sabores Y&B" class="h-24 mx-auto mb-6 brightness-0 invert opacity-90">
+            <img src="assets/images/logo.png" alt="Sabores Y&B"
+                class="h-16 mx-auto mb-4 brightness-0 invert opacity-90">
             <h5 class="text-2xl font-display mb-2 text-primary">Sabores Y&B</h5>
-            <p class="text-gray-400 mb-8 max-w-sm mx-auto">Hechas con amor desde nuestra familia para la tuya.</p>
-            
-            <div class="flex justify-center flex-wrap gap-8 text-gray-300 font-light mb-8">
+            <p class="text-gray-400 mb-6 max-w-sm mx-auto text-sm">Hechas con amor desde nuestra familia para la tuya.
+            </p>
+
+            <div class="flex justify-center flex-wrap gap-6 text-gray-300 font-light mb-6 text-sm">
                 <a href="#" class="hover:text-primary transition"><i class="fab fa-instagram mr-2"></i>@sabores.yb</a>
                 <a href="#" class="hover:text-primary transition"><i class="fab fa-whatsapp mr-2"></i>+1 234 567 890</a>
             </div>
-            
-            <div class="border-t border-gray-700 pt-8 text-sm text-gray-500">
+
+            <div class="border-t border-gray-700 pt-6 text-xs text-gray-500">
                 &copy; 2026 Sabores Y&B. Todos los derechos reservados.
             </div>
         </div>
@@ -501,17 +937,52 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
+            // Tasa BCV Logic
+            let bcvRate = 1.0;
+            let isBcvLoaded = false;
+
+            async function fetchBcvRate() {
+                try {
+                    // Usando DolarApi.com que es más confiable y libre de CORS
+                    const response = await fetch('https://ve.dolarapi.com/v1/dolares/oficial');
+                    const data = await response.json();
+
+                    if (data && data.promedio) {
+                        bcvRate = data.promedio;
+                        isBcvLoaded = true;
+                        console.log("🚀 Tasa BCV (DolarApi) obtenida:", bcvRate);
+                        $('#bcv-rate-navbar .rate-val').text(`Bs. ${bcvRate.toFixed(2)}`);
+                    } else {
+                        throw new Error("Formato de datos no válido");
+                    }
+                } catch (error) {
+                    console.error("Error fetching BCV rate. Using fallback rate.", error);
+                    bcvRate = 50.00; // Tasa de respaldo manual
+                    $('#bcv-rate-navbar .rate-val').text(`Bs. ${bcvRate.toFixed(2)} (Ref)`);
+                }
+
+                // Actualizar precios en pantalla
+                $('.price-display').each(function () {
+                    let usdPrice = parseFloat($(this).data('dolar'));
+                    let bsPrice = usdPrice * bcvRate;
+                    $(this).text(`Bs. ${bsPrice.toFixed(2)}`);
+                });
+                updateCartUI(); // Reset visual totals according to new rate
+            }
+
+            fetchBcvRate();
+
             // Navbar Background on Scroll
-            $(window).scroll(function() {
+            $(window).scroll(function () {
                 if ($(window).scrollTop() > 50) {
                     $('#navbar').addClass('shadow-md bg-white/95').removeClass('bg-white/90 shadow-sm');
                 } else {
                     $('#navbar').removeClass('shadow-md bg-white/95').addClass('bg-white/90 shadow-sm');
                 }
-                
+
                 // Reveal animations
-                $('.reveal').each(function() {
+                $('.reveal').each(function () {
                     var windowHeight = $(window).height();
                     var elementTop = $(this).offset().top;
                     var elementVisible = 100;
@@ -522,23 +993,23 @@
             });
 
             // Initial trigger for reveal elements currently in view
-            setTimeout(function() {
+            setTimeout(function () {
                 $(window).trigger('scroll');
             }, 100);
 
             // Mobile menu toggle
-            $('#mobile-menu-btn').click(function() {
+            $('#mobile-menu-btn').click(function () {
                 $('#mobile-menu').removeClass('hidden').toggleClass('opacity-0 opacity-100');
             });
-            $('#close-mobile-menu, #mobile-menu a').click(function() {
+            $('#close-mobile-menu, #mobile-menu a').click(function () {
                 $('#mobile-menu').removeClass('opacity-100').addClass('opacity-0');
-                setTimeout(function() {
+                setTimeout(function () {
                     $('#mobile-menu').addClass('hidden');
                 }, 300);
             });
 
             // Counter Logic ([-] 0 [+])
-            $('.qty-btn').click(function() {
+            $('.qty-btn').click(function () {
                 var isPlus = $(this).hasClass('plus');
                 var targetId = $(this).data('target');
                 var inputEl = $('#' + targetId);
@@ -555,28 +1026,34 @@
 
             // Visual Cart Logic & Functionality
             var cart = [];
-            
+
             function updateCartUI() {
                 var totalItems = 0;
                 var totalPrice = 0;
                 var html = '';
-                
+
                 if (cart.length === 0) {
                     $('#empty-cart-msg').removeClass('hidden');
                     $('#cart-items .cart-item-row').remove();
+                    $('#clear-cart-btn').addClass('hidden');
+                    // Ocultar sección de pagos al vaciar el carrito
+                    $('#pagos').addClass('hidden');
                 } else {
                     $('#empty-cart-msg').addClass('hidden');
-                    cart.forEach(function(item, index) {
+                    $('#clear-cart-btn').removeClass('hidden');
+                    cart.forEach(function (item, index) {
                         totalItems += item.qty;
                         totalPrice += (item.price * item.qty);
+                        let bsRowPrice = (item.price * bcvRate).toFixed(2);
+                        let bsRowTotal = (item.price * item.qty * bcvRate).toFixed(2);
                         html += `
                             <div class="cart-item-row flex justify-between items-center border-b border-gray-50 pb-3">
                                 <div>
                                     <p class="font-bold text-textMain text-sm">${item.name}</p>
-                                    <p class="text-xs text-gray-500">${item.qty} x $${item.price.toFixed(2)}</p>
+                                    <p class="text-xs text-gray-500">${item.qty} x Bs. ${bsRowPrice} <span class="opacity-70">($${item.price.toFixed(2)})</span></p>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <span class="font-bold text-accent">$${(item.price * item.qty).toFixed(2)}</span>
+                                    <span class="font-bold text-accent">Bs. ${bsRowTotal}</span>
                                     <button class="text-red-300 hover:text-red-500 delete-item" data-index="${index}"><i class="fas fa-trash"></i></button>
                                 </div>
                             </div>
@@ -585,9 +1062,17 @@
                     $('#cart-items .cart-item-row').remove();
                     $('#cart-items').append(html);
                 }
-                
-                $('#cart-total').text('$' + totalPrice.toFixed(2));
-                
+
+                let bsTotal = (totalPrice * bcvRate).toFixed(2);
+                $('#cart-total').html(`Bs. ${bsTotal}<br><span class="text-xs text-gray-400 mt-1 block">Ref: $${totalPrice.toFixed(2)}</span>`);
+
+                // Actualizar sección de pago dinámicamente si está visible
+                if (!$('#pagos').hasClass('hidden')) {
+                    $('#pago-total-bs').text(`Bs. ${bsTotal}`);
+                    var copyText = `Pago Móvil Sabores Y&B\nBanco: Venezuela (0102)\nTel: 04161071344\nCI: V-12993940\nMonto: Bs. ${bsTotal}`;
+                    $('#btn-copy-data').attr('data-copy', copyText);
+                }
+
                 var badge = $('#cart-badge');
                 badge.text(totalItems);
                 if (totalItems > 0) {
@@ -599,40 +1084,47 @@
             }
 
             // Bind delete item dynamically
-            $(document).on('click', '.delete-item', function() {
+            $(document).on('click', '.delete-item', function () {
                 var index = $(this).data('index');
                 cart.splice(index, 1);
                 updateCartUI();
             });
 
-            $('#cart-toggle-btn').click(function() {
+            // Bind clear cart
+            $('#clear-cart-btn').click(function () {
+                cart = [];
+                updateCartUI();
+                $('#cart-dropdown').removeClass('scale-100').addClass('scale-0');
+            });
+
+            $('#cart-toggle-btn').click(function () {
                 if (cart.length > 0) {
                     $('#cart-dropdown').toggleClass('scale-0 scale-100');
                 }
             });
 
-            $('#close-cart-btn').click(function() {
+            $('#close-cart-btn').click(function () {
                 $('#cart-dropdown').removeClass('scale-100').addClass('scale-0');
             });
-            
-            $('.add-to-cart-btn').click(function() {
+
+            $('.add-to-cart-btn').click(function () {
                 var btn = $(this);
                 var qtyTarget = btn.data('qty');
                 var itemName = btn.data('name');
                 var itemPrice = parseFloat(btn.data('price'));
                 var qtyToAdd = parseInt($('#' + qtyTarget).val()) || 1;
-                
+
                 // Add class for animation feedback
                 btn.html('<i class="fas fa-check"></i> ¡Listo!').addClass('bg-green-500 !text-white').removeClass('bg-primary bg-dark');
-                
-                setTimeout(function() {
+
+                setTimeout(function () {
                     var isDrink = btn.hasClass('bg-dark') || btn.data('qty').includes('papelon') || btn.data('qty').includes('malta') || btn.data('qty').includes('chicha');
                     if (isDrink) {
                         btn.html('Añadir').removeClass('bg-green-500').addClass('bg-dark text-white');
                     } else {
-                         btn.html('Añadir').removeClass('bg-green-500').addClass('bg-primary text-white');
+                        btn.html('Añadir').removeClass('bg-green-500').addClass('bg-primary text-white');
                     }
-                    
+
                     // Reset input
                     $('#' + qtyTarget).val(1);
                 }, 1500);
@@ -642,62 +1134,129 @@
                 if (existingItemIndex > -1) {
                     cart[existingItemIndex].qty += qtyToAdd;
                 } else {
-                    cart.push({name: itemName, price: itemPrice, qty: qtyToAdd});
+                    cart.push({ name: itemName, price: itemPrice, qty: qtyToAdd });
                 }
-                
+
                 updateCartUI();
-                
+
                 var badge = $('#cart-badge');
                 // Bounce animation on the floating cart button
                 badge.parent().addClass('animate-bounce');
-                setTimeout(function() {
+                setTimeout(function () {
                     badge.parent().removeClass('animate-bounce');
                 }, 1000);
             });
 
             // WhatsApp and Payment Logic
-            $('#btn-comprar').click(function() {
-                if(cart.length === 0) return;
-                
-                // Generar Mensaje de Orden
-                var orderMsg = "¡Hola Sabores Y&B! 🥟 Quisiera ordenar lo siguiente:\n\n";
-                var totalPrice = 0;
-                cart.forEach(function(item) {
-                    orderMsg += `• ${item.qty}x ${item.name} ($${(item.price * item.qty).toFixed(2)})\n`;
-                    totalPrice += (item.price * item.qty);
+            // WhatsApp and Payment Logic
+            $('#btn-comprar').click(function () {
+                if (cart.length === 0) return;
+
+                // Cerrar carrito
+                $('#cart-dropdown').removeClass('scale-100').addClass('scale-0');
+
+                // Mostrar Modal de Disponibilidad
+                $('#availability-modal').removeClass('hidden');
+                setTimeout(function() {
+                    $('#availability-modal').removeClass('opacity-0').find('.scale-95').removeClass('scale-95').addClass('scale-100');
+                }, 10);
+            });
+
+            $('#btn-cancel-modal').click(function () {
+                $('#availability-modal').addClass('opacity-0').find('.scale-100').removeClass('scale-100').addClass('scale-95');
+                setTimeout(function() {
+                    $('#availability-modal').addClass('hidden');
+                }, 300);
+            });
+
+            $('#btn-confirm-whatsapp').click(function () {
+                // Ocultar modal
+                $('#availability-modal').addClass('opacity-0').find('.scale-100').removeClass('scale-100').addClass('scale-95');
+                setTimeout(function() {
+                    $('#availability-modal').addClass('hidden');
+                }, 300);
+
+                // Generar Mensaje de Orden directo (Estandar UTF-8 para WhatsApp)
+                var orderMsg = "👋 ¡Hola, *Sabores Y&B*!\n\n";
+                orderMsg += "📝 *Quisiera ordenar lo siguiente:*\n";
+                orderMsg += "---------------------------------------\n";
+                var totalPriceUSD = 0;
+                cart.forEach(function (item) {
+                    let bsRowTotal = (item.price * item.qty * bcvRate).toFixed(2);
+                    orderMsg += `▸ ${item.qty}x ${item.name}\n      💵 Bs. ${bsRowTotal}  |  $${(item.price * item.qty).toFixed(2)}\n`;
+                    totalPriceUSD += (item.price * item.qty);
                 });
-                orderMsg += `\n*TOTAL: $${totalPrice.toFixed(2)}*\n\nPor favor envíame las instrucciones o confirmación. ¡Voy a proceder al pago!`;
-                
-                var waNumber = "584141234567"; // Número de WhatsApp de ejemplo 
+
+                let bsTotalOrder = (totalPriceUSD * bcvRate).toFixed(2);
+                orderMsg += "---------------------------------------\n";
+                orderMsg += `💰 *TOTAL ESTIMADO: Bs. ${bsTotalOrder}*\n`;
+                orderMsg += `💵 *(Ref: $${totalPriceUSD.toFixed(2)})*\n`;
+                orderMsg += `📊 _Tasa BCV del día: Bs. ${bcvRate.toFixed(2)}_\n\n`;
+                orderMsg += `✅ Envíame la disponibilidad para poder realizar el pago. ¡Quedo atento(a)!`;
+
+                var waNumber = "584128853518"; // Número de WhatsApp Real
                 var waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(orderMsg)}`;
-                
+
                 // Abrir en WhatsApp
                 window.open(waLink, '_blank');
-                
-                // Cerrar carrito y mostrar pagos
-                $('#cart-dropdown').removeClass('scale-100').addClass('scale-0');
+
+                // Inject values into Payment Section
+                $('#pago-total-bs').text(`Bs. ${bsTotalOrder}`);
+
+                // Store formatted data for copy button
+                var copyText = `Pago Móvil Sabores Y&B\nBanco: Venezuela (0102)\nTel: 04161071344\nCI: V-12993940\nMonto: Bs. ${bsTotalOrder}`;
+                $('#btn-copy-data').attr('data-copy', copyText);
+
+                // Mostrar pagos
                 $('#pagos').removeClass('hidden');
-                
+
                 // Scroll a pagos
                 $('html, body').animate({
                     scrollTop: $("#pagos").offset().top - 80
                 }, 800, 'swing');
             });
-            
+
+            // Logica para copiar datos de pago
+            $('#btn-copy-data').click(function () {
+                var textToCopy = $(this).attr('data-copy');
+                var $btn = $(this);
+                var $textSpan = $('#text-copy-data');
+                var $icon = $btn.find('i');
+
+                navigator.clipboard.writeText(textToCopy).then(function () {
+                    // Success visual feedback
+                    $btn.removeClass('bg-white text-red-600 hover:bg-red-600 hover:text-white border-red-200');
+                    $btn.addClass('bg-green-500 text-white border-green-500');
+                    $icon.removeClass('fa-copy').addClass('fa-check-circle');
+                    $textSpan.text('¡Datos copiados!');
+
+                    setTimeout(function () {
+                        // Revert visual change after 2.5s
+                        $btn.removeClass('bg-green-500 text-white border-green-500');
+                        $btn.addClass('bg-white text-red-600 hover:bg-red-600 hover:text-white border-red-200');
+                        $icon.removeClass('fa-check-circle').addClass('fa-copy');
+                        $textSpan.text('Copiar datos del pago');
+                    }, 2500);
+                }).catch(function (err) {
+                    console.error('Could not copy text: ', err);
+                    alert("No se pudo copiar el texto. Inténtalo manualmente.");
+                });
+            });
+
             // Subida de Capture
-            $('#capture-upload').change(function(e) {
+            $('#capture-upload').change(function (e) {
                 var fileName = e.target.files[0] ? e.target.files[0].name : '';
                 if (fileName) {
                     $('#upload-placeholder').addClass('hidden');
                     $('#upload-preview-container').removeClass('hidden').addClass('flex');
                     $('#upload-filename').text(fileName);
-                    
+
                     // Habilitar botón de completar
                     $('#btn-completar-pedido').removeClass('opacity-50 cursor-not-allowed bg-primary bg-green-500').addClass('bg-green-500').removeAttr('disabled');
                 }
             });
-            
-            $('#btn-completar-pedido').click(function() {
+
+            $('#btn-completar-pedido').click(function () {
                 var waNumber = "584141234567";
                 var compMsg = "¡Listo! Ya realicé el pago de mi pedido. Te adjunto el comprobante por acá 📸.";
                 var waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(compMsg)}`;
@@ -705,7 +1264,7 @@
             });
 
             // Smooth scrolling for anchor links
-            $('a[href^="#"]').on('click', function(e) {
+            $('a[href^="#"]').on('click', function (e) {
                 e.preventDefault();
                 var target = this.hash;
                 $('html, body').animate({
@@ -720,4 +1279,5 @@
         }
     </script>
 </body>
+
 </html>
