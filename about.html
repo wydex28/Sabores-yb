@@ -47,6 +47,17 @@
                     fontFamily: {
                         sans: ['Outfit', 'sans-serif'],
                         display: ['Lilita One', 'cursive']
+                    },
+                    keyframes: {
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '25%': { transform: 'translateX(-4px)' },
+                            '75%': { transform: 'translateX(4px)' },
+                        }
+                    },
+                    animation: {
+                        'shake': 'shake 0.3s ease-in-out infinite',
+                        'shake-slow': 'shake 2s ease-in-out infinite'
                     }
                 }
             }
@@ -99,15 +110,35 @@
         .counter-btn:active {
             transform: scale(0.9);
         }
+
+        /* Attention-grabbing shake animation */
+        @keyframes shake-btn {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+            20%, 40%, 60%, 80% { transform: translateX(2px); }
+        }
+
+        .animate-shake-attention {
+            animation: shake-btn 5s cubic-bezier(.36,.07,.19,.97) infinite;
+        }
+
+        /* Adjustments for Installed App (Standalone) Mode */
+        @media (display-mode: standalone) {
+            #navbar .nav-logo { height: 3rem !important; } /* h-12 instead of h-14 */
+            footer .footer-logo { height: 3.5rem !important; } /* h-14 instead of h-16 */
+        }
     </style>
 </head>
 
 <body class="font-sans antialiased overflow-x-hidden relative">
 
     <!-- Floating Install App Button -->
-    <button id="pwa-install-btn" class="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 bg-white p-1 rounded-full shadow-2xl transition-transform hover:scale-110 hidden items-center justify-center border-2 border-primary group">
-        <img src="assets/images/logo.png" alt="Instalar Sabores Y&B" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover group-hover:rotate-12 transition-transform duration-300">
-        <span class="absolute -top-3 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm animate-pulse">Instalar</span>
+    <button id="pwa-install-btn"
+        class="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 bg-white p-1 rounded-full shadow-2xl transition-transform hover:scale-110 hidden items-center justify-center border-2 border-primary group animate-shake-attention">
+        <img src="assets/images/logo.png" alt="Instalar Sabores Y&B"
+            class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover group-hover:rotate-12 transition-transform duration-300">
+        <span
+            class="absolute -top-3 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm animate-pulse">Instalar</span>
     </button>
 
     <!-- Navbar -->
@@ -116,7 +147,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="about.html" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
-                    <img class="h-14 w-auto drop-shadow-md" src="assets/images/logo.png" alt="Sabores Y&B Logo">
+                    <img class="h-14 w-auto drop-shadow-md nav-logo" src="assets/images/logo.png" alt="Sabores Y&B Logo">
                     <span class="font-display tracking-wide text-xl text-primary drop-shadow-sm hidden sm:block">Sabores
                         Y&B</span>
                 </a>
@@ -135,7 +166,7 @@
                 <div class="hidden md:flex space-x-8">
                     <a href="index.html" class="text-gray-800 hover:text-primary font-semibold transition">Menú</a>
                     <a href="about.html"
-                        class="text-gray-800 hover:text-primary font-semibold transition border-b-2 border-primary">Nuestra
+                        class="text-gray-800 hover:text-primary font-semibold transition border-b-2 border-primary hidden">Nuestra
                         Historia</a>
                 </div>
                 <div class="md:hidden flex items-center">
@@ -149,17 +180,20 @@
         <!-- Schedule & Location Banner -->
         <div class="bg-primary py-1.5 border-t border-white/10">
             <div
-                class="max-w-7xl mx-auto px-4 flex justify-center items-center gap-4 text-xs sm:text-sm font-bold text-white whitespace-nowrap overflow-x-auto scrollbar-hide">
-                <span id="schedule-text" class="flex items-center gap-1.5">
-                    <i class="fas fa-clock text-white/80"></i> Lunes a Sábado de 6:00 am a 12:00 pm
-                </span>
-                <span class="opacity-30">|</span>
+                class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-4 text-xs sm:text-sm font-bold text-white sm:whitespace-nowrap sm:overflow-x-auto scrollbar-hide">
+                <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
+                    <span id="schedule-text" class="flex items-center gap-1.5">
+                        <i class="fas fa-clock text-white/80"></i> Lunes a Sábado de 6:00 am a 1:00 pm
+                    </span>
+                    <span id="store-status-badge"
+                        class="px-2 py-0.5 text-[9px] sm:text-[10px] rounded-full uppercase tracking-wider font-extrabold shadow-sm transition-colors duration-300"></span>
+                </div>
+                <span class="opacity-30 hidden sm:inline">|</span>
                 <a href="https://maps.app.goo.gl/q1pFAsYWsYEuoX4i6" target="_blank"
                     class="flex items-center gap-1.5 hover:text-white/80 transition group">
                     <i class="fas fa-map-marker-alt text-red-500/80 group-hover:animate-bounce"></i>
                     <span
-                        class="underline decoration-2 underline-offset-4 decoration-red-500/30 group-hover:decoration-red-500">Ubícanos
-                        aquí</span>
+                        class="underline decoration-2 underline-offset-4 decoration-red-500/30 group-hover:decoration-red-500">Ubícanos</span>
                 </a>
             </div>
         </div>
@@ -171,7 +205,7 @@
         <button id="close-mobile-menu" class="absolute top-6 right-8 text-4xl text-gray-800"><i
                 class="fas fa-times"></i></button>
         <a href="index.html" class="text-textMain hover:text-primary transition">Menú</a>
-        <a href="about.html" class="text-textMain hover:text-primary transition">Nuestra Historia</a>
+        <a href="about.html" class="text-textMain hover:text-primary transition hidden">Nuestra Historia</a>
     </div>
 
     <!-- Hero Section -->
@@ -192,7 +226,7 @@
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                         <a href="index.html"
-                            class="px-8 py-4 bg-primary text-white font-bold rounded-full shadow-lg hover:bg-orange-500 hover:shadow-primary/50 hover:-translate-y-1 transition-all duration-300 text-center">
+                            class="px-8 py-4 bg-primary text-white font-bold rounded-full shadow-lg hover:bg-green-600 hover:shadow-primary/50 hover:-translate-y-1 transition-all duration-300 text-center">
                             Ver el Menú Completo
                         </a>
                         <a href="#historia"
@@ -278,7 +312,7 @@
     <footer class="bg-textMain py-8 text-white text-center">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <img src="assets/images/logo.png" alt="Sabores Y&B"
-                class="h-16 mx-auto mb-4 brightness-0 invert opacity-90">
+                class="h-16 mx-auto mb-4 brightness-0 invert opacity-90 footer-logo">
             <h5 class="text-2xl font-display mb-2 text-primary">Sabores Y&B</h5>
             <p class="text-gray-400 mb-6 max-w-sm mx-auto text-sm">Hechas con amor desde nuestra familia para la tuya.
             </p>
@@ -289,6 +323,13 @@
                 <a href="https://wa.me/584128853518?text=%C2%A1Hola%20Sabores%20Y%26B!%20Quiero%20hacerles%20una%20consulta."
                     target="_blank" class="hover:text-primary transition"><i class="fab fa-whatsapp mr-2"></i>+58
                     412-8853518</a>
+            </div>
+
+            <div class="flex justify-center px-4 mb-6 text-sm text-gray-300 font-light text-center">
+                <a href="https://maps.app.goo.gl/q1pFAsYWsYEuoX4i6" target="_blank"
+                    class="hover:text-primary transition max-w-lg">
+                    Los olivos nuevos - Calle Andres Bello - al frente del Colegio Nuestra Señora de las Mercedes
+                </a>
             </div>
 
             <div class="border-t border-gray-700 pt-6 text-xs text-gray-500">
@@ -321,6 +362,26 @@
                 }
             }
             fetchBcvRate();
+
+            // Horario Logic
+            function updateScheduleBadge() {
+                var now = new Date();
+                var day = now.getDay(); // 0-6: Sun-Sat
+                var hours = now.getHours();
+
+                var isSunday = (day === 0);
+                var isOpenTime = (hours >= 6 && hours < 13);
+                var isStoreOpen = !isSunday && isOpenTime;
+
+                var badge = $('#store-status-badge');
+                if (isStoreOpen) {
+                    badge.text('Abierto').removeClass('bg-red-500 border-red-400 text-white').addClass('bg-green-100 text-green-800 border-green-300');
+                } else {
+                    badge.text('Cerrado').removeClass('bg-green-100 text-green-800 border-green-300').addClass('bg-red-500 text-white border-red-400');
+                }
+            }
+            updateScheduleBadge();
+            setInterval(updateScheduleBadge, 60000);
 
             // Navbar Background on Scroll
             $(window).scroll(function () {
