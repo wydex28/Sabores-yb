@@ -180,7 +180,7 @@
         <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-3xl">
             <div class="flex items-center gap-2">
                 <h3 class="font-display text-xl text-textMain"><i class="fas fa-shopping-basket text-primary mr-2"></i>Tu Orden</h3>
-                <button id="btn-config-order" class="text-[10px] bg-gray-200 text-gray-700 px-2 py-1 rounded-md font-bold hover:bg-gray-300 transition shadow-sm"><i class="fas fa-cog mr-1"></i>Configurar</button>
+                <button id="btn-config-order" class="text-[10px] bg-gray-200 text-gray-700 px-2 py-1 rounded-md font-bold hover:bg-gray-300 transition shadow-sm"><i class="fas fa-cog mr-1"></i>Configurar Pedido</button>
             </div>
             <div class="flex items-center gap-4">
                 <button id="clear-cart-btn" class="text-xs text-red-500 font-bold hover:underline hidden"><i
@@ -293,7 +293,10 @@
         <div class="bg-white rounded-3xl p-5 sm:p-8 max-w-lg w-full shadow-2xl flex flex-col max-h-[90vh]">
             <h3 class="text-xl font-display text-textMain mb-3 flex items-center justify-between">
                 <div><i class="fas fa-map-marked-alt text-orange-500 mr-2"></i>Destino de Envío</div>
-                <div class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap border border-orange-200 shadow-sm"><i class="fas fa-info-circle mr-1"></i>Tarifa: $0.45 / km</div>
+                <div class="bg-orange-100 text-orange-600 text-[10px] sm:text-xs font-bold px-2 py-1 rounded-xl whitespace-nowrap border border-orange-200 shadow-sm flex flex-col items-end leading-none">
+                    <span><i class="fas fa-info-circle mr-1"></i>Tarifa: <span class="price-display text-orange-700" data-dolar="0.45">Bs. -</span> / km</span>
+                    <span class="text-[8px] sm:text-[9px] font-normal opacity-70 mt-1">Ref: $0.45 / km</span>
+                </div>
             </h3>
             <p class="text-xs text-gray-500 mb-3">Busca tu zona o mueve el mapa para calcular el costo del delivery.</p>
             
@@ -421,321 +424,163 @@
                 <div
                     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6">
 
-                    <!-- Item 1: Mechada -->
+                    <!-- Item: Carne Mechada -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <!-- Badge Special -->
-                            <div
-                                class="absolute top-4 xl:left-4 z-10 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                Más Vendida</div>
-                            <img src="assets/images/carne_mechada.png" alt="Empanada de Mechada"
-                                class="w-full h-full object-cover">
+                            <img src="assets/images/carne_mechada.png" alt="Carne Mechada" class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Mechada</h4>
-
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Carne Mechada</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $2.00</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
-                                        data-target="qty-mechada">-</button>
-                                    <input type="number" id="qty-mechada"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
-                                        data-target="qty-mechada">+</button>
+                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-mechada">-</button>
+                                    <input type="number" id="qty-mechada" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-mechada">+</button>
                                 </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-sm sm:text-base rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center"
-                                    data-qty="qty-mechada" data-name="Empanada de Mechada"
-                                    data-price="2.00">Añadir</button>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-mechada" data-name="Carne Mechada" data-price="1.50">Añadir</button>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Item 4: Jamón con Queso -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
-                        style="transition-delay: 50ms;">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <!-- Badge Special -->
-                            <div
-                                class="absolute top-4 xl:left-4 z-10 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                Más Vendida</div>
-                            <img src="assets/images/queso.png" alt="Empanada Jamón y Queso"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Jamón con Queso</h4>
-
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $2.00</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
-                                        data-target="qty-jamonq">-</button>
-                                    <input type="number" id="qty-jamonq"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
-                                        data-target="qty-jamonq">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-sm sm:text-base rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center"
-                                    data-qty="qty-jamonq" data-name="Empanada Jamón con Queso"
-                                    data-price="2.00">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Item 2: Pollo -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
-                        style="transition-delay: 100ms;">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/pollo.png" alt="Empanada de Pollo"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Pollo</h4>
-
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $2.00</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
-                                        data-target="qty-pollo">-</button>
-                                    <input type="number" id="qty-pollo"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
-                                        data-target="qty-pollo">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-sm sm:text-base rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center"
-                                    data-qty="qty-pollo" data-name="Empanada de Pollo" data-price="2.00">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Item 3: Molida -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
-                        style="transition-delay: 200ms;">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/carne_mechada.png" alt="Empanada Molida"
-                                class="w-full h-full object-cover grayscale-[30%]">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Molida</h4>
-
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $2.00</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
-                                        data-target="qty-molida">-</button>
-                                    <input type="number" id="qty-molida"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
-                                        data-target="qty-molida">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-sm sm:text-base rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center"
-                                    data-qty="qty-molida" data-name="Empanada Molida" data-price="2.00">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div
-                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6 mt-8">
-                    <!-- Item 5: Pabellon -->
+                    <!-- Item: Jamón con Queso -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/pabellon.png" alt="Empanada de Pabellón"
-                                class="w-full h-full object-cover">
+                            <img src="assets/images/queso.png" alt="Jamón con Queso" class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Pabellón</h4>
-
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Jamón con Queso</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $2.00</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
-                                        data-target="qty-pabellon">-</button>
-                                    <input type="number" id="qty-pabellon"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
-                                        data-target="qty-pabellon">+</button>
+                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-jamonq">-</button>
+                                    <input type="number" id="qty-jamonq" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-jamonq">+</button>
                                 </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-sm sm:text-base rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center"
-                                    data-qty="qty-pabellon" data-name="Empanada de Pabellón"
-                                    data-price="2.00">Añadir</button>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-jamonq" data-name="Jamón con Queso" data-price="1.50">Añadir</button>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Item 6: Guiso Navideño -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
-                        style="transition-delay: 100ms;">
+                    <!-- Item: Pollo -->
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/pabellon.png" alt="Empanada Guiso Navideño"
-                                class="w-full h-full object-cover grayscale-[20%] sepia-[10%]">
+                            <img src="assets/images/pollo.png" alt="Pollo" class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Guiso Navideño</h4>
-
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Pollo</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $2.00</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
-                                        data-target="qty-navideno">-</button>
-                                    <input type="number" id="qty-navideno"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
-                                        data-target="qty-navideno">+</button>
+                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-pollo">-</button>
+                                    <input type="number" id="qty-pollo" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-pollo">+</button>
                                 </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-sm sm:text-base rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center"
-                                    data-qty="qty-navideno" data-name="Empanada Guiso Navideño"
-                                    data-price="2.00">Añadir</button>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-pollo" data-name="Pollo" data-price="1.50">Añadir</button>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Item 7: Macabi -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
-                        style="transition-delay: 200ms;">
+                    <!-- Item: Carne Molida -->
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/queso.png" alt="Empanada Margariteña"
-                                class="w-full h-full object-cover">
+                            <img src="assets/images/carne_mechada.png" alt="Carne Molida" class="w-full h-full object-cover grayscale-[30%]">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Macabí (Pescado)</h4>
-
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Carne Molida</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $2.00</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
-                                        data-target="qty-macabi">-</button>
-                                    <input type="number" id="qty-macabi"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
-                                        data-target="qty-macabi">+</button>
+                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-molida">-</button>
+                                    <input type="number" id="qty-molida" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-molida">+</button>
                                 </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-sm sm:text-base rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center"
-                                    data-qty="qty-macabi" data-name="Empanada de Macabí"
-                                    data-price="2.00">Añadir</button>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-molida" data-name="Carne Molida" data-price="1.50">Añadir</button>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Item 8: Queso -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
-                        style="transition-delay: 300ms;">
+                    <!-- Item: Queso blanco (Llanero) -->
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/queso.png" alt="Empanada de Queso"
-                                class="w-full h-full object-cover">
+                            <img src="assets/images/queso.png" alt="Queso blanco (Llanero)" class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Queso Llanero</h4>
-
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Queso blanco (Llanero)</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $2.00</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn"
-                                        data-target="qty-queso">-</button>
-                                    <input type="number" id="qty-queso"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
-                                        data-target="qty-queso">+</button>
+                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-quesobl">-</button>
+                                    <input type="number" id="qty-quesobl" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-quesobl">+</button>
                                 </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-sm sm:text-base rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center"
-                                    data-qty="qty-queso" data-name="Empanada de Queso" data-price="2.00">Añadir</button>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-quesobl" data-name="Queso blanco (Llanero)" data-price="1.50">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Item: Pabellón -->
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <img src="assets/images/pabellon.png" alt="Pabellón" class="w-full h-full object-cover ">
+                        </div>
+                        <div class="p-3 sm:p-5">
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Pabellón (Mechada, Caraotas y Queso)</h4>
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
+                            </div>
+                            <div class="flex gap-2">
+                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-pabellon">-</button>
+                                    <input type="number" id="qty-pabellon" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-pabellon">+</button>
+                                </div>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-pabellon" data-name="Pabellón" data-price="1.50">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Item: Guiso Navideño -->
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <img src="assets/images/pabellon.png" alt="Guiso Navideño" class="w-full h-full object-cover sepia-[30%]">
+                        </div>
+                        <div class="p-3 sm:p-5">
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Guiso Navideño</h4>
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
+                            </div>
+                            <div class="flex gap-2">
+                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-navideno">-</button>
+                                    <input type="number" id="qty-navideno" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-navideno">+</button>
+                                </div>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-navideno" data-name="Guiso Navideño" data-price="1.50">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Item: Macabí (Pescado) -->
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <img src="assets/images/queso.png" alt="Macabí (Pescado)" class="w-full h-full object-cover grayscale-[10%]">
+                        </div>
+                        <div class="p-3 sm:p-5">
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Macabí (Pescado)</h4>
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
+                            </div>
+                            <div class="flex gap-2">
+                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-macabi">-</button>
+                                    <input type="number" id="qty-macabi" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-macabi">+</button>
+                                </div>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-macabi" data-name="Macabí (Pescado)" data-price="1.50">Añadir</button>
                             </div>
                         </div>
                     </div>
@@ -753,134 +598,132 @@
                 <div
                     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6">
 
-                    <!-- Especial 1: Especial -->
-                    <div
-                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
+                    <!-- Item: Mechada con Queso (Pelúa) -->
+                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div
-                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial
-                            </div>
-                            <img src="assets/images/carne_mechada.png" alt="Especial Mechada con Queso"
-                                class="w-full h-full object-cover">
+                            <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"><i class="fas fa-crown mr-1"></i> Especial</div>
+                            <img src="assets/images/carne_mechada.png" alt="Mechada con Queso (Pelúa)" class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Mechada y Queso Amarillo (Pelúa)</h4>
-
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Mechada con Queso (Pelúa)</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="3.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $3.50</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn"
-                                        data-target="qty-esp-mech">-</button>
-                                    <input type="number" id="qty-esp-mech"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
-                                        data-target="qty-esp-mech">+</button>
+                                <div class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn" data-target="qty-esp-pelua">-</button>
+                                    <input type="number" id="qty-esp-pelua" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-esp-pelua">+</button>
                                 </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-sm sm:text-base rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-esp-mech" data-name="Mechada y Queso (Pelúa)"
-                                    data-price="3.50">Añadir</button>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-pelua" data-name="Mechada con Queso (Pelúa)" data-price="1.80">Añadir</button>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Especial 2: Pollo con Queso -->
-                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal"
-                        style="transition-delay: 100ms;">
+                    <!-- Item: Molida con Queso -->
+                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div
-                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial
-                            </div>
-                            <img src="assets/images/pollo.png" alt="Pollo con Queso" class="w-full h-full object-cover">
+                            <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"><i class="fas fa-crown mr-1"></i> Especial</div>
+                            <img src="assets/images/carne_mechada.png" alt="Molida con Queso" class="w-full h-full object-cover grayscale-[20%]">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Pollo con Queso (Catira)</h4>
-
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Molida con Queso</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="3.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $3.50</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn"
-                                        data-target="qty-esp-pollo">-</button>
-                                    <input type="number" id="qty-esp-pollo"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
-                                        data-target="qty-esp-pollo">+</button>
+                                <div class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn" data-target="qty-esp-molidaq">-</button>
+                                    <input type="number" id="qty-esp-molidaq" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-esp-molidaq">+</button>
                                 </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-sm sm:text-base rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-esp-pollo" data-name="Pollo con Queso"
-                                    data-price="3.50">Añadir</button>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-molidaq" data-name="Molida con Queso" data-price="1.80">Añadir</button>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Especial 3: Molida con Queso Amarillo -->
-                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal"
-                        style="transition-delay: 200ms;">
+                    <!-- Item: Pollo con Queso (Catira) -->
+                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div
-                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial
-                            </div>
-                            <img src="assets/images/carne_mechada.png" alt="Molida con Queso Amarillo"
-                                class="w-full h-full object-cover grayscale-[30%]">
+                            <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"><i class="fas fa-crown mr-1"></i> Especial</div>
+                            <img src="assets/images/pollo.png" alt="Pollo con Queso (Catira)" class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Molida con Queso Amarillo</h4>
-
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Pollo con Queso (Catira)</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="3.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $3.50</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn"
-                                        data-target="qty-esp-molida">-</button>
-                                    <input type="number" id="qty-esp-molida"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn"
-                                        data-target="qty-esp-molida">+</button>
+                                <div class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn" data-target="qty-esp-catira">-</button>
+                                    <input type="number" id="qty-esp-catira" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-esp-catira">+</button>
                                 </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-sm sm:text-base rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-esp-molida" data-name="Molida con Queso Amarillo"
-                                    data-price="3.50">Añadir</button>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-catira" data-name="Pollo con Queso (Catira)" data-price="1.80">Añadir</button>
                             </div>
                         </div>
                     </div>
-
+                    <!-- Item: Caraota con Queso (Dominó) -->
+                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"><i class="fas fa-crown mr-1"></i> Especial</div>
+                            <img src="assets/images/pabellon.png" alt="Caraota con Queso (Dominó)" class="w-full h-full object-cover grayscale-[40%]">
+                        </div>
+                        <div class="p-3 sm:p-5">
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Caraota con Queso (Dominó)</h4>
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
+                            </div>
+                            <div class="flex gap-2">
+                                <div class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn" data-target="qty-esp-domino">-</button>
+                                    <input type="number" id="qty-esp-domino" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-esp-domino">+</button>
+                                </div>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-domino" data-name="Caraota con Queso (Dominó)" data-price="1.80">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Item: Gordon Blue de Mechada -->
+                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"><i class="fas fa-crown mr-1"></i> Especial</div>
+                            <img src="assets/images/carne_mechada.png" alt="Gordon Blue de Mechada" class="w-full h-full object-cover contrast-125">
+                        </div>
+                        <div class="p-3 sm:p-5">
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Gordon Blue de Mechada</h4>
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
+                            </div>
+                            <div class="flex gap-2">
+                                <div class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn" data-target="qty-esp-cbm">-</button>
+                                    <input type="number" id="qty-esp-cbm" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-esp-cbm">+</button>
+                                </div>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-cbm" data-name="Gordon Blue de Mechada" data-price="1.80">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Item: Gordon Blue de Pollo -->
+                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
+                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
+                            <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"><i class="fas fa-crown mr-1"></i> Especial</div>
+                            <img src="assets/images/pollo.png" alt="Gordon Blue de Pollo" class="w-full h-full object-cover contrast-125">
+                        </div>
+                        <div class="p-3 sm:p-5">
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Gordon Blue de Pollo</h4>
+                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
+                            </div>
+                            <div class="flex gap-2">
+                                <div class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
+                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn" data-target="qty-esp-cbp">-</button>
+                                    <input type="number" id="qty-esp-cbp" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-esp-cbp">+</button>
+                                </div>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-cbp" data-name="Gordon Blue de Pollo" data-price="1.80">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -918,6 +761,23 @@
                 </div>
             </div>
 
+            <!-- Conveniencia Category -->
+            <div class="mt-16">
+                <div class="flex items-center gap-4 mb-10 reveal">
+                    <i class="fas fa-shopping-basket text-3xl text-indigo-500"></i>
+                    <h3 class="text-3xl font-display text-textMain">Artículos de Conveniencia</h3>
+                    <div class="h-px bg-gray-200 flex-grow"></div>
+                </div>
+
+                <div class="bg-indigo-50 border-2 border-dashed border-indigo-200 rounded-3xl p-8 sm:p-12 text-center reveal">
+                    <div class="w-16 h-16 bg-indigo-100 text-indigo-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 hover:scale-110 transition-transform">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <h4 class="text-xl sm:text-2xl font-bold text-indigo-600 mb-2">Próximamente</h4>
+                    <p class="text-sm text-indigo-500/80">Pronto encontrarás productos básicos para tu día a día y hogar.</p>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -930,8 +790,13 @@
                     <i class="fas fa-money-bill-wave"></i>
                 </div>
                 <h2 class="text-3xl font-display text-textMain mb-4">¡Casi listo! Realiza tu Pago</h2>
-                <p class="text-gray-500 mb-8">Por favor realiza el pago por el monto total de tu orden y sube el
-                    comprobante (capture) para completar tu pedido.</p>
+                <p class="text-gray-600 mb-6 font-medium">Por favor realiza el pago y repórtalo en WhatsApp antes de que el tiempo termine.<br><span class="text-sm font-normal text-gray-500">De lo contrario, tu sesión se reiniciará por seguridad para evitar errores con los montos a transferir.</span></p>
+                
+                <!-- Countdown Timer -->
+                <div class="bg-orange-50 border border-orange-200 rounded-2xl p-4 mb-8 mx-auto max-w-sm flex flex-col items-center justify-center shadow-sm">
+                    <p class="text-orange-800 text-sm font-bold mb-1"><i class="fas fa-stopwatch mr-1 animate-pulse"></i> Tienes 20 minutos para pagar</p>
+                    <div id="payment-timer" class="text-4xl font-display text-orange-600 font-bold tracking-wider">20:00</div>
+                </div>
 
                 <div class="mb-8 max-w-md mx-auto">
                     <div
@@ -949,23 +814,34 @@
                         </div>
 
                         <div
-                            class="space-y-3 relative z-10 bg-white/70 p-4 rounded-2xl border border-red-100 mb-6 shadow-inner">
+                            class="space-y-3 relative z-10 bg-white/70 p-4 rounded-2xl border border-red-100 mb-6 shadow-inner overflow-hidden">
                             <div class="flex justify-between items-center border-b border-red-50 pb-2">
                                 <span class="text-gray-500 text-sm">Banco</span>
-                                <strong class="text-red-900 font-display text-lg">Venezuela (0102)</strong>
+                                <div class="flex items-center gap-1 sm:gap-2">
+                                    <strong class="text-red-900 font-display text-base sm:text-lg">0102 (Venezuela)</strong>
+                                    <button class="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single" data-copy="0102" title="Copiar Banco"><i class="far fa-copy"></i></button>
+                                </div>
                             </div>
                             <div class="flex justify-between items-center border-b border-red-50 pb-2">
                                 <span class="text-gray-500 text-sm">Teléfono</span>
-                                <strong class="text-red-900 font-display text-lg">04161071344</strong>
+                                <div class="flex items-center gap-1 sm:gap-2">
+                                    <strong class="text-red-900 font-display text-base sm:text-lg">04161071344</strong>
+                                    <button class="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single" data-copy="04161071344" title="Copiar Teléfono"><i class="far fa-copy"></i></button>
+                                </div>
                             </div>
                             <div class="flex justify-between items-center border-b border-red-50 pb-2">
                                 <span class="text-gray-500 text-sm">Cédula</span>
-                                <strong class="text-red-900 font-display text-lg">V-12993940</strong>
+                                <div class="flex items-center gap-1 sm:gap-2">
+                                    <strong class="text-red-900 font-display text-base sm:text-lg">V12993940</strong>
+                                    <button class="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single" data-copy="V12993940" title="Copiar Cédula"><i class="far fa-copy"></i></button>
+                                </div>
                             </div>
                             <div class="flex justify-between items-center pt-2 mt-2">
-                                <span class="text-red-800 text-sm font-bold">Monto a Transferir</span>
-                                <strong class="text-red-600 font-display text-2xl drop-shadow-sm" id="pago-total-bs">Bs.
-                                    0.00</strong>
+                                <span class="text-red-800 text-sm font-bold">Monto Exacto</span>
+                                <div class="flex items-center gap-1 sm:gap-2">
+                                    <strong class="text-red-600 font-display text-xl sm:text-2xl drop-shadow-sm" id="pago-total-bs">Bs. 0.00</strong>
+                                    <button class="text-red-400 hover:text-red-700 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single text-lg" id="btn-copy-monto" data-copy="0.00" title="Copiar Monto exacto"><i class="far fa-copy"></i></button>
+                                </div>
                             </div>
                         </div>
 
@@ -977,29 +853,10 @@
                     </div>
                 </div>
 
-                <div
-                    class="border-2 border-dashed border-gray-300 rounded-2xl p-8 mb-8 relative hover:bg-gray-50 transition cursor-pointer">
-                    <input type="file" id="capture-upload"
-                        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*">
-                    <div class="text-gray-500" id="upload-placeholder">
-                        <i class="fas fa-cloud-upload-alt text-4xl mb-3 text-primary"></i>
-                        <p class="font-bold">Toca aquí para subir tu capture</p>
-                        <p class="text-xs mt-1">Formatos: JPG, PNG</p>
-                    </div>
-                    <div class="hidden flex-col items-center" id="upload-preview-container">
-                        <p class="text-green-500 font-bold mb-2"><i class="fas fa-check-circle mr-1"></i> Capture subido
-                            exitosamente</p>
-                        <p class="text-sm text-gray-500" id="upload-filename"></p>
-                    </div>
-                </div>
-
                 <button id="btn-completar-pedido"
-                    class="w-full bg-primary text-white font-bold py-4 rounded-full hover:bg-green-600 transition shadow-lg shadow-primary/30 text-lg flex items-center justify-center opacity-50 cursor-not-allowed"
-                    disabled>
-                    <i class="fab fa-whatsapp text-2xl mr-2"></i> Enviar Comprobante al WhatsApp
+                    class="w-full bg-green-500 text-white font-bold py-4 rounded-full hover:bg-green-600 transition shadow-lg shadow-green-500/30 text-lg flex items-center justify-center mt-6">
+                    <i class="fab fa-whatsapp text-2xl mr-2"></i> Reportar Pago en WhatsApp
                 </button>
-                <p class="text-xs text-gray-400 mt-4">* Serás redirigido a WhatsApp donde debes enviar la imagen
-                    manualmente si la ventana no la adjunta.</p>
             </div>
         </div>
     </section>
@@ -1065,18 +922,18 @@
             const gainNode = audioCtx.createGain();
 
             oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.05);
+            oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(900, audioCtx.currentTime + 0.04);
 
             gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.01);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            gainNode.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
 
             oscillator.connect(gainNode);
             gainNode.connect(audioCtx.destination);
 
             oscillator.start(audioCtx.currentTime);
-            oscillator.stop(audioCtx.currentTime + 0.1);
+            oscillator.stop(audioCtx.currentTime + 0.08);
         }
 
         // Audio Helper for "Delete" sound
@@ -1090,19 +947,19 @@
             const oscillator = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
 
-            oscillator.type = 'sawtooth';
-            oscillator.frequency.setValueAtTime(250, audioCtx.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.15);
+            oscillator.type = 'triangle';
+            oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.08);
 
             gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 0.02);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+            gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
 
             oscillator.connect(gainNode);
             gainNode.connect(audioCtx.destination);
 
             oscillator.start(audioCtx.currentTime);
-            oscillator.stop(audioCtx.currentTime + 0.15);
+            oscillator.stop(audioCtx.currentTime + 0.1);
         }
 
         $(document).ready(function () {
@@ -1135,14 +992,16 @@
                 orderConfig.lat = lat;
                 orderConfig.lng = lng;
 
+                let bsCost = cost * bcvRate;
                 $('#delivery-distance').text(dist.toFixed(2));
-                $('#delivery-cost').text('$' + cost.toFixed(2));
+                $('#delivery-cost').html(`Bs. ${bsCost.toFixed(2)}<br><span class="text-xs text-gray-500 font-sans tracking-normal opacity-80">Ref: $${cost.toFixed(2)}</span>`);
 
                 var currentTotalStr = '';
                 if(cart.length > 0) {
                    var baseTotal = cart.reduce((acc, current) => acc + (current.price * current.qty), 0);
                    var finalTotal = baseTotal + cost;
-                   currentTotalStr = `($${finalTotal.toFixed(2)})`;
+                   let bsFinalTotal = finalTotal * bcvRate;
+                   currentTotalStr = `- Total Orden: Bs. ${bsFinalTotal.toFixed(2)}`;
                 }
                 $('#delivery-total-btn').text(currentTotalStr);
             }
@@ -1366,6 +1225,7 @@
                 // Actualizar sección de pago dinámicamente si está visible
                 if (!$('#pagos').hasClass('hidden')) {
                     $('#pago-total-bs').text(`Bs. ${bsTotal}`);
+                    $('#btn-copy-monto').attr('data-copy', bsTotal);
                     var copyText = `Pago Móvil Sabores Y&B\nBanco: Venezuela (0102)\nTel: 04161071344\nCI: V-12993940\nMonto: Bs. ${bsTotal}`;
                     $('#btn-copy-data').attr('data-copy', copyText);
                 }
@@ -1741,6 +1601,7 @@
                 // Store formatted data for copy button
                 var copyText = `Pago Móvil Sabores Y&B\nBanco: Venezuela (0102)\nTel: 04161071344\nCI: V-12993940\nMonto: Bs. ${bsTotalOrder}`;
                 $('#btn-copy-data').attr('data-copy', copyText);
+                $('#btn-copy-monto').attr('data-copy', bsTotalOrder);
 
                 // Copiar los datos del pago móvil directamente al portapapeles del cliente
                 if (navigator.clipboard) {
@@ -1760,6 +1621,25 @@
                 $('html, body').animate({
                     scrollTop: $("#pagos").offset().top - 80
                 }, 800, 'swing');
+                
+                // Expiración de sesión y Cronómetro (20 minutos)
+                var timeLeft = 20 * 60; // 1200 seconds
+                $('#payment-timer').text("20:00");
+                
+                if(window.paymentInterval) clearInterval(window.paymentInterval);
+                
+                window.paymentInterval = setInterval(function() {
+                    timeLeft--;
+                    var m = Math.floor(timeLeft / 60);
+                    var s = timeLeft % 60;
+                    $('#payment-timer').text((m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s);
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(window.paymentInterval);
+                        alert("⏱️ Tu sesión de pago ha expirado. La página se recargará por seguridad para evitar errores con los precios y montos a transferir.");
+                        window.location.reload();
+                    }
+                }, 1000);
             });
 
             // Logica para copiar datos de pago
@@ -1788,22 +1668,23 @@
                 });
             });
 
-            // Subida de Capture
-            $('#capture-upload').change(function (e) {
-                var fileName = e.target.files[0] ? e.target.files[0].name : '';
-                if (fileName) {
-                    $('#upload-placeholder').addClass('hidden');
-                    $('#upload-preview-container').removeClass('hidden').addClass('flex');
-                    $('#upload-filename').text(fileName);
-
-                    // Habilitar botón de completar
-                    $('#btn-completar-pedido').removeClass('opacity-50 cursor-not-allowed bg-primary bg-green-500').addClass('bg-green-500').removeAttr('disabled');
+            // Logica para los botones pequeños individuales
+            $('.copy-btn-single').click(function () {
+                var textToCopy = $(this).attr('data-copy');
+                var $icon = $(this).find('i');
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(textToCopy).then(function () {
+                        $icon.removeClass('far fa-copy').addClass('fas fa-check text-green-500 scale-125');
+                        setTimeout(function () {
+                            $icon.removeClass('fas fa-check text-green-500 scale-125').addClass('far fa-copy');
+                        }, 1300);
+                    }).catch(function(err){});
                 }
             });
 
             $('#btn-completar-pedido').click(function () {
-                var waNumber = "584141234567";
-                var compMsg = "¡Listo! Ya realicé el pago de mi pedido. Te adjunto el comprobante por acá 📸.";
+                var waNumber = "584128853518"; // Oficial
+                var compMsg = "¡Listo! Ya realicé el pago de mi pedido. Te mando la imagen del comprobante por acá 📸.";
                 var waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(compMsg)}`;
                 window.open(waLink, '_blank');
             });
