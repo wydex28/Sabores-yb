@@ -113,19 +113,42 @@
 
         /* Attention-grabbing shake animation */
         @keyframes shake-btn {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
-            20%, 40%, 60%, 80% { transform: translateX(2px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-2px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(2px);
+            }
         }
 
         .animate-shake-attention {
-            animation: shake-btn 5s cubic-bezier(.36,.07,.19,.97) infinite;
+            animation: shake-btn 5s cubic-bezier(.36, .07, .19, .97) infinite;
         }
 
         /* Adjustments for Installed App (Standalone) Mode */
         @media (display-mode: standalone) {
-            #navbar .nav-logo { height: 3rem !important; } /* h-12 instead of h-14 */
-            footer .footer-logo { height: 3.5rem !important; } /* h-14 instead of h-16 */
+            #navbar .nav-logo {
+                height: 3rem !important;
+            }
+
+            /* h-12 instead of h-14 */
+            footer {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -135,7 +158,7 @@
     <!-- Floating Install App Button -->
     <button id="pwa-install-btn"
         class="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 bg-white p-1 rounded-full shadow-2xl transition-transform hover:scale-110 hidden items-center justify-center border-2 border-primary group animate-shake-attention">
-        <img src="assets/images/logo.png" alt="Instalar Sabores Y&B"
+        <img src="assets/images/logo-maskable.png" alt="Instalar Sabores Y&B"
             class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover group-hover:rotate-12 transition-transform duration-300">
         <span
             class="absolute -top-3 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm animate-pulse">Instalar</span>
@@ -147,7 +170,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="about.html" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
-                    <img class="h-14 w-auto drop-shadow-md nav-logo" src="assets/images/logo.png" alt="Sabores Y&B Logo">
+                    <img class="h-14 w-auto drop-shadow-md nav-logo" src="assets/images/logo.png"
+                        alt="Sabores Y&B Logo">
                     <span class="font-display tracking-wide text-xl text-primary drop-shadow-sm hidden sm:block">Sabores
                         Y&B</span>
                 </a>
@@ -181,7 +205,7 @@
         <div class="bg-primary py-1.5 border-t border-white/10">
             <div
                 class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-4 text-xs sm:text-sm font-bold text-white sm:whitespace-nowrap sm:overflow-x-auto scrollbar-hide">
-                <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
+                <div class="flex flex-row items-center gap-2">
                     <span id="schedule-text" class="flex items-center gap-1.5">
                         <i class="fas fa-clock text-white/80"></i> Lunes a Sábado de 6:00 am a 1:00 pm
                     </span>
@@ -193,7 +217,7 @@
                     class="flex items-center gap-1.5 hover:text-white/80 transition group">
                     <i class="fas fa-map-marker-alt text-red-500/80 group-hover:animate-bounce"></i>
                     <span
-                        class="underline decoration-2 underline-offset-4 decoration-red-500/30 group-hover:decoration-red-500">Ubícanos</span>
+                        class="underline decoration-2 underline-offset-4 decoration-red-500/30 group-hover:decoration-red-500">Ubícanos en Maracay</span>
                 </a>
             </div>
         </div>

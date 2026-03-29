@@ -113,19 +113,42 @@
 
         /* Attention-grabbing shake animation */
         @keyframes shake-btn {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
-            20%, 40%, 60%, 80% { transform: translateX(2px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-2px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(2px);
+            }
         }
 
         .animate-shake-attention {
-            animation: shake-btn 5s cubic-bezier(.36,.07,.19,.97) infinite;
+            animation: shake-btn 5s cubic-bezier(.36, .07, .19, .97) infinite;
         }
 
         /* Adjustments for Installed App (Standalone) Mode */
         @media (display-mode: standalone) {
-            #navbar .nav-logo { height: 3rem !important; } /* h-12 instead of h-14 */
-            footer .footer-logo { height: 3.5rem !important; } /* h-14 instead of h-16 */
+            #navbar .nav-logo {
+                height: 3rem !important;
+            }
+
+            /* h-12 instead of h-14 */
+            footer {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -135,7 +158,7 @@
     <!-- Floating Install App Button -->
     <button id="pwa-install-btn"
         class="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 bg-white p-1 rounded-full shadow-2xl transition-transform hover:scale-110 hidden items-center justify-center border-2 border-primary group animate-shake-attention">
-        <img src="assets/images/logo.png" alt="Instalar Sabores Y&B"
+        <img src="assets/images/logo-maskable.png" alt="Instalar Sabores Y&B"
             class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover group-hover:rotate-12 transition-transform duration-300">
         <span
             class="absolute -top-3 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm animate-pulse">Instalar</span>
@@ -226,7 +249,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="about.html" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
-                    <img class="h-14 w-auto drop-shadow-md nav-logo" src="assets/images/logo.png" alt="Sabores Y&B Logo">
+                    <img class="h-14 w-auto drop-shadow-md nav-logo" src="assets/images/logo.png"
+                        alt="Sabores Y&B Logo">
                     <span class="font-display tracking-wide text-xl text-primary drop-shadow-sm hidden sm:block">Sabores
                         Y&B</span>
                 </a>
@@ -245,7 +269,8 @@
                 <div class="hidden md:flex space-x-8">
                     <a href="#menu"
                         class="text-gray-800 hover:text-primary font-semibold transition border-b-2 border-primary">Menú</a>
-                    <a href="about.html" class="text-gray-800 hover:text-primary font-semibold transition hidden">Nuestra
+                    <a href="about.html"
+                        class="text-gray-800 hover:text-primary font-semibold transition hidden">Nuestra
                         Historia</a>
                 </div>
                 <div class="md:hidden flex items-center">
@@ -260,7 +285,7 @@
         <div class="bg-primary py-1.5 border-t border-white/10">
             <div
                 class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-4 text-xs sm:text-sm font-bold text-white sm:whitespace-nowrap sm:overflow-x-auto scrollbar-hide">
-                <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
+                <div class="flex flex-row items-center gap-2">
                     <span id="schedule-text" class="flex items-center gap-1.5">
                         <i class="fas fa-clock text-white/80"></i> Lunes a Sábado de 6:00 am a 1:00 pm
                     </span>
@@ -272,7 +297,7 @@
                     class="flex items-center gap-1.5 hover:text-white/80 transition group">
                     <i class="fas fa-map-marker-alt text-red-500/80 group-hover:animate-bounce"></i>
                     <span
-                        class="underline decoration-2 underline-offset-4 decoration-red-500/30 group-hover:decoration-red-500">Ubícanos</span>
+                        class="underline decoration-2 underline-offset-4 decoration-red-500/30 group-hover:decoration-red-500">Ubícanos en Maracay</span>
                 </a>
             </div>
         </div>
@@ -1031,9 +1056,64 @@
     </footer>
 
     <!-- Scripts -->
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
+        // Audio Helper for "Pop" sound
+        let audioCtx;
+        function playPopSound() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.05);
+
+            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            oscillator.start(audioCtx.currentTime);
+            oscillator.stop(audioCtx.currentTime + 0.1);
+        }
+
+        // Audio Helper for "Delete" sound
+        function playDeleteSound() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(250, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.15);
+
+            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 0.02);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            oscillator.start(audioCtx.currentTime);
+            oscillator.stop(audioCtx.currentTime + 0.15);
+        }
+
         $(document).ready(function () {
             // Tasa BCV Logic
             let bcvRate = 1.0;
@@ -1214,17 +1294,57 @@
             }
 
             // Bind delete item dynamically
-            $(document).on('click', '.delete-item', function () {
-                var index = $(this).data('index');
-                cart.splice(index, 1);
-                updateCartUI();
+            $(document).on('click', '.delete-item', function (e) {
+                var btn = $(this);
+                var index = btn.data('index');
+                var row = btn.closest('.cart-item-row');
+                
+                playDeleteSound();
+                
+                // Animación de confeti rojo
+                var rect = btn[0].getBoundingClientRect();
+                var x = (rect.left + (rect.width / 2)) / window.innerWidth;
+                var y = (rect.top + (rect.height / 2)) / window.innerHeight;
+                confetti({
+                    particleCount: 20,
+                    spread: 50,
+                    origin: { x: x, y: y },
+                    colors: ['#E71D36', '#fb7185', '#ef4444'],
+                    zIndex: 100
+                });
+
+                // Animación de salida (fade out y desplazar)
+                row.css({
+                    'transition': 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    'opacity': '0',
+                    'transform': 'translateX(30px) scale(0.95)'
+                });
+
+                setTimeout(function () {
+                    cart.splice(index, 1);
+                    updateCartUI();
+                }, 300);
             });
 
             // Bind clear cart
-            $('#clear-cart-btn').click(function () {
-                cart = [];
-                updateCartUI();
-                $('#cart-dropdown').removeClass('scale-100').addClass('scale-0');
+            $('#clear-cart-btn').click(function (e) {
+                playDeleteSound();
+                var rect = $(this)[0].getBoundingClientRect();
+                var x = (rect.left + (rect.width / 2)) / window.innerWidth;
+                var y = (rect.top + (rect.height / 2)) / window.innerHeight;
+                confetti({
+                    particleCount: 40,
+                    spread: 80,
+                    origin: { x: x, y: y },
+                    colors: ['#E71D36', '#fb7185', '#ef4444'],
+                    zIndex: 100
+                });
+
+                setTimeout(function () {
+                    cart = [];
+                    updateCartUI();
+                    $('#cart-dropdown').removeClass('scale-100').addClass('scale-0');
+                }, 200);
             });
 
             $('#cart-toggle-btn').click(function () {
@@ -1237,12 +1357,29 @@
                 $('#cart-dropdown').removeClass('scale-100').addClass('scale-0');
             });
 
-            $('.add-to-cart-btn').click(function () {
+            $('.add-to-cart-btn').click(function (e) {
                 var btn = $(this);
                 var qtyTarget = btn.data('qty');
                 var itemName = btn.data('name');
                 var itemPrice = parseFloat(btn.data('price'));
                 var qtyToAdd = parseInt($('#' + qtyTarget).val()) || 1;
+
+                // Play Audio
+                playPopSound();
+
+                // Show Confetti slightly above the clicked button
+                var rect = btn[0].getBoundingClientRect();
+                var x = (rect.left + (rect.width / 2)) / window.innerWidth;
+                var y = (rect.top + (rect.height / 2)) / window.innerHeight;
+
+                confetti({
+                    particleCount: 40,
+                    spread: 60,
+                    origin: { x: x, y: y },
+                    colors: ['#00A859', '#FFBF69', '#E71D36'],
+                    disableForReducedMotion: true,
+                    zIndex: 100
+                });
 
                 // Add class for animation feedback
                 btn.html('¡Listo!').addClass('bg-primary !text-white').removeClass('bg-primary bg-dark');
