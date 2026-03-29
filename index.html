@@ -176,7 +176,7 @@
 
     <!-- Cart Dropup -->
     <div id="cart-dropdown"
-        class="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-80 lg:w-96 bg-white rounded-3xl shadow-2xl border border-gray-100 z-50 transform scale-0 origin-bottom-right transition-transform duration-300 flex flex-col max-h-[70vh]">
+        class="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-80 lg:w-96 bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-2 border-orange-100 z-50 transform scale-0 origin-bottom-right transition-transform duration-300 flex flex-col max-h-[70vh] ring-8 ring-black/5">
         <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-3xl">
             <div class="flex items-center gap-2">
                 <h3 class="font-display text-xl text-textMain"><i class="fas fa-shopping-basket text-primary mr-2"></i>Tu Orden</h3>
@@ -195,7 +195,7 @@
         <div class="p-5 border-t border-gray-100 bg-gray-50 rounded-b-3xl">
             <div class="flex justify-between items-start mb-4">
                 <span class="font-bold text-gray-600 mt-1">Total:</span>
-                <span id="cart-total" class="font-display text-2xl text-accent text-right leading-none">Bs.
+                <span id="cart-total" class="font-display text-2xl text-primary text-right leading-none">Bs.
                     0.00<br><span class="text-xs text-gray-400 mt-1 block">Ref: $0.00</span></span>
             </div>
             <button id="btn-comprar"
@@ -293,9 +293,9 @@
         <div class="bg-white rounded-3xl p-5 sm:p-8 max-w-lg w-full shadow-2xl flex flex-col max-h-[90vh]">
             <h3 class="text-xl font-display text-textMain mb-3 flex items-center justify-between">
                 <div><i class="fas fa-map-marked-alt text-orange-500 mr-2"></i>Destino de Envío</div>
-                <div class="bg-orange-100 text-orange-600 text-[10px] sm:text-xs font-bold px-2 py-1 rounded-xl whitespace-nowrap border border-orange-200 shadow-sm flex flex-col items-end leading-none">
-                    <span><i class="fas fa-info-circle mr-1"></i>Tarifa: <span class="price-display text-orange-700" data-dolar="0.45">Bs. -</span> / km</span>
-                    <span class="text-[8px] sm:text-[9px] font-normal opacity-70 mt-1">Ref: $0.45 / km</span>
+                <div class="bg-orange-100 text-orange-600 text-[10px] sm:text-xs font-sans font-semibold px-2 py-1 rounded-xl whitespace-nowrap border border-orange-200 shadow-sm flex flex-col items-end leading-none">
+                    <span class="font-sans font-semibold italic-none uppercase tracking-tight"><i class="fas fa-info-circle mr-1"></i>Tarifa: <span class="price-display text-orange-700 font-bold" data-dolar="0.43">Bs. -</span> / km</span>
+                    <span class="text-[8px] sm:text-[9px] font-normal opacity-70 mt-1">Ref: $0.43 / km</span>
                 </div>
             </h3>
             <p class="text-xs text-gray-500 mb-3">Busca tu zona o mueve el mapa para calcular el costo del delivery.</p>
@@ -305,7 +305,7 @@
                 <button id="btn-search-location" class="bg-orange-500 text-white px-4 rounded-lg hover:bg-orange-600 transition"><i class="fas fa-search"></i></button>
             </div>
             
-            <button id="btn-gps-location" class="w-full text-xs text-blue-600 font-bold flex items-center justify-center gap-1 hover:underline mb-3 py-1">
+            <button id="btn-gps-location" class="w-full text-xs text-blue-600 font-semibold flex items-center justify-center gap-1 hover:underline mb-3 py-1">
                 <i class="fas fa-crosshairs"></i> Usar mi ubicación actual
             </button>
             
@@ -317,7 +317,20 @@
                     <p class="text-xs text-gray-600 mt-0.5"><i class="fas fa-route text-gray-400 mr-1"></i>Distancia: <span id="delivery-distance" class="font-bold text-gray-800">0.00</span> km</p>
                 </div>
                 <div class="text-right">
-                    <p id="delivery-cost" class="font-display text-xl text-orange-600">$0.00</p>
+                    <p id="delivery-cost" class="font-sans font-semibold text-lg sm:text-xl text-orange-600">$0.00</p>
+                </div>
+            </div>
+
+            <!-- Warning minimum price -->
+            <div id="delivery-warning-box" class="bg-red-50 border-2 border-red-200 rounded-xl p-3 mb-4 hidden shadow-sm translate-y-1 transition-all duration-300">
+                <div class="flex items-center gap-3">
+                    <div class="bg-red-100 text-red-600 w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-red-800 font-bold leading-tight">Ubicación muy cercana</p>
+                        <p class="text-[11px] text-red-600 mt-1 leading-tight">El costo de envío es menor a $0.20. Asegúrate de que la ubicación sea correcta o confirma que deseas continuar con este monto.</p>
+                    </div>
                 </div>
             </div>
             
@@ -435,10 +448,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-mechada">-</button>
-                                    <input type="number" id="qty-mechada" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-mechada">+</button>
+                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-mechada">-</button>
+                                    <input type="number" id="qty-mechada" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-mechada">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-mechada" data-name="Carne Mechada" data-price="1.50">Añadir</button>
                             </div>
@@ -455,10 +468,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-jamonq">-</button>
-                                    <input type="number" id="qty-jamonq" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-jamonq">+</button>
+                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-jamonq">-</button>
+                                    <input type="number" id="qty-jamonq" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-jamonq">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-jamonq" data-name="Jamón con Queso" data-price="1.50">Añadir</button>
                             </div>
@@ -475,10 +488,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-pollo">-</button>
-                                    <input type="number" id="qty-pollo" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-pollo">+</button>
+                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-pollo">-</button>
+                                    <input type="number" id="qty-pollo" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-pollo">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-pollo" data-name="Pollo" data-price="1.50">Añadir</button>
                             </div>
@@ -495,10 +508,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-molida">-</button>
-                                    <input type="number" id="qty-molida" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-molida">+</button>
+                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-molida">-</button>
+                                    <input type="number" id="qty-molida" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-molida">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-molida" data-name="Carne Molida" data-price="1.50">Añadir</button>
                             </div>
@@ -515,10 +528,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-quesobl">-</button>
-                                    <input type="number" id="qty-quesobl" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-quesobl">+</button>
+                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-quesobl">-</button>
+                                    <input type="number" id="qty-quesobl" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-quesobl">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-quesobl" data-name="Queso blanco (Llanero)" data-price="1.50">Añadir</button>
                             </div>
@@ -535,10 +548,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-pabellon">-</button>
-                                    <input type="number" id="qty-pabellon" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-pabellon">+</button>
+                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-pabellon">-</button>
+                                    <input type="number" id="qty-pabellon" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-pabellon">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-pabellon" data-name="Pabellón" data-price="1.50">Añadir</button>
                             </div>
@@ -555,10 +568,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-navideno">-</button>
-                                    <input type="number" id="qty-navideno" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-navideno">+</button>
+                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-navideno">-</button>
+                                    <input type="number" id="qty-navideno" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-navideno">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-navideno" data-name="Guiso Navideño" data-price="1.50">Añadir</button>
                             </div>
@@ -575,10 +588,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition counter-btn" data-target="qty-macabi">-</button>
-                                    <input type="number" id="qty-macabi" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-macabi">+</button>
+                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-macabi">-</button>
+                                    <input type="number" id="qty-macabi" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-macabi">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-macabi" data-name="Macabí (Pescado)" data-price="1.50">Añadir</button>
                             </div>
@@ -610,10 +623,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn" data-target="qty-esp-pelua">-</button>
-                                    <input type="number" id="qty-esp-pelua" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-esp-pelua">+</button>
+                                <div class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn" data-target="qty-esp-pelua">-</button>
+                                    <input type="number" id="qty-esp-pelua" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn" data-target="qty-esp-pelua">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-pelua" data-name="Mechada con Queso (Pelúa)" data-price="1.80">Añadir</button>
                             </div>
@@ -631,10 +644,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn" data-target="qty-esp-molidaq">-</button>
-                                    <input type="number" id="qty-esp-molidaq" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-esp-molidaq">+</button>
+                                <div class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn" data-target="qty-esp-molidaq">-</button>
+                                    <input type="number" id="qty-esp-molidaq" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn" data-target="qty-esp-molidaq">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-molidaq" data-name="Molida con Queso" data-price="1.80">Añadir</button>
                             </div>
@@ -652,10 +665,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn" data-target="qty-esp-catira">-</button>
-                                    <input type="number" id="qty-esp-catira" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-esp-catira">+</button>
+                                <div class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn" data-target="qty-esp-catira">-</button>
+                                    <input type="number" id="qty-esp-catira" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn" data-target="qty-esp-catira">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-catira" data-name="Pollo con Queso (Catira)" data-price="1.80">Añadir</button>
                             </div>
@@ -673,10 +686,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn" data-target="qty-esp-domino">-</button>
-                                    <input type="number" id="qty-esp-domino" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-esp-domino">+</button>
+                                <div class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn" data-target="qty-esp-domino">-</button>
+                                    <input type="number" id="qty-esp-domino" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn" data-target="qty-esp-domino">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-domino" data-name="Caraota con Queso (Dominó)" data-price="1.80">Añadir</button>
                             </div>
@@ -694,10 +707,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn" data-target="qty-esp-cbm">-</button>
-                                    <input type="number" id="qty-esp-cbm" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-esp-cbm">+</button>
+                                <div class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn" data-target="qty-esp-cbm">-</button>
+                                    <input type="number" id="qty-esp-cbm" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn" data-target="qty-esp-cbm">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-cbm" data-name="Gordon Blue de Mechada" data-price="1.80">Añadir</button>
                             </div>
@@ -715,10 +728,10 @@
                                 <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center justify-between bg-white rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-gray-100 hover:shadow transition counter-btn" data-target="qty-esp-cbp">-</button>
-                                    <input type="number" id="qty-esp-cbp" class="w-8 text-center bg-transparent border-none font-bold text-lg px-0 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-primary bg-yellow-100 hover:bg-yellow-200 transition counter-btn" data-target="qty-esp-cbp">+</button>
+                                <div class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn" data-target="qty-esp-cbp">-</button>
+                                    <input type="number" id="qty-esp-cbp" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn" data-target="qty-esp-cbp">+</button>
                                 </div>
                                 <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-cbp" data-name="Gordon Blue de Pollo" data-price="1.80">Añadir</button>
                             </div>
@@ -809,7 +822,7 @@
                                 <i class="fas fa-mobile-alt text-2xl"></i> Pago Móvil
                             </h3>
                             <span
-                                class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-md font-bold uppercase tracking-wide">Bco.
+                                class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-md font-semibold uppercase tracking-wide">Bco.
                                 Venezuela</span>
                         </div>
 
@@ -818,28 +831,28 @@
                             <div class="flex justify-between items-center border-b border-red-50 pb-2">
                                 <span class="text-gray-500 text-sm">Banco</span>
                                 <div class="flex items-center gap-1 sm:gap-2">
-                                    <strong class="text-red-900 font-display text-base sm:text-lg">0102 (Venezuela)</strong>
+                                    <span class="text-red-900 font-sans font-semibold text-base sm:text-lg">0102 (Venezuela)</span>
                                     <button class="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single" data-copy="0102" title="Copiar Banco"><i class="far fa-copy"></i></button>
                                 </div>
                             </div>
                             <div class="flex justify-between items-center border-b border-red-50 pb-2">
                                 <span class="text-gray-500 text-sm">Teléfono</span>
                                 <div class="flex items-center gap-1 sm:gap-2">
-                                    <strong class="text-red-900 font-display text-base sm:text-lg">04161071344</strong>
+                                    <span class="text-red-900 font-sans font-semibold text-base sm:text-lg">04161071344</span>
                                     <button class="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single" data-copy="04161071344" title="Copiar Teléfono"><i class="far fa-copy"></i></button>
                                 </div>
                             </div>
                             <div class="flex justify-between items-center border-b border-red-50 pb-2">
                                 <span class="text-gray-500 text-sm">Cédula</span>
                                 <div class="flex items-center gap-1 sm:gap-2">
-                                    <strong class="text-red-900 font-display text-base sm:text-lg">V12993940</strong>
+                                    <span class="text-red-900 font-sans font-semibold text-base sm:text-lg">V12993940</span>
                                     <button class="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single" data-copy="V12993940" title="Copiar Cédula"><i class="far fa-copy"></i></button>
                                 </div>
                             </div>
                             <div class="flex justify-between items-center pt-2 mt-2">
-                                <span class="text-red-800 text-sm font-bold">Monto Exacto</span>
+                                <span class="text-primary text-sm font-semibold">Monto Exacto</span>
                                 <div class="flex items-center gap-1 sm:gap-2">
-                                    <strong class="text-red-600 font-display text-xl sm:text-2xl drop-shadow-sm" id="pago-total-bs">Bs. 0.00</strong>
+                                    <span class="text-primary font-sans font-semibold text-xl sm:text-2xl drop-shadow-sm" id="pago-total-bs">Bs. 0.00</span>
                                     <button class="text-red-400 hover:text-red-700 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single text-lg" id="btn-copy-monto" data-copy="0.00" title="Copiar Monto exacto"><i class="far fa-copy"></i></button>
                                 </div>
                             </div>
@@ -967,7 +980,7 @@
             var orderConfig = { type: 'pickup', distance: 0, deliveryCost: 0, lat: null, lng: null, confirmed: false };
             const STORE_LAT = 10.2586;
             const STORE_LNG = -67.5856;
-            const DELIVERY_RATE_PER_KM = 0.45;
+            const DELIVERY_RATE_PER_KM = 0.43;
             var deliveryMap = null;
             var deliveryMarker = null;
 
@@ -1004,6 +1017,16 @@
                    currentTotalStr = `- Total Orden: Bs. ${bsFinalTotal.toFixed(2)}`;
                 }
                 $('#delivery-total-btn').text(currentTotalStr);
+
+                // Ocultar advertencia al mover el marcador si el costo sube
+                if (cost >= 0.20) {
+                    $('#delivery-warning-box').addClass('hidden');
+                    const btn = $('#btn-confirm-delivery');
+                    if (btn.hasClass('bg-red-500')) {
+                        btn.removeClass('bg-red-500').addClass('bg-orange-500').html('Confirmar <span id="delivery-total-btn" class="ml-1 text-orange-100 font-normal"></span> <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>');
+                        $('#delivery-total-btn').text(currentTotalStr);
+                    }
+                }
             }
 
             function initLeafletMap() {
@@ -1184,14 +1207,21 @@
                         let bsRowPrice = (item.price * bcvRate).toFixed(2);
                         let bsRowTotal = (item.price * item.qty * bcvRate).toFixed(2);
                         html += `
-                            <div class="cart-item-row flex justify-between items-center border-b border-gray-50 pb-3 relative">
-                                <div>
-                                    <p class="font-bold text-textMain text-sm">${item.name}</p>
-                                    <p class="text-xs text-gray-500">${item.qty} x Bs. ${bsRowPrice} <span class="opacity-70">($${item.price.toFixed(2)})</span></p>
+                            <div class="cart-item-row flex justify-between items-center border-b border-gray-50 pb-3 mt-2 relative overflow-hidden">
+                                <div class="flex-grow pr-3">
+                                    <p class="font-bold text-textMain text-sm line-clamp-1">${item.name}</p>
+                                    <div class="flex items-center gap-2 mt-2 font-sans">
+                                        <div class="flex items-center bg-gray-50 rounded-lg overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300">
+                                            <button class="px-3.5 py-1 text-sm font-bold hover:bg-gray-100 transition-colors cart-qty-minus text-accent" data-index="${index}">-</button>
+                                            <span class="px-3 py-1 text-xs font-bold border-x border-gray-200 min-w-[34px] text-center bg-white text-textMain">${item.qty}</span>
+                                            <button class="px-3.5 py-1 text-sm font-bold hover:bg-gray-100 transition-colors cart-qty-plus text-primary" data-index="${index}">+</button>
+                                        </div>
+                                        <p class="text-[10px] text-gray-400 font-medium">x Bs. ${bsRowPrice}</p>
+                                    </div>
                                 </div>
-                                <div class="flex items-center gap-3">
-                                    <span class="font-bold text-accent">Bs. ${bsRowTotal}</span>
-                                    <button class="text-red-300 hover:text-red-500 delete-item" data-index="${index}"><i class="fas fa-trash"></i></button>
+                                <div class="flex flex-col items-end justify-center min-w-[100px]">
+                                    <p class="font-sans font-bold text-primary text-[15px] leading-tight text-right italic">Bs. ${bsRowTotal}</p>
+                                    <button class="text-[10px] text-red-500 hover:text-red-700 delete-item flex items-center justify-end gap-1 mt-1 font-bold transition-all hover:scale-105 active:scale-95" data-index="${index}"><i class="fas fa-trash-alt text-[9px]"></i> Eliminar</button>
                                 </div>
                             </div>
                         `;
@@ -1205,7 +1235,7 @@
                             <div class="cart-item-row flex justify-between items-center border-t border-b border-orange-100 bg-orange-50/50 pb-3 pt-3 px-2 rounded-lg mt-2 relative">
                                 <div>
                                     <p class="font-bold text-orange-600 text-sm"><i class="fas fa-motorcycle mr-1"></i>Envío a Domicilio</p>
-                                    <p class="text-[11px] text-gray-500 mt-1">${orderConfig.distance.toFixed(1)} km a $0.45/km</p>
+                                    <p class="text-[11px] text-gray-500 mt-1">${orderConfig.distance.toFixed(1)} km a $0.43/km</p>
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <span class="font-bold text-orange-600">Bs. ${bsDelPrice}</span>
@@ -1239,6 +1269,24 @@
                     $('#cart-dropdown').removeClass('scale-100').addClass('scale-0');
                 }
             }
+            // Logica para añadir/quitar cantidad directamente en el carro
+            $(document).on('click', '.cart-qty-plus', function() {
+                var index = $(this).data('index');
+                cart[index].qty++;
+                playPopSound();
+                updateCartUI();
+            });
+
+            $(document).on('click', '.cart-qty-minus', function() {
+                var index = $(this).data('index');
+                if (cart[index].qty > 1) {
+                    cart[index].qty--;
+                    playPopSound();
+                    updateCartUI();
+                } else {
+                    // Opcional: Si es 1, podrías gatillar el delete-item pero el usuario tiene el botón de eliminar.
+                }
+            });
 
             // Bind delete item dynamically
             $(document).on('click', '.delete-item', function (e) {
@@ -1477,6 +1525,18 @@
             });
 
             $('#btn-confirm-delivery').click(function () {
+                // Validación de costo mínimo ($0.20)
+                if (orderConfig.deliveryCost < 0.20 && $('#delivery-warning-box').hasClass('hidden')) {
+                    $('#delivery-warning-box').removeClass('hidden');
+                    $(this).removeClass('bg-orange-500').addClass('bg-red-500').html('Confirmar de todas formas <i class="fas fa-check ml-2"></i>');
+                    
+                    // Efecto de vibración
+                    var btn = $(this);
+                    btn.addClass('animate-shake-attention');
+                    setTimeout(() => btn.removeClass('animate-shake-attention'), 500);
+                    return;
+                }
+
                 orderConfig.type = 'delivery';
                 orderConfig.confirmed = true;
                 var domModal = $('#delivery-modal');
@@ -1486,6 +1546,9 @@
                     updateCartUI(); 
                     
                     $('#cart-dropdown').removeClass('scale-0').addClass('scale-100');
+                    
+                    // Reset button style
+                    $('#btn-confirm-delivery').removeClass('bg-red-500').addClass('bg-orange-500').html('Confirmar <span id="delivery-total-btn" class="ml-1 text-orange-100 font-normal"></span> <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>');
                 }, 300);
             });
 
