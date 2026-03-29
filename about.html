@@ -30,8 +30,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Lilita+One&display=swap"
         rel="stylesheet">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS (Local) -->
+    <script src="assets/js/tailwindcss.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -64,8 +64,8 @@
         }
     </script>
 
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome for Icons (Local) -->
+    <link rel="stylesheet" href="assets/css/all.min.css">
 
     <!-- Custom CSS Base -->
     <style>
@@ -356,14 +356,24 @@
                 </a>
             </div>
 
-            <div class="border-t border-gray-700 pt-6 text-xs text-gray-500">
-                &copy; 2026 Sabores Y&B. Todos los derechos reservados.
+            <div class="border-t border-gray-700 pt-6 flex flex-col items-center justify-center">
+                <div class="text-xs text-gray-500 text-center">
+                    &copy; 2026 Sabores Y&B. Todos los derechos reservados.
+                </div>
+                <div class="text-xs text-gray-400 mt-2 flex items-center justify-center gap-1">
+                    <span>Desarrollado con</span>
+                    <i class="fas fa-heart text-red-500 animate-pulse"></i>
+                    <span>por</span>
+                    <a href="https://github.com/wydex28" target="_blank" class="text-primary hover:text-green-400 font-bold transition flex items-center gap-1 hover:-translate-y-0.5 hover:scale-105" title="Creador: wydex28">
+                        <i class="fab fa-github text-sm"></i> wydex28
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
             // Tasa BCV Logic
@@ -454,11 +464,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').then(reg => {
-                    console.log('PWA ServiceWorker registrado con éxito:', reg.scope);
-                }).catch(err => {
-                    console.log('Fallo al registrar PWA SW:', err);
-                });
+                navigator.serviceWorker.register('./sw.js').catch(err => {});
             });
         }
 
@@ -477,7 +483,7 @@
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
-                    console.log('Instalación aceptada');
+                    // Install aceptada
                 }
                 deferredPrompt = null;
                 installBtn.classList.remove('flex');
@@ -489,7 +495,6 @@
             installBtn.classList.remove('flex');
             installBtn.classList.add('hidden');
             deferredPrompt = null;
-            console.log('App PWA instalada exitosamente');
         });
     </script>
 </body>

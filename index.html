@@ -30,8 +30,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Lilita+One&display=swap"
         rel="stylesheet">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS (Local) -->
+    <script src="assets/js/tailwindcss.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -64,8 +64,8 @@
         }
     </script>
 
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome for Icons (Local) -->
+    <link rel="stylesheet" href="assets/css/all.min.css">
 
     <!-- Custom CSS Base -->
     <style>
@@ -293,7 +293,7 @@
         <div class="bg-white rounded-3xl p-5 sm:p-8 max-w-lg w-full shadow-2xl flex flex-col max-h-[90vh]">
             <h3 class="text-xl font-display text-textMain mb-3 flex items-center justify-between">
                 <div><i class="fas fa-map-marked-alt text-orange-500 mr-2"></i>Destino de Envío</div>
-                <div class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap border border-orange-200 shadow-sm"><i class="fas fa-info-circle mr-1"></i>Tarifa: $0.30 / km</div>
+                <div class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap border border-orange-200 shadow-sm"><i class="fas fa-info-circle mr-1"></i>Tarifa: $0.45 / km</div>
             </h3>
             <p class="text-xs text-gray-500 mb-3">Busca tu zona o mueve el mapa para calcular el costo del delivery.</p>
             
@@ -888,138 +888,33 @@
             <div>
                 <div class="flex items-center gap-4 mb-10 reveal">
                     <i class="fas fa-glass-water text-3xl text-dark"></i>
-                    <h3 class="text-3xl font-display text-textMain">Bebidas Refrescantes</h3>
+                    <h3 class="text-3xl font-display text-textMain">Refrescos y Jugos</h3>
                     <div class="h-px bg-gray-200 flex-grow"></div>
                 </div>
 
-                <div
-                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6">
-
-                    <!-- Drink 1: Papelon -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
-                        <div class="relative h-32 sm:h-40 lg:h-44 overflow-hidden bg-gray-100">
-                            <img src="assets/images/papelon.png" alt="Papelón con Limón"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Papelón con Limón</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div>
-                                    <span class="price-display font-display text-2xl text-dark block"
-                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span>
-                                    <span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.50</span>
-                                </div>
-                            </div>
-
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition"
-                                        data-target="qty-papelon">-</button>
-                                    <input type="number" id="qty-papelon"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-dark bg-teal-50 hover:bg-teal-100 transition"
-                                        data-target="qty-papelon">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-dark text-white font-bold py-2 rounded-full hover:bg-teal-600 transition shadow-md"
-                                    data-qty="qty-papelon" data-name="Papelón con Limón" data-price="1.50">
-                                    Añadir
-                                </button>
-                            </div>
-                        </div>
+                <div class="bg-gray-50 border-2 border-dashed border-gray-200 rounded-3xl p-8 sm:p-12 text-center reveal">
+                    <div class="w-16 h-16 bg-gray-200 text-gray-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 hover:scale-110 transition-transform">
+                        <i class="fas fa-clock"></i>
                     </div>
+                    <h4 class="text-xl sm:text-2xl font-bold text-gray-500 mb-2">Próximamente</h4>
+                    <p class="text-sm text-gray-400">Estamos preparando las mejores opciones para refrescarte.</p>
+                </div>
+            </div>
 
-                    <!-- Drink 2: Malta -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
-                        style="transition-delay: 100ms;">
-                        <div class="relative h-32 sm:h-40 lg:h-44 overflow-hidden bg-gray-100">
-                            <img src="assets/images/malta.png" alt="Malta Venezolana"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Malta Venezolana</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div>
-                                    <span class="price-display font-display text-2xl text-dark block"
-                                        data-dolar="2.00"><i class="fas fa-spinner fa-spin text-sm"></i></span>
-                                    <span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $2.00</span>
-                                </div>
-                            </div>
+            <!-- Dulces Category -->
+            <div class="mt-16">
+                <div class="flex items-center gap-4 mb-10 reveal">
+                    <i class="fas fa-candy-cane text-3xl text-pink-500"></i>
+                    <h3 class="text-3xl font-display text-textMain">Chucherías y Dulces</h3>
+                    <div class="h-px bg-gray-200 flex-grow"></div>
+                </div>
 
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition"
-                                        data-target="qty-malta">-</button>
-                                    <input type="number" id="qty-malta"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-dark bg-teal-50 hover:bg-teal-100 transition"
-                                        data-target="qty-malta">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-dark text-white font-bold py-2 rounded-full hover:bg-teal-600 transition shadow-md"
-                                    data-qty="qty-malta" data-name="Malta Venezolana" data-price="2.00">
-                                    Añadir
-                                </button>
-                            </div>
-                        </div>
+                <div class="bg-pink-50 border-2 border-dashed border-pink-200 rounded-3xl p-8 sm:p-12 text-center reveal">
+                    <div class="w-16 h-16 bg-pink-100 text-pink-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 hover:rotate-12 transition-transform">
+                        <i class="fas fa-star"></i>
                     </div>
-
-                    <!-- Drink 3: Chicha -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal"
-                        style="transition-delay: 200ms;">
-                        <div class="relative h-32 sm:h-40 lg:h-44 overflow-hidden bg-gray-100">
-                            <img src="assets/images/chicha.png" alt="Chicha Venezolana"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-lg font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight">
-                                Chicha Casera</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div>
-                                    <span class="price-display font-display text-2xl text-dark block"
-                                        data-dolar="2.50"><i class="fas fa-spinner fa-spin text-sm"></i></span>
-                                    <span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $2.50</span>
-                                </div>
-                            </div>
-
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center justify-between bg-gray-50 rounded-full border border-gray-200 p-1 w-1/2">
-                                    <button
-                                        class="qty-btn minus w-8 h-8 rounded-full flex justify-center items-center text-gray-500 hover:bg-white hover:shadow transition"
-                                        data-target="qty-chicha">-</button>
-                                    <input type="number" id="qty-chicha"
-                                        class="w-8 text-center bg-transparent border-none font-bold text-lg focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus w-8 h-8 rounded-full flex justify-center items-center text-dark bg-teal-50 hover:bg-teal-100 transition"
-                                        data-target="qty-chicha">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-dark text-white font-bold py-2 rounded-full hover:bg-teal-600 transition shadow-md"
-                                    data-qty="qty-chicha" data-name="Chicha Casera" data-price="2.50">
-                                    Añadir
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
+                    <h4 class="text-xl sm:text-2xl font-bold text-pink-600 mb-2">Próximamente</h4>
+                    <p class="text-sm text-pink-500/80">Muy pronto endulzaremos tus pedidos con las mejores chucherías.</p>
                 </div>
             </div>
 
@@ -1133,19 +1028,29 @@
                 </a>
             </div>
 
-            <div class="border-t border-gray-700 pt-6 text-xs text-gray-500">
-                &copy; 2026 Sabores Y&B. Todos los derechos reservados.
+            <div class="border-t border-gray-700 pt-6 flex flex-col items-center justify-center">
+                <div class="text-xs text-gray-500 text-center">
+                    &copy; 2026 Sabores Y&B. Todos los derechos reservados.
+                </div>
+                <div class="text-xs text-gray-400 mt-2 flex items-center justify-center gap-1">
+                    <span>Desarrollado con</span>
+                    <i class="fas fa-heart text-red-500 animate-pulse"></i>
+                    <span>por</span>
+                    <a href="https://github.com/wydex28" target="_blank" class="text-primary hover:text-green-400 font-bold transition flex items-center gap-1 hover:-translate-y-0.5 hover:scale-105" title="Creador: wydex28">
+                        <i class="fab fa-github text-sm"></i> wydex28
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <!-- Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Confetti Local -->
+    <script src="assets/js/confetti.browser.min.js"></script>
+    <!-- Leaflet JS Local -->
+    <script src="assets/js/leaflet.js"></script>
+    <!-- jQuery Local -->
+    <script src="assets/js/jquery.min.js"></script>
     <script>
         // Audio Helper for "Pop" sound
         let audioCtx;
@@ -1205,7 +1110,7 @@
             var orderConfig = { type: 'pickup', distance: 0, deliveryCost: 0, lat: null, lng: null, confirmed: false };
             const STORE_LAT = 10.2586;
             const STORE_LNG = -67.5856;
-            const DELIVERY_RATE_PER_KM = 0.30;
+            const DELIVERY_RATE_PER_KM = 0.45;
             var deliveryMap = null;
             var deliveryMarker = null;
 
@@ -1278,6 +1183,14 @@
                 });
             }
 
+            console.log(
+                "%c🚀 Proyecto Sabores Y&B\n%cDesarrollado por %cwydex28\n%c🔥 Visita mi GitHub: https://github.com/wydex28",
+                "color: #ff5722; font-size: 20px; font-weight: bold; padding-bottom: 5px;",
+                "color: #4CAF50; font-size: 14px;",
+                "color: #2196F3; font-size: 16px; font-weight: bold;",
+                "color: #9e9e9e; font-size: 12px; font-style: italic; margin-top: 5px;"
+            );
+
             // Tasa BCV Logic
             let bcvRate = 1.0;
             let isBcvLoaded = false;
@@ -1292,13 +1205,6 @@
                         bcvRate = data.promedio;
                         isBcvLoaded = true;
 
-                        console.log("==========================================");
-                        console.log("🌐 Consultando API BCV");
-                        console.log("🔗 URL:", 'https://ve.dolarapi.com/v1/dolares/oficial');
-                        console.log("💵 Precio obtenido: Bs.", data.promedio);
-                        console.log("🕒 Última actualización API:", data.fechaActualizacion);
-                        console.log("==========================================");
-
                         $('#bcv-rate-navbar .rate-val').text(`Bs. ${bcvRate.toFixed(2)}`);
                         if (data.fechaActualizacion) {
                             let dateObj = new Date(data.fechaActualizacion);
@@ -1308,7 +1214,6 @@
                         throw new Error("Formato de datos no válido");
                     }
                 } catch (error) {
-                    console.error("Error fetching BCV rate. Using fallback rate.", error);
                     bcvRate = 50.00; // Tasa de respaldo manual
                     $('#bcv-rate-navbar .rate-val').text(`Bs. ${bcvRate.toFixed(2)} (Ref)`);
                     $('#bcv-date').text('Tasa Referencial Manual');
@@ -1441,7 +1346,7 @@
                             <div class="cart-item-row flex justify-between items-center border-t border-b border-orange-100 bg-orange-50/50 pb-3 pt-3 px-2 rounded-lg mt-2 relative">
                                 <div>
                                     <p class="font-bold text-orange-600 text-sm"><i class="fas fa-motorcycle mr-1"></i>Envío a Domicilio</p>
-                                    <p class="text-[11px] text-gray-500 mt-1">${orderConfig.distance.toFixed(1)} km a $0.30/km</p>
+                                    <p class="text-[11px] text-gray-500 mt-1">${orderConfig.distance.toFixed(1)} km a $0.45/km</p>
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <span class="font-bold text-orange-600">Bs. ${bsDelPrice}</span>
@@ -1504,6 +1409,13 @@
 
                 setTimeout(function () {
                     cart.splice(index, 1);
+                    if (cart.length === 0) {
+                        orderConfig.type = 'pickup';
+                        orderConfig.deliveryCost = 0;
+                        orderConfig.distance = 0;
+                        orderConfig.confirmed = false;
+                        $('#cart-dropdown').removeClass('scale-100').addClass('scale-0');
+                    }
                     updateCartUI();
                 }, 300);
             });
@@ -1542,6 +1454,10 @@
 
                 setTimeout(function () {
                     cart = [];
+                    orderConfig.type = 'pickup';
+                    orderConfig.deliveryCost = 0;
+                    orderConfig.distance = 0;
+                    orderConfig.confirmed = false;
                     updateCartUI();
                     $('#cart-dropdown').removeClass('scale-100').addClass('scale-0');
                 }, 200);
@@ -1822,15 +1738,20 @@
                 var waNumber = "584128853518"; // Número de WhatsApp Real
                 var waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(orderMsg)}`;
 
+                // Store formatted data for copy button
+                var copyText = `Pago Móvil Sabores Y&B\nBanco: Venezuela (0102)\nTel: 04161071344\nCI: V-12993940\nMonto: Bs. ${bsTotalOrder}`;
+                $('#btn-copy-data').attr('data-copy', copyText);
+
+                // Copiar los datos del pago móvil directamente al portapapeles del cliente
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(copyText).catch(function(err) {});
+                }
+
                 // Abrir en WhatsApp
                 window.open(waLink, '_blank');
 
                 // Inject values into Payment Section
                 $('#pago-total-bs').text(`Bs. ${bsTotalOrder}`);
-
-                // Store formatted data for copy button
-                var copyText = `Pago Móvil Sabores Y&B\nBanco: Venezuela (0102)\nTel: 04161071344\nCI: V-12993940\nMonto: Bs. ${bsTotalOrder}`;
-                $('#btn-copy-data').attr('data-copy', copyText);
 
                 // Mostrar pagos
                 $('#pagos').removeClass('hidden');
@@ -1863,7 +1784,6 @@
                         $textSpan.text('Copiar datos del pago');
                     }, 2500);
                 }).catch(function (err) {
-                    console.error('Could not copy text: ', err);
                     alert("No se pudo copiar el texto. Inténtalo manualmente.");
                 });
             });
@@ -1907,11 +1827,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').then(reg => {
-                    console.log('PWA ServiceWorker registrado con éxito:', reg.scope);
-                }).catch(err => {
-                    console.log('Fallo al registrar PWA SW:', err);
-                });
+                navigator.serviceWorker.register('./sw.js').catch(err => {});
             });
         }
 
@@ -1930,7 +1846,7 @@
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
-                    console.log('Instalación aceptada');
+                    // Install aceptada
                 }
                 deferredPrompt = null;
                 installBtn.classList.remove('flex');
@@ -1942,7 +1858,6 @@
             installBtn.classList.remove('flex');
             installBtn.classList.add('hidden');
             deferredPrompt = null;
-            console.log('App PWA instalada exitosamente');
         });
     </script>
 </body>
