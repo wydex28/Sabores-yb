@@ -151,6 +151,8 @@
             }
         }
     </style>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
 
 <body class="font-sans antialiased overflow-x-hidden relative">
@@ -176,8 +178,10 @@
     <div id="cart-dropdown"
         class="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-80 lg:w-96 bg-white rounded-3xl shadow-2xl border border-gray-100 z-50 transform scale-0 origin-bottom-right transition-transform duration-300 flex flex-col max-h-[70vh]">
         <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-3xl">
-            <h3 class="font-display text-xl text-textMain"><i class="fas fa-shopping-basket text-primary mr-2"></i>Tu
-                Orden</h3>
+            <div class="flex items-center gap-2">
+                <h3 class="font-display text-xl text-textMain"><i class="fas fa-shopping-basket text-primary mr-2"></i>Tu Orden</h3>
+                <button id="btn-config-order" class="text-[10px] bg-gray-200 text-gray-700 px-2 py-1 rounded-md font-bold hover:bg-gray-300 transition shadow-sm"><i class="fas fa-cog mr-1"></i>Configurar</button>
+            </div>
             <div class="flex items-center gap-4">
                 <button id="clear-cart-btn" class="text-xs text-red-500 font-bold hover:underline hidden"><i
                         class="fas fa-trash-alt mr-1"></i>Vaciar</button>
@@ -214,8 +218,11 @@
             <p class="text-gray-600 text-center mb-6 text-base">Nuestro horario de atención es de <b>Lunes a Sábado de
                     6:00 am a 1:00 pm</b>. Por favor, realiza tu pedido dentro de este horario.</p>
             <button id="btn-close-store-modal"
-                class="w-full bg-primary text-white font-bold py-3 rounded-full hover:bg-green-700 transition shadow-lg flex justify-center items-center">
+                class="w-full bg-primary text-white font-bold py-3 rounded-full hover:bg-green-700 transition shadow-lg flex justify-center items-center mb-2">
                 Entendido
+            </button>
+            <button id="btn-test-continue" class="w-full text-xs text-red-400 hover:text-red-600 transition underline decoration-red-200 py-1">
+                Omitir horario (Solo pruebas)
             </button>
         </div>
     </div>
@@ -239,6 +246,83 @@
             <button id="btn-cancel-modal"
                 class="w-full mt-3 text-gray-400 font-bold py-2 rounded-full hover:text-gray-600 transition">
                 Volver al menú
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de Configuración de Orden -->
+    <div id="config-order-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[65] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300">
+            <h3 class="text-2xl font-display text-textMain text-center mb-4">¿Cómo deseas tu pedido?</h3>
+            <div class="space-y-4 mb-6">
+                <!-- Opción PickUp -->
+                <button id="btn-pickup" class="w-full relative bg-gray-50 border-2 border-gray-200 hover:border-primary hover:bg-green-50 rounded-xl p-4 text-left transition group">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary text-xl shadow-sm mr-4 group-hover:scale-110 transition">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-lg">Retiro en Local</h4>
+                            <p class="text-xs text-gray-500 mt-1">Busca tu pedido por PickUp</p>
+                        </div>
+                    </div>
+                </button>
+                <!-- Opción Delivery -->
+                <button id="btn-delivery" class="w-full relative bg-gray-50 border-2 border-gray-200 hover:border-orange-500 hover:bg-orange-50 rounded-xl p-4 text-left transition group">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-orange-500 text-xl shadow-sm mr-4 group-hover:scale-110 transition">
+                            <i class="fas fa-motorcycle"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-lg">Envío (Delivery)</h4>
+                            <p class="text-xs text-gray-500 mt-1">Te lo llevamos a donde estés</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+            <button id="btn-close-config-modal"
+                class="w-full text-gray-400 font-bold py-2 rounded-full hover:text-gray-600 transition">
+                Volver al carrito
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de Delivery (Mapa) -->
+    <div id="delivery-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[70] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl p-5 sm:p-8 max-w-lg w-full shadow-2xl flex flex-col max-h-[90vh]">
+            <h3 class="text-xl font-display text-textMain mb-3 flex items-center justify-between">
+                <div><i class="fas fa-map-marked-alt text-orange-500 mr-2"></i>Destino de Envío</div>
+                <div class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap border border-orange-200 shadow-sm"><i class="fas fa-info-circle mr-1"></i>Tarifa: $0.30 / km</div>
+            </h3>
+            <p class="text-xs text-gray-500 mb-3">Busca tu zona o mueve el mapa para calcular el costo del delivery.</p>
+            
+            <div class="mb-3 flex gap-2">
+                <input type="text" id="delivery-search-input" placeholder="Buscar sector (ej. Base Aragua)" class="flex-grow border border-gray-300 rounded-lg px-3 py-2 text-md focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
+                <button id="btn-search-location" class="bg-orange-500 text-white px-4 rounded-lg hover:bg-orange-600 transition"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <button id="btn-gps-location" class="w-full text-xs text-blue-600 font-bold flex items-center justify-center gap-1 hover:underline mb-3 py-1">
+                <i class="fas fa-crosshairs"></i> Usar mi ubicación actual
+            </button>
+            
+            <div id="delivery-map" class="w-full h-48 sm:h-56 bg-gray-200 rounded-xl mb-4 relative z-0 border border-gray-200 shadow-inner"></div>
+            
+            <div class="bg-orange-50/80 border border-orange-100 rounded-xl p-3 mb-4 flex justify-between items-center" id="delivery-info-box">
+                <div>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wide">Costo Estimado</p>
+                    <p class="text-xs text-gray-600 mt-0.5"><i class="fas fa-route text-gray-400 mr-1"></i>Distancia: <span id="delivery-distance" class="font-bold text-gray-800">0.00</span> km</p>
+                </div>
+                <div class="text-right">
+                    <p id="delivery-cost" class="font-display text-xl text-orange-600">$0.00</p>
+                </div>
+            </div>
+            
+            <button id="btn-confirm-delivery" class="w-full bg-orange-500 text-white font-bold py-3 rounded-full hover:bg-orange-600 transition shadow-lg flex justify-center items-center group shadow-orange-500/30">
+                Confirmar <span id="delivery-total-btn" class="ml-1 text-orange-100 font-normal"></span> <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+            </button>
+            <button id="btn-cancel-delivery" class="w-full mt-2 text-gray-400 font-bold py-2 rounded-full hover:text-gray-600 transition">
+                Volver
             </button>
         </div>
     </div>
@@ -1058,6 +1142,8 @@
     <!-- Scripts -->
     <!-- Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
@@ -1115,6 +1201,83 @@
         }
 
         $(document).ready(function () {
+            // Delivery Global State
+            var orderConfig = { type: 'pickup', distance: 0, deliveryCost: 0, lat: null, lng: null, confirmed: false };
+            const STORE_LAT = 10.2586;
+            const STORE_LNG = -67.5856;
+            const DELIVERY_RATE_PER_KM = 0.30;
+            var deliveryMap = null;
+            var deliveryMarker = null;
+
+            // Funciones de Distancia Haversine
+            function deg2rad(deg) { return deg * (Math.PI/180); }
+            function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+                var R = 6371; 
+                var dLat = deg2rad(lat2-lat1);  
+                var dLon = deg2rad(lon2-lon1); 
+                var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+                        Math.sin(dLon/2) * Math.sin(dLon/2); 
+                return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+            }
+
+            function updateDeliveryCost(lat, lng) {
+                var dist = getDistanceFromLatLonInKm(STORE_LAT, STORE_LNG, lat, lng);
+                var cost = dist * DELIVERY_RATE_PER_KM;
+                
+                orderConfig.distance = dist;
+                orderConfig.deliveryCost = cost;
+                orderConfig.lat = lat;
+                orderConfig.lng = lng;
+
+                $('#delivery-distance').text(dist.toFixed(2));
+                $('#delivery-cost').text('$' + cost.toFixed(2));
+
+                var currentTotalStr = '';
+                if(cart.length > 0) {
+                   var baseTotal = cart.reduce((acc, current) => acc + (current.price * current.qty), 0);
+                   var finalTotal = baseTotal + cost;
+                   currentTotalStr = `($${finalTotal.toFixed(2)})`;
+                }
+                $('#delivery-total-btn').text(currentTotalStr);
+            }
+
+            function initLeafletMap() {
+                if (deliveryMap) return;
+                // Maracay center
+                deliveryMap = L.map('delivery-map').setView([STORE_LAT, STORE_LNG], 13);
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(deliveryMap);
+
+                // Icono tienda
+                var storeIcon = L.divIcon({
+                    html: '<div class="w-8 h-8 bg-white border-2 border-primary rounded-full shadow-lg flex items-center justify-center p-1"><img src="assets/images/logo.png" class="w-full h-full object-cover"></div>',
+                    className: 'store-marker-icon',
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16]
+                });
+                L.marker([STORE_LAT, STORE_LNG], {icon: storeIcon}).addTo(deliveryMap).bindPopup("<b>Sabores Y&B</b>").openPopup();
+
+                // Icono cliente
+                var clientIcon = L.divIcon({
+                    html: '<div class="text-orange-500 text-3xl drop-shadow-md -mt-8 -ml-3"><i class="fas fa-map-marker-alt"></i></div>',
+                    className: 'client-marker-icon'
+                });
+                deliveryMarker = L.marker([STORE_LAT, STORE_LNG], {icon: clientIcon, draggable: true, zIndexOffset: 1000}).addTo(deliveryMap);
+                updateDeliveryCost(STORE_LAT, STORE_LNG);
+
+                deliveryMarker.on('dragend', function (e) {
+                    var coords = e.target.getLatLng();
+                    updateDeliveryCost(coords.lat, coords.lng);
+                });
+
+                deliveryMap.on('click', function(e) {
+                    deliveryMarker.setLatLng(e.latlng);
+                    updateDeliveryCost(e.latlng.lat, e.latlng.lng);
+                });
+            }
+
             // Tasa BCV Logic
             let bcvRate = 1.0;
             let isBcvLoaded = false;
@@ -1257,7 +1420,7 @@
                         let bsRowPrice = (item.price * bcvRate).toFixed(2);
                         let bsRowTotal = (item.price * item.qty * bcvRate).toFixed(2);
                         html += `
-                            <div class="cart-item-row flex justify-between items-center border-b border-gray-50 pb-3">
+                            <div class="cart-item-row flex justify-between items-center border-b border-gray-50 pb-3 relative">
                                 <div>
                                     <p class="font-bold text-textMain text-sm">${item.name}</p>
                                     <p class="text-xs text-gray-500">${item.qty} x Bs. ${bsRowPrice} <span class="opacity-70">($${item.price.toFixed(2)})</span></p>
@@ -1269,6 +1432,25 @@
                             </div>
                         `;
                     });
+
+                    // Add Delivery Row if active
+                    if(orderConfig.type === 'delivery' && orderConfig.deliveryCost >= 0) {
+                        totalPrice += orderConfig.deliveryCost;
+                        let bsDelPrice = (orderConfig.deliveryCost * bcvRate).toFixed(2);
+                        html += `
+                            <div class="cart-item-row flex justify-between items-center border-t border-b border-orange-100 bg-orange-50/50 pb-3 pt-3 px-2 rounded-lg mt-2 relative">
+                                <div>
+                                    <p class="font-bold text-orange-600 text-sm"><i class="fas fa-motorcycle mr-1"></i>Envío a Domicilio</p>
+                                    <p class="text-[11px] text-gray-500 mt-1">${orderConfig.distance.toFixed(1)} km a $0.30/km</p>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="font-bold text-orange-600">Bs. ${bsDelPrice}</span>
+                                    <button class="text-orange-300 hover:text-orange-500 delete-delivery"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                        `;
+                    }
+
                     $('#cart-items .cart-item-row').remove();
                     $('#cart-items').append(html);
                 }
@@ -1322,6 +1504,24 @@
 
                 setTimeout(function () {
                     cart.splice(index, 1);
+                    updateCartUI();
+                }, 300);
+            });
+
+            // Bind delete delivery
+            $(document).on('click', '.delete-delivery', function (e) {
+                var row = $(this).closest('.cart-item-row');
+                playDeleteSound();
+                row.css({
+                    'transition': 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    'opacity': '0',
+                    'transform': 'translateX(30px) scale(0.95)'
+                });
+                setTimeout(function () {
+                    orderConfig.type = 'pickup';
+                    orderConfig.deliveryCost = 0;
+                    orderConfig.distance = 0;
+                    orderConfig.confirmed = false;
                     updateCartUI();
                 }, 300);
             });
@@ -1414,9 +1614,7 @@
                 }, 1000);
             });
 
-            // WhatsApp and Payment Logic
-            // WhatsApp and Payment Logic
-            $('#btn-comprar').click(function () {
+            function showConfigModal(forceOpen) {
                 if (cart.length === 0) return;
 
                 if (!isStoreOpen) {
@@ -1428,14 +1626,134 @@
                     return;
                 }
 
+                if (orderConfig.confirmed && !forceOpen) {
+                    $('#cart-dropdown').removeClass('scale-100').addClass('scale-0');
+                    $('#availability-modal').removeClass('hidden');
+                    setTimeout(function () {
+                        $('#availability-modal').removeClass('opacity-0').find('.scale-95').removeClass('scale-95').addClass('scale-100');
+                    }, 10);
+                    return;
+                }
+                
                 // Cerrar carrito
                 $('#cart-dropdown').removeClass('scale-100').addClass('scale-0');
 
-                // Mostrar Modal de Disponibilidad
-                $('#availability-modal').removeClass('hidden');
+                // Mostrar Modal de Configuración
+                $('#config-order-modal').removeClass('hidden');
                 setTimeout(function () {
-                    $('#availability-modal').removeClass('opacity-0').find('.scale-95').removeClass('scale-95').addClass('scale-100');
+                    $('#config-order-modal').removeClass('opacity-0').find('.scale-95').removeClass('scale-95').addClass('scale-100');
                 }, 10);
+            }
+
+            $('#btn-comprar').click(function() { showConfigModal(false); });
+            $('#btn-config-order').click(function() { showConfigModal(true); });
+
+            $('#btn-close-config-modal').click(function () {
+                var modal = $('#config-order-modal');
+                modal.addClass('opacity-0').find('.scale-100').removeClass('scale-100').addClass('scale-95');
+                setTimeout(() => {
+                    modal.addClass('hidden');
+                    $('#cart-dropdown').removeClass('scale-0').addClass('scale-100');
+                }, 300);
+            });
+
+            $('#btn-pickup').click(function () {
+                var configModal = $('#config-order-modal');
+                configModal.addClass('opacity-0').find('.scale-100').removeClass('scale-100').addClass('scale-95');
+                setTimeout(() => {
+                    configModal.addClass('hidden');
+                    
+                    orderConfig.type = 'pickup';
+                    orderConfig.confirmed = true;
+                    orderConfig.deliveryCost = 0;
+                    orderConfig.distance = 0;
+                    
+                    updateCartUI();
+                    $('#cart-dropdown').removeClass('scale-0').addClass('scale-100');
+                }, 300);
+            });
+
+            $('#btn-delivery').click(function () {
+                // Ocultar Config Modal, Mostrar Delivery Map
+                var configModal = $('#config-order-modal');
+                configModal.addClass('opacity-0').find('.scale-100').removeClass('scale-100').addClass('scale-95');
+                setTimeout(() => {
+                    configModal.addClass('hidden');
+                    $('#delivery-modal').removeClass('hidden');
+                    setTimeout(function () {
+                        $('#delivery-modal').removeClass('opacity-0').find('.scale-95').removeClass('scale-95').addClass('scale-100');
+                        initLeafletMap();
+                        // Forzar a leaflet a redibujar después de la animación para no ver tiles grisados
+                        setTimeout(() => deliveryMap.invalidateSize(), 300);
+                    }, 10);
+                }, 300);
+            });
+
+            // Lógicas del Mapa Modal
+            $('#btn-cancel-delivery').click(function () {
+                var domModal = $('#delivery-modal');
+                domModal.addClass('opacity-0').find('.scale-100').removeClass('scale-100').addClass('scale-95');
+                setTimeout(() => {
+                    domModal.addClass('hidden');
+                    $('#config-order-modal').removeClass('hidden');
+                    setTimeout(() => $('#config-order-modal').removeClass('opacity-0').find('.scale-95').removeClass('scale-95').addClass('scale-100'), 10);
+                }, 300);
+            });
+
+            $('#btn-confirm-delivery').click(function () {
+                orderConfig.type = 'delivery';
+                orderConfig.confirmed = true;
+                var domModal = $('#delivery-modal');
+                domModal.addClass('opacity-0').find('.scale-100').removeClass('scale-100').addClass('scale-95');
+                setTimeout(() => {
+                    domModal.addClass('hidden');
+                    updateCartUI(); 
+                    
+                    $('#cart-dropdown').removeClass('scale-0').addClass('scale-100');
+                }, 300);
+            });
+
+            $('#btn-search-location').click(function() {
+                var query = $('#delivery-search-input').val();
+                if(!query) return;
+                var $btn = $(this);
+                $btn.html('<i class="fas fa-spinner fa-spin"></i>').prop('disabled', true);
+                
+                var searchQuery = query + ", Maracay, Aragua";
+                $.getJSON('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(searchQuery))
+                 .done(function(data) {
+                    if(data && data.length > 0) {
+                        var lat = parseFloat(data[0].lat);
+                        var lon = parseFloat(data[0].lon);
+                        deliveryMap.setView([lat, lon], 15);
+                        deliveryMarker.setLatLng([lat, lon]);
+                        updateDeliveryCost(lat, lon);
+                    } else {
+                        alert("No encontramos ese lugar. Búscalo manualmente deslizando la pantalla.");
+                    }
+                 }).always(function() {
+                    $btn.html('<i class="fas fa-search"></i>').prop('disabled', false);
+                 });
+            });
+
+            $('#btn-gps-location').click(function() {
+                var $btn = $(this);
+                if ("geolocation" in navigator) {
+                    $btn.html('<i class="fas fa-spinner fa-spin"></i> Obteniendo satélites...');
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var lat = position.coords.latitude;
+                        var lon = position.coords.longitude;
+                        deliveryMap.setView([lat, lon], 16);
+                        deliveryMarker.setLatLng([lat, lon]);
+                        updateDeliveryCost(lat, lon);
+                        $btn.html('<i class="fas fa-check text-green-500"></i> GPS Confirmado');
+                    }, function(error) {
+                        alert("Activa el GPS de tu celular o dale permisos a Sabores Y&B para encontrar tu ubicación exactita.");
+                        $btn.html('<i class="fas fa-crosshairs"></i> Usar mi ubicación actual');
+                    }, { enableHighAccuracy: true });
+                } else {
+                    alert("Tu navegador no puede conseguir el GPS automático.");
+                }
             });
 
             $('#btn-cancel-modal').click(function () {
@@ -1452,6 +1770,15 @@
                 }, 300);
             });
 
+            $('#btn-test-continue').click(function () {
+                $('#closed-store-modal').addClass('opacity-0').find('.scale-100').removeClass('scale-100').addClass('scale-95');
+                setTimeout(function () {
+                    $('#closed-store-modal').addClass('hidden');
+                    isStoreOpen = true;
+                    showConfigModal(false);
+                }, 300);
+            });
+
             $('#btn-confirm-whatsapp').click(function () {
                 // Ocultar modal
                 $('#availability-modal').addClass('opacity-0').find('.scale-100').removeClass('scale-100').addClass('scale-95');
@@ -1461,7 +1788,16 @@
 
                 // Generar Mensaje de Orden directo (Estandar UTF-8 para WhatsApp)
                 var orderMsg = "👋 ¡Hola, *Sabores Y&B*!\n\n";
-                orderMsg += "📝 *Quisiera ordenar lo siguiente:*\n";
+                orderMsg += "📝 *Mi Pedido en la Web:*\n";
+                
+                if(orderConfig.type === 'delivery') {
+                    orderMsg += `🚀 *TIPO DE ORDEN:* ENVÍO (DELIVERY)\n`;
+                    orderMsg += `📍 *Ubicación:* https://www.google.com/maps?q=${orderConfig.lat},${orderConfig.lng}\n`;
+                    orderMsg += `🛵 *Distancia calculada:* ${orderConfig.distance.toFixed(1)} km\n`;
+                } else {
+                    orderMsg += `🏬 *TIPO DE ORDEN:* RETIRO EN LOCAL (PICKUP)\n`;
+                }
+                
                 orderMsg += "---------------------------------------\n";
                 var totalPriceUSD = 0;
                 cart.forEach(function (item) {
@@ -1470,12 +1806,18 @@
                     totalPriceUSD += (item.price * item.qty);
                 });
 
+                if(orderConfig.type === 'delivery') {
+                    let costBs = (orderConfig.deliveryCost * bcvRate).toFixed(2);
+                    totalPriceUSD += orderConfig.deliveryCost;
+                    orderMsg += `\n🛵 *Servicio Delivery:* Bs. ${costBs} ($${orderConfig.deliveryCost.toFixed(2)})\n`;
+                }
+
                 let bsTotalOrder = (totalPriceUSD * bcvRate).toFixed(2);
                 orderMsg += "---------------------------------------\n";
-                orderMsg += `💰 *TOTAL ESTIMADO: Bs. ${bsTotalOrder}*\n`;
+                orderMsg += `💰 *TOTAL A PAGAR: Bs. ${bsTotalOrder}*\n`;
                 orderMsg += `💵 *(Ref: $${totalPriceUSD.toFixed(2)})*\n`;
                 orderMsg += `📊 _Tasa BCV del día: Bs. ${bcvRate.toFixed(2)}_\n\n`;
-                orderMsg += `✅ Envíame la disponibilidad para poder realizar el pago. ¡Quedo atento(a)!`;
+                orderMsg += `✅ Envíame la disponibilidad para procesar la compra. ¡Quedo atento(a)!`;
 
                 var waNumber = "584128853518"; // Número de WhatsApp Real
                 var waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(orderMsg)}`;
