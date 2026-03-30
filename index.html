@@ -19,10 +19,11 @@
     <link rel="icon" type="image/png" href="assets/images/logo.png">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#00A859">
-    <link rel="apple-touch-icon" href="assets/images/logo.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Mobile Optimization -->
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Sabores">
+    <meta name="apple-mobile-web-app-title" content="Sabores Y&B">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -152,19 +153,68 @@
         }
     </style>
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 </head>
 
 <body class="font-sans antialiased overflow-x-hidden relative">
 
-    <!-- Floating Install App Button -->
-    <button id="pwa-install-btn"
-        class="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 bg-white p-1 rounded-full shadow-2xl transition-transform hover:scale-110 hidden items-center justify-center border-2 border-primary group animate-shake-attention">
-        <img src="assets/images/logo-maskable.png" alt="Instalar Sabores Y&B"
-            class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover group-hover:rotate-12 transition-transform duration-300">
-        <span
-            class="absolute -top-3 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm animate-pulse">Instalar</span>
-    </button>
+    <!-- PWA Installation Modal (Onboarding) -->
+    <div id="install-pwa-modal"
+        class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div
+            class="bg-white rounded-[2.5rem] p-8 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300 relative overflow-hidden text-center border border-orange-100">
+            <!-- Decorative blur background -->
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-accent/10 rounded-full blur-3xl"></div>
+
+            <div class="relative z-10">
+                <h2 class="text-2xl font-display font-medium text-textMain mb-2">¡Sabores Y&B en el Inicio de tu
+                    dispositivo!</h2>
+
+                <!-- Company Logo -->
+                <div class="flex justify-center mb-6">
+                    <img src="assets/images/logo.png" alt="Sabores Y&B" class="w-20 h-20 object-contain drop-shadow-md">
+                </div>
+
+                <!-- Android Specific Section -->
+                <div id="android-install-view" class="hidden animate-in fade-in zoom-in duration-300">
+                    <p class="text-gray-600 mb-8 text-sm leading-relaxed font-medium">Instala nuestra App para pedir más
+                        rápido y recibir notificaciones de tus empanadas.</p>
+                    <button id="btn-pwa-install-now"
+                        class="w-full bg-gradient-to-r from-primary to-green-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-95 transition-all text-base mb-3">
+                        Instalar aplicación
+                    </button>
+                </div>
+
+                <!-- iOS Specific Section -->
+                <div id="ios-install-view" class="hidden animate-in fade-in zoom-in duration-300">
+                    <p class="text-gray-600 mb-6 text-sm leading-relaxed font-medium">Instala nuestra App para pedir más
+                        rápido.</p>
+
+                    <div class="p-4 bg-blue-50 border border-blue-100 rounded-2xl text-left mb-6">
+                        <p class="text-xs text-blue-700 font-medium mb-3 leading-relaxed text-center">
+                            Sigue estos pasos en tu iPhone/iPad:
+                        </p>
+                        <ol class="text-[11px] text-blue-600 space-y-2 list-decimal list-inside ml-1 font-medium">
+                            <li>Presiona el botón <span
+                                    class="bg-white px-1.5 py-0.5 rounded border border-blue-200">Compartir <i
+                                        class="far fa-share-square"></i></span></li>
+                            <li>Selecciona <span class="bg-white px-1.5 py-0.5 rounded border border-blue-200">"Añadir a
+                                    la pantalla de inicio" <i class="far fa-plus-square"></i></span></li>
+                            <li>Pulsa <span class="font-bold text-blue-800 underline">Añadir</span> en la esquina
+                                superior.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <button id="btn-pwa-close-modal"
+                    class="w-full bg-gray-50 text-gray-400 font-semibold py-3 rounded-2xl hover:bg-gray-100 transition-colors text-sm">
+                    Luego
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Floating Cart Button -->
     <button id="cart-toggle-btn"
@@ -179,8 +229,11 @@
         class="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-80 lg:w-96 bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-2 border-orange-100 z-50 transform scale-0 origin-bottom-right transition-transform duration-300 flex flex-col max-h-[70vh] ring-8 ring-black/5">
         <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-3xl">
             <div class="flex items-center gap-2">
-                <h3 class="font-display text-xl text-textMain"><i class="fas fa-shopping-basket text-primary mr-2"></i>Tu Orden</h3>
-                <button id="btn-config-order" class="text-[10px] bg-gray-200 text-gray-700 px-2 py-1 rounded-md font-bold hover:bg-gray-300 transition shadow-sm"><i class="fas fa-cog mr-1"></i>Configurar Pedido</button>
+                <h3 class="font-display text-xl text-textMain"><i
+                        class="fas fa-shopping-basket text-primary mr-2"></i>Tu Orden</h3>
+                <button id="btn-config-order"
+                    class="text-[10px] bg-gray-200 text-gray-700 px-2 py-1 rounded-md font-bold hover:bg-gray-300 transition shadow-sm"><i
+                        class="fas fa-cog mr-1"></i>Configurar Pedido</button>
             </div>
             <div class="flex items-center gap-4">
                 <button id="clear-cart-btn" class="text-xs text-red-500 font-bold hover:underline hidden"><i
@@ -221,7 +274,8 @@
                 class="w-full bg-primary text-white font-bold py-3 rounded-full hover:bg-green-700 transition shadow-lg flex justify-center items-center mb-2">
                 Entendido
             </button>
-            <button id="btn-test-continue" class="w-full text-xs text-red-400 hover:text-red-600 transition underline decoration-red-200 py-1">
+            <button id="btn-test-continue"
+                class="w-full text-xs text-red-400 hover:text-red-600 transition underline decoration-red-200 py-1">
                 Omitir horario (Simular pedido)
             </button>
         </div>
@@ -240,8 +294,13 @@
             <p class="text-gray-600 text-center mb-6 text-base"><b>Confirma la disponibilidad de los sabores por
                     WhatsApp</b> antes de realizar cualquier pago.</p>
             <button id="btn-confirm-whatsapp"
-                class="w-full bg-green-500 text-white font-bold py-3 rounded-full hover:bg-green-600 transition shadow-lg shadow-green-500/30 flex justify-center items-center">
-                <i class="fab fa-whatsapp text-xl mr-2"></i> Ir a WhatsApp
+                class="w-full bg-green-500 text-white font-bold py-3 rounded-full hover:bg-green-600 transition shadow-lg shadow-green-500/30 flex justify-center items-center group">
+                <i class="fab fa-whatsapp text-xl mr-2 group-hover:scale-110 transition-transform"></i> Enviar Pedido a
+                WhatsApp
+            </button>
+            <button id="btn-copy-all-final"
+                class="w-full mt-3 py-3 px-6 bg-gray-100 text-gray-700 font-bold rounded-full hover:bg-gray-200 transition-all flex items-center justify-center gap-2 border border-gray-200 shadow-sm text-sm">
+                <i class="fas fa-copy"></i> Copiar todos los datos de pago
             </button>
             <button id="btn-cancel-modal"
                 class="w-full mt-3 text-gray-400 font-bold py-2 rounded-full hover:text-gray-600 transition">
@@ -253,13 +312,16 @@
     <!-- Modal de Configuración de Orden -->
     <div id="config-order-modal"
         class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[65] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300">
+        <div
+            class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300">
             <h3 class="text-2xl font-display text-textMain text-center mb-4">¿Cómo deseas tu pedido?</h3>
             <div class="space-y-4 mb-6">
                 <!-- Opción PickUp -->
-                <button id="btn-pickup" class="w-full relative bg-gray-50 border-2 border-gray-200 hover:border-primary hover:bg-green-50 rounded-xl p-4 text-left transition group">
+                <button id="btn-pickup"
+                    class="w-full relative bg-gray-50 border-2 border-gray-200 hover:border-primary hover:bg-green-50 rounded-xl p-4 text-left transition group">
                     <div class="flex items-center">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary text-xl shadow-sm mr-4 group-hover:scale-110 transition">
+                        <div
+                            class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary text-xl shadow-sm mr-4 group-hover:scale-110 transition">
                             <i class="fas fa-store"></i>
                         </div>
                         <div>
@@ -269,9 +331,11 @@
                     </div>
                 </button>
                 <!-- Opción Delivery -->
-                <button id="btn-delivery" class="w-full relative bg-gray-50 border-2 border-gray-200 hover:border-orange-500 hover:bg-orange-50 rounded-xl p-4 text-left transition group">
+                <button id="btn-delivery"
+                    class="w-full relative bg-gray-50 border-2 border-gray-200 hover:border-orange-500 hover:bg-orange-50 rounded-xl p-4 text-left transition group">
                     <div class="flex items-center">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-orange-500 text-xl shadow-sm mr-4 group-hover:scale-110 transition">
+                        <div
+                            class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-orange-500 text-xl shadow-sm mr-4 group-hover:scale-110 transition">
                             <i class="fas fa-motorcycle"></i>
                         </div>
                         <div>
@@ -289,32 +353,44 @@
     </div>
 
     <!-- Modal de Delivery (Mapa) -->
-    <div id="delivery-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[70] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+    <div id="delivery-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[70] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-3xl p-5 sm:p-8 max-w-lg w-full shadow-2xl flex flex-col max-h-[90vh]">
             <h3 class="text-xl font-display text-textMain mb-3 flex items-center justify-between">
                 <div><i class="fas fa-map-marked-alt text-orange-500 mr-2"></i>Destino de Envío</div>
-                <div class="bg-orange-100 text-orange-600 text-[10px] sm:text-xs font-sans font-semibold px-2 py-1 rounded-xl whitespace-nowrap border border-orange-200 shadow-sm flex flex-col items-end leading-none">
-                    <span class="font-sans font-semibold italic-none uppercase tracking-tight"><i class="fas fa-info-circle mr-1"></i>Tarifa: <span class="price-display text-orange-700 font-bold" data-dolar="0.43">Bs. -</span> / km</span>
+                <div
+                    class="bg-orange-100 text-orange-600 text-[10px] sm:text-xs font-sans font-semibold px-2 py-1 rounded-xl whitespace-nowrap border border-orange-200 shadow-sm flex flex-col items-end leading-none">
+                    <span class="font-sans font-semibold italic-none uppercase tracking-tight"><i
+                            class="fas fa-info-circle mr-1"></i>Tarifa: <span
+                            class="price-display text-orange-700 font-bold" data-dolar="0.43">Bs. -</span> / km</span>
                     <span class="text-[8px] sm:text-[9px] font-normal opacity-70 mt-1">Ref: $0.43 / km</span>
                 </div>
             </h3>
             <p class="text-xs text-gray-500 mb-3">Busca tu zona o mueve el mapa para calcular el costo del delivery.</p>
-            
+
             <div class="mb-3 flex gap-2">
-                <input type="text" id="delivery-search-input" placeholder="Buscar sector (ej. Base Aragua)" class="flex-grow border border-gray-300 rounded-lg px-3 py-2 text-md focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
-                <button id="btn-search-location" class="bg-orange-500 text-white px-4 rounded-lg hover:bg-orange-600 transition"><i class="fas fa-search"></i></button>
+                <input type="text" id="delivery-search-input" placeholder="Buscar sector (ej. Base Aragua)"
+                    class="flex-grow border border-gray-300 rounded-lg px-3 py-2 text-md focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
+                <button id="btn-search-location"
+                    class="bg-orange-500 text-white px-4 rounded-lg hover:bg-orange-600 transition"><i
+                        class="fas fa-search"></i></button>
             </div>
-            
-            <button id="btn-gps-location" class="w-full text-xs text-blue-600 font-semibold flex items-center justify-center gap-1 hover:underline mb-3 py-1">
+
+            <button id="btn-gps-location"
+                class="w-full text-xs text-blue-600 font-semibold flex items-center justify-center gap-1 hover:underline mb-3 py-1">
                 <i class="fas fa-crosshairs"></i> Usar mi ubicación actual
             </button>
-            
-            <div id="delivery-map" class="w-full h-48 sm:h-56 bg-gray-200 rounded-xl mb-4 relative z-0 border border-gray-200 shadow-inner"></div>
-            
-            <div class="bg-orange-50/80 border border-orange-100 rounded-xl p-3 mb-4 flex justify-between items-center" id="delivery-info-box">
+
+            <div id="delivery-map"
+                class="w-full h-48 sm:h-56 bg-gray-200 rounded-xl mb-4 relative z-0 border border-gray-200 shadow-inner">
+            </div>
+
+            <div class="bg-orange-50/80 border border-orange-100 rounded-xl p-3 mb-4 flex justify-between items-center"
+                id="delivery-info-box">
                 <div>
                     <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wide">Costo Estimado</p>
-                    <p class="text-xs text-gray-600 mt-0.5"><i class="fas fa-route text-gray-400 mr-1"></i>Distancia: <span id="delivery-distance" class="font-bold text-gray-800">0.00</span> km</p>
+                    <p class="text-xs text-gray-600 mt-0.5"><i class="fas fa-route text-gray-400 mr-1"></i>Distancia:
+                        <span id="delivery-distance" class="font-bold text-gray-800">0.00</span> km</p>
                 </div>
                 <div class="text-right">
                     <p id="delivery-cost" class="font-sans font-semibold text-lg sm:text-xl text-orange-600">$0.00</p>
@@ -322,22 +398,29 @@
             </div>
 
             <!-- Warning minimum price -->
-            <div id="delivery-warning-box" class="bg-red-50 border-2 border-red-200 rounded-xl p-3 mb-4 hidden shadow-sm translate-y-1 transition-all duration-300">
+            <div id="delivery-warning-box"
+                class="bg-red-50 border-2 border-red-200 rounded-xl p-3 mb-4 hidden shadow-sm translate-y-1 transition-all duration-300">
                 <div class="flex items-center gap-3">
-                    <div class="bg-red-100 text-red-600 w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+                    <div
+                        class="bg-red-100 text-red-600 w-10 h-10 rounded-full flex items-center justify-center shrink-0">
                         <i class="fas fa-exclamation-triangle"></i>
                     </div>
                     <div>
                         <p class="text-xs text-red-800 font-bold leading-tight">Ubicación muy cercana</p>
-                        <p class="text-[11px] text-red-600 mt-1 leading-tight">El costo de envío es menor a $0.20. Asegúrate de que la ubicación sea correcta o confirma que deseas continuar con este monto.</p>
+                        <p class="text-[11px] text-red-600 mt-1 leading-tight">El costo de envío es menor a $0.20.
+                            Asegúrate de que la ubicación sea correcta o confirma que deseas continuar con este monto.
+                        </p>
                     </div>
                 </div>
             </div>
-            
-            <button id="btn-confirm-delivery" class="w-full bg-orange-500 text-white font-bold py-3 rounded-full hover:bg-orange-600 transition shadow-lg flex justify-center items-center group shadow-orange-500/30">
-                Confirmar <span id="delivery-total-btn" class="ml-1 text-orange-100 font-normal"></span> <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+
+            <button id="btn-confirm-delivery"
+                class="w-full bg-orange-500 text-white font-bold py-3 rounded-full hover:bg-orange-600 transition shadow-lg flex justify-center items-center group shadow-orange-500/30">
+                Confirmar <span id="delivery-total-btn" class="ml-1 text-orange-100 font-normal"></span> <i
+                    class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
             </button>
-            <button id="btn-cancel-delivery" class="w-full mt-2 text-gray-400 font-bold py-2 rounded-full hover:text-gray-600 transition">
+            <button id="btn-cancel-delivery"
+                class="w-full mt-2 text-gray-400 font-bold py-2 rounded-full hover:text-gray-600 transition">
                 Volver
             </button>
         </div>
@@ -397,7 +480,8 @@
                     class="flex items-center gap-1.5 hover:text-white/80 transition group">
                     <i class="fas fa-map-marker-alt text-red-500/80 group-hover:animate-bounce"></i>
                     <span
-                        class="underline decoration-2 underline-offset-4 decoration-red-500/30 group-hover:decoration-red-500">Ubícanos en Maracay</span>
+                        class="underline decoration-2 underline-offset-4 decoration-red-500/30 group-hover:decoration-red-500">Ubícanos
+                        en Maracay</span>
                 </a>
             </div>
         </div>
@@ -426,6 +510,22 @@
                 <div class="w-24 h-1 bg-accent mx-auto rounded-full mt-6"></div>
             </div>
 
+            <!-- Disclaimer Note -->
+            <div class="mb-12 max-w-2xl mx-auto reveal">
+                <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-2xl shadow-sm">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-info-circle text-amber-500 text-xl"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-amber-800 font-medium">
+                                <b>Nota:</b> Las imágenes de la web son referenciales. ¡Muy pronto tendremos fotos reales de nuestras deliciosas empanadas!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Empanadas Clásicas Category -->
             <div class="mb-20">
                 <div class="flex items-center gap-4 mb-10 reveal">
@@ -440,40 +540,70 @@
                     <!-- Item: Carne Mechada -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/carne_mechada.png" alt="Carne Mechada" class="w-full h-full object-cover ">
+                            <img src="assets/images/carne_mechada.png" alt="Carne Mechada"
+                                class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Carne Mechada</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Carne Mechada</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-mechada">-</button>
-                                    <input type="number" id="qty-mechada" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-mechada">+</button>
+                                <div
+                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
+                                        data-target="qty-mechada">-</button>
+                                    <input type="number" id="qty-mechada"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
+                                        data-target="qty-mechada">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-mechada" data-name="Carne Mechada" data-price="1.50">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-mechada" data-name="Carne Mechada" data-price="1.50">Añadir</button>
                             </div>
                         </div>
                     </div>
                     <!-- Item: Jamón con Queso -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/jamon_queso.png" alt="Jamón con Queso" class="w-full h-full object-cover ">
+                            <img src="assets/images/jamon_queso.png" alt="Jamón con Queso"
+                                class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Jamón con Queso</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Jamón con Queso</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-jamonq">-</button>
-                                    <input type="number" id="qty-jamonq" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-jamonq">+</button>
+                                <div
+                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
+                                        data-target="qty-jamonq">-</button>
+                                    <input type="number" id="qty-jamonq"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
+                                        data-target="qty-jamonq">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-jamonq" data-name="Jamón con Queso" data-price="1.50">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-jamonq" data-name="Jamón con Queso" data-price="1.50">Añadir</button>
                             </div>
                         </div>
                     </div>
@@ -483,57 +613,102 @@
                             <img src="assets/images/pollo.png" alt="Pollo" class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Pollo</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Pollo</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-pollo">-</button>
-                                    <input type="number" id="qty-pollo" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-pollo">+</button>
+                                <div
+                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
+                                        data-target="qty-pollo">-</button>
+                                    <input type="number" id="qty-pollo"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
+                                        data-target="qty-pollo">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-pollo" data-name="Pollo" data-price="1.50">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-pollo" data-name="Pollo" data-price="1.50">Añadir</button>
                             </div>
                         </div>
                     </div>
                     <!-- Item: Carne Molida -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/carne_molida.png" alt="Carne Molida" class="w-full h-full object-cover">
+                            <img src="assets/images/carne_molida.png" alt="Carne Molida"
+                                class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Carne Molida</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Carne Molida</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-molida">-</button>
-                                    <input type="number" id="qty-molida" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-molida">+</button>
+                                <div
+                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
+                                        data-target="qty-molida">-</button>
+                                    <input type="number" id="qty-molida"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
+                                        data-target="qty-molida">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-molida" data-name="Carne Molida" data-price="1.50">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-molida" data-name="Carne Molida" data-price="1.50">Añadir</button>
                             </div>
                         </div>
                     </div>
                     <!-- Item: Queso blanco (Llanero) -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/queso_blanco.png" alt="Queso blanco (Llanero)" class="w-full h-full object-cover ">
+                            <img src="assets/images/queso_blanco.png" alt="Queso blanco (Llanero)"
+                                class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Queso blanco (Llanero)</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Queso blanco (Llanero)</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-quesobl">-</button>
-                                    <input type="number" id="qty-quesobl" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-quesobl">+</button>
+                                <div
+                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
+                                        data-target="qty-quesobl">-</button>
+                                    <input type="number" id="qty-quesobl"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
+                                        data-target="qty-quesobl">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-quesobl" data-name="Queso blanco (Llanero)" data-price="1.50">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-quesobl" data-name="Queso blanco (Llanero)"
+                                    data-price="1.50">Añadir</button>
                             </div>
                         </div>
                     </div>
@@ -543,57 +718,101 @@
                             <img src="assets/images/pabellon.png" alt="Pabellón" class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Pabellón (Mechada, Caraotas y Queso)</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Pabellón (Mechada, Caraotas y Queso)</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-pabellon">-</button>
-                                    <input type="number" id="qty-pabellon" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-pabellon">+</button>
+                                <div
+                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
+                                        data-target="qty-pabellon">-</button>
+                                    <input type="number" id="qty-pabellon"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
+                                        data-target="qty-pabellon">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-pabellon" data-name="Pabellón" data-price="1.50">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-pabellon" data-name="Pabellón" data-price="1.50">Añadir</button>
                             </div>
                         </div>
                     </div>
                     <!-- Item: Guiso Navideño -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/navideno.png" alt="Guiso Navideño" class="w-full h-full object-cover">
+                            <img src="assets/images/navideno.png" alt="Guiso Navideño"
+                                class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Guiso Navideño</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Guiso Navideño</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-navideno">-</button>
-                                    <input type="number" id="qty-navideno" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-navideno">+</button>
+                                <div
+                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
+                                        data-target="qty-navideno">-</button>
+                                    <input type="number" id="qty-navideno"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
+                                        data-target="qty-navideno">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-navideno" data-name="Guiso Navideño" data-price="1.50">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-navideno" data-name="Guiso Navideño" data-price="1.50">Añadir</button>
                             </div>
                         </div>
                     </div>
                     <!-- Item: Macabí (Pescado) -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/macabi.png" alt="Macabí (Pescado)" class="w-full h-full object-cover">
+                            <img src="assets/images/macabi.png" alt="Macabí (Pescado)"
+                                class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Macabí (Pescado)</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Macabí (Pescado)</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.50</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.50</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-macabi">-</button>
-                                    <input type="number" id="qty-macabi" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-macabi">+</button>
+                                <div
+                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
+                                        data-target="qty-macabi">-</button>
+                                    <input type="number" id="qty-macabi"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
+                                        data-target="qty-macabi">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-macabi" data-name="Macabí (Pescado)" data-price="1.50">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-macabi" data-name="Macabí (Pescado)" data-price="1.50">Añadir</button>
                             </div>
                         </div>
                     </div>
@@ -612,128 +831,242 @@
                     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6">
 
                     <!-- Item: Mechada con Queso (Pelúa) -->
-                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
+                    <div
+                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"><i class="fas fa-crown mr-1"></i> Especial</div>
-                            <img src="assets/images/pelua.png" alt="Mechada con Queso (Pelúa)" class="w-full h-full object-cover ">
+                            <div
+                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                <i class="fas fa-crown mr-1"></i> Especial</div>
+                            <img src="assets/images/pelua.png" alt="Mechada con Queso (Pelúa)"
+                                class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Mechada con Queso (Pelúa)</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Mechada con Queso (Pelúa)</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn" data-target="qty-esp-pelua">-</button>
-                                    <input type="number" id="qty-esp-pelua" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn" data-target="qty-esp-pelua">+</button>
+                                <div
+                                    class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn"
+                                        data-target="qty-esp-pelua">-</button>
+                                    <input type="number" id="qty-esp-pelua"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn"
+                                        data-target="qty-esp-pelua">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-pelua" data-name="Mechada con Queso (Pelúa)" data-price="1.80">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-esp-pelua" data-name="Mechada con Queso (Pelúa)"
+                                    data-price="1.80">Añadir</button>
                             </div>
                         </div>
                     </div>
                     <!-- Item: Molida con Queso -->
-                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
+                    <div
+                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"><i class="fas fa-crown mr-1"></i> Especial</div>
-                            <img src="assets/images/molida_queso.png" alt="Molida con Queso" class="w-full h-full object-cover">
+                            <div
+                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                <i class="fas fa-crown mr-1"></i> Especial</div>
+                            <img src="assets/images/molida_queso.png" alt="Molida con Queso"
+                                class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Molida con Queso</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Molida con Queso</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn" data-target="qty-esp-molidaq">-</button>
-                                    <input type="number" id="qty-esp-molidaq" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn" data-target="qty-esp-molidaq">+</button>
+                                <div
+                                    class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn"
+                                        data-target="qty-esp-molidaq">-</button>
+                                    <input type="number" id="qty-esp-molidaq"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn"
+                                        data-target="qty-esp-molidaq">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-molidaq" data-name="Molida con Queso" data-price="1.80">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-esp-molidaq" data-name="Molida con Queso"
+                                    data-price="1.80">Añadir</button>
                             </div>
                         </div>
                     </div>
                     <!-- Item: Pollo con Queso (Catira) -->
-                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
+                    <div
+                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"><i class="fas fa-crown mr-1"></i> Especial</div>
-                            <img src="assets/images/catira.png" alt="Pollo con Queso (Catira)" class="w-full h-full object-cover ">
+                            <div
+                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                <i class="fas fa-crown mr-1"></i> Especial</div>
+                            <img src="assets/images/catira.png" alt="Pollo con Queso (Catira)"
+                                class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Pollo con Queso (Catira)</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Pollo con Queso (Catira)</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn" data-target="qty-esp-catira">-</button>
-                                    <input type="number" id="qty-esp-catira" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn" data-target="qty-esp-catira">+</button>
+                                <div
+                                    class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn"
+                                        data-target="qty-esp-catira">-</button>
+                                    <input type="number" id="qty-esp-catira"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn"
+                                        data-target="qty-esp-catira">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-catira" data-name="Pollo con Queso (Catira)" data-price="1.80">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-esp-catira" data-name="Pollo con Queso (Catira)"
+                                    data-price="1.80">Añadir</button>
                             </div>
                         </div>
                     </div>
                     <!-- Item: Caraota con Queso (Dominó) -->
-                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
+                    <div
+                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"><i class="fas fa-crown mr-1"></i> Especial</div>
-                            <img src="assets/images/domino.png" alt="Caraota con Queso (Dominó)" class="w-full h-full object-cover">
+                            <div
+                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                <i class="fas fa-crown mr-1"></i> Especial</div>
+                            <img src="assets/images/domino.png" alt="Caraota con Queso (Dominó)"
+                                class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Caraota con Queso (Dominó)</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Caraota con Queso (Dominó)</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn" data-target="qty-esp-domino">-</button>
-                                    <input type="number" id="qty-esp-domino" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn" data-target="qty-esp-domino">+</button>
+                                <div
+                                    class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn"
+                                        data-target="qty-esp-domino">-</button>
+                                    <input type="number" id="qty-esp-domino"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn"
+                                        data-target="qty-esp-domino">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-domino" data-name="Caraota con Queso (Dominó)" data-price="1.80">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-esp-domino" data-name="Caraota con Queso (Dominó)"
+                                    data-price="1.80">Añadir</button>
                             </div>
                         </div>
                     </div>
                     <!-- Item: Gordon Blue de Mechada -->
-                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
+                    <div
+                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"><i class="fas fa-crown mr-1"></i> Especial</div>
-                            <img src="assets/images/gordon_blue_mechada.png" alt="Gordon Blue de Mechada" class="w-full h-full object-cover">
+                            <div
+                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                <i class="fas fa-crown mr-1"></i> Especial</div>
+                            <img src="assets/images/gordon_blue_mechada.png" alt="Gordon Blue de Mechada"
+                                class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Gordon Blue de Mechada</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Gordon Blue de Mechada</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn" data-target="qty-esp-cbm">-</button>
-                                    <input type="number" id="qty-esp-cbm" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn" data-target="qty-esp-cbm">+</button>
+                                <div
+                                    class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn"
+                                        data-target="qty-esp-cbm">-</button>
+                                    <input type="number" id="qty-esp-cbm"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn"
+                                        data-target="qty-esp-cbm">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-cbm" data-name="Gordon Blue de Mechada" data-price="1.80">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-esp-cbm" data-name="Gordon Blue de Mechada"
+                                    data-price="1.80">Añadir</button>
                             </div>
                         </div>
                     </div>
                     <!-- Item: Gordon Blue de Pollo -->
-                    <div class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
+                    <div
+                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"><i class="fas fa-crown mr-1"></i> Especial</div>
-                            <img src="assets/images/gordon_blue_pollo.png" alt="Gordon Blue de Pollo" class="w-full h-full object-cover">
+                            <div
+                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                <i class="fas fa-crown mr-1"></i> Especial</div>
+                            <img src="assets/images/gordon_blue_pollo.png" alt="Gordon Blue de Pollo"
+                                class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">Gordon Blue de Pollo</h4>
+                            <h4
+                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
+                                Gordon Blue de Pollo</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: $1.80</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
+                                        data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
+                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
+                                        $1.80</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn" data-target="qty-esp-cbp">-</button>
-                                    <input type="number" id="qty-esp-cbp" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
-                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn" data-target="qty-esp-cbp">+</button>
+                                <div
+                                    class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button
+                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn"
+                                        data-target="qty-esp-cbp">-</button>
+                                    <input type="number" id="qty-esp-cbp"
+                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
+                                        value="1" min="1" readonly>
+                                    <button
+                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn"
+                                        data-target="qty-esp-cbp">+</button>
                                 </div>
-                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-esp-cbp" data-name="Gordon Blue de Pollo" data-price="1.80">Añadir</button>
+                                <button
+                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
+                                    data-qty="qty-esp-cbp" data-name="Gordon Blue de Pollo"
+                                    data-price="1.80">Añadir</button>
                             </div>
                         </div>
                     </div>
@@ -748,8 +1081,10 @@
                     <div class="h-px bg-gray-200 flex-grow"></div>
                 </div>
 
-                <div class="bg-gray-50 border-2 border-dashed border-gray-200 rounded-3xl p-8 sm:p-12 text-center reveal">
-                    <div class="w-16 h-16 bg-gray-200 text-gray-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 hover:scale-110 transition-transform">
+                <div
+                    class="bg-gray-50 border-2 border-dashed border-gray-200 rounded-3xl p-8 sm:p-12 text-center reveal">
+                    <div
+                        class="w-16 h-16 bg-gray-200 text-gray-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 hover:scale-110 transition-transform">
                         <i class="fas fa-clock"></i>
                     </div>
                     <h4 class="text-xl sm:text-2xl font-bold text-gray-500 mb-2">Próximamente</h4>
@@ -765,12 +1100,15 @@
                     <div class="h-px bg-gray-200 flex-grow"></div>
                 </div>
 
-                <div class="bg-pink-50 border-2 border-dashed border-pink-200 rounded-3xl p-8 sm:p-12 text-center reveal">
-                    <div class="w-16 h-16 bg-pink-100 text-pink-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 hover:rotate-12 transition-transform">
+                <div
+                    class="bg-pink-50 border-2 border-dashed border-pink-200 rounded-3xl p-8 sm:p-12 text-center reveal">
+                    <div
+                        class="w-16 h-16 bg-pink-100 text-pink-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 hover:rotate-12 transition-transform">
                         <i class="fas fa-star"></i>
                     </div>
                     <h4 class="text-xl sm:text-2xl font-bold text-pink-600 mb-2">Próximamente</h4>
-                    <p class="text-sm text-pink-500/80">Muy pronto endulzaremos tus pedidos con las mejores chucherías.</p>
+                    <p class="text-sm text-pink-500/80">Muy pronto endulzaremos tus pedidos con las mejores chucherías.
+                    </p>
                 </div>
             </div>
 
@@ -782,12 +1120,15 @@
                     <div class="h-px bg-gray-200 flex-grow"></div>
                 </div>
 
-                <div class="bg-indigo-50 border-2 border-dashed border-indigo-200 rounded-3xl p-8 sm:p-12 text-center reveal">
-                    <div class="w-16 h-16 bg-indigo-100 text-indigo-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 hover:scale-110 transition-transform">
+                <div
+                    class="bg-indigo-50 border-2 border-dashed border-indigo-200 rounded-3xl p-8 sm:p-12 text-center reveal">
+                    <div
+                        class="w-16 h-16 bg-indigo-100 text-indigo-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 hover:scale-110 transition-transform">
                         <i class="fas fa-box-open"></i>
                     </div>
                     <h4 class="text-xl sm:text-2xl font-bold text-indigo-600 mb-2">Próximamente</h4>
-                    <p class="text-sm text-indigo-500/80">Pronto encontrarás productos básicos para tu día a día y hogar.</p>
+                    <p class="text-sm text-indigo-500/80">Pronto encontrarás productos básicos para tu día a día y
+                        hogar.</p>
                 </div>
             </div>
 
@@ -803,12 +1144,17 @@
                     <i class="fas fa-money-bill-wave"></i>
                 </div>
                 <h2 class="text-3xl font-display text-textMain mb-4">¡Casi listo! Realiza tu Pago</h2>
-                <p class="text-gray-600 mb-6 font-medium">Por favor realiza el pago y repórtalo en WhatsApp antes de que el tiempo termine.<br><span class="text-sm font-normal text-gray-500">De lo contrario, tu sesión se reiniciará por seguridad para evitar errores con los montos a transferir.</span></p>
-                
+                <p class="text-gray-600 mb-6 font-medium">Por favor realiza el pago y repórtalo en WhatsApp antes de que
+                    el tiempo termine.<br><span class="text-sm font-normal text-gray-500">De lo contrario, tu sesión se
+                        reiniciará por seguridad para evitar errores con los montos a transferir.</span></p>
+
                 <!-- Countdown Timer -->
-                <div class="bg-orange-50 border border-orange-200 rounded-2xl p-4 mb-8 mx-auto max-w-sm flex flex-col items-center justify-center shadow-sm">
-                    <p class="text-orange-800 text-sm font-bold mb-1"><i class="fas fa-stopwatch mr-1 animate-pulse"></i> Tienes 20 minutos para pagar</p>
-                    <div id="payment-timer" class="text-4xl font-display text-orange-600 font-bold tracking-wider">20:00</div>
+                <div
+                    class="bg-orange-50 border border-orange-200 rounded-2xl p-4 mb-8 mx-auto max-w-sm flex flex-col items-center justify-center shadow-sm">
+                    <p class="text-orange-800 text-sm font-bold mb-1"><i
+                            class="fas fa-stopwatch mr-1 animate-pulse"></i> Tienes 20 minutos para pagar</p>
+                    <div id="payment-timer" class="text-4xl font-display text-orange-600 font-bold tracking-wider">20:00
+                    </div>
                 </div>
 
                 <div class="mb-8 max-w-md mx-auto">
@@ -831,29 +1177,44 @@
                             <div class="flex justify-between items-center border-b border-red-50 pb-2">
                                 <span class="text-gray-500 text-sm">Banco</span>
                                 <div class="flex items-center gap-1 sm:gap-2">
-                                    <span class="text-red-900 font-sans font-semibold text-base sm:text-lg">0102 (Venezuela)</span>
-                                    <button class="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single" data-copy="0102" title="Copiar Banco"><i class="far fa-copy"></i></button>
+                                    <span class="text-red-900 font-sans font-semibold text-base sm:text-lg">0102
+                                        (Venezuela)</span>
+                                    <button
+                                        class="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single"
+                                        data-copy="0102" title="Copiar Banco"><i class="far fa-copy"></i></button>
                                 </div>
                             </div>
                             <div class="flex justify-between items-center border-b border-red-50 pb-2">
                                 <span class="text-gray-500 text-sm">Teléfono</span>
                                 <div class="flex items-center gap-1 sm:gap-2">
-                                    <span class="text-red-900 font-sans font-semibold text-base sm:text-lg">04161071344</span>
-                                    <button class="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single" data-copy="04161071344" title="Copiar Teléfono"><i class="far fa-copy"></i></button>
+                                    <span
+                                        class="text-red-900 font-sans font-semibold text-base sm:text-lg">04161071344</span>
+                                    <button
+                                        class="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single"
+                                        data-copy="04161071344" title="Copiar Teléfono"><i
+                                            class="far fa-copy"></i></button>
                                 </div>
                             </div>
                             <div class="flex justify-between items-center border-b border-red-50 pb-2">
                                 <span class="text-gray-500 text-sm">Cédula</span>
                                 <div class="flex items-center gap-1 sm:gap-2">
-                                    <span class="text-red-900 font-sans font-semibold text-base sm:text-lg">V12993940</span>
-                                    <button class="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single" data-copy="V12993940" title="Copiar Cédula"><i class="far fa-copy"></i></button>
+                                    <span
+                                        class="text-red-900 font-sans font-semibold text-base sm:text-lg">V12993940</span>
+                                    <button
+                                        class="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single"
+                                        data-copy="V12993940" title="Copiar Cédula"><i class="far fa-copy"></i></button>
                                 </div>
                             </div>
                             <div class="flex justify-between items-center pt-2 mt-2">
                                 <span class="text-primary text-sm font-semibold">Monto Exacto</span>
                                 <div class="flex items-center gap-1 sm:gap-2">
-                                    <span class="text-primary font-sans font-semibold text-xl sm:text-2xl drop-shadow-sm" id="pago-total-bs">Bs. 0.00</span>
-                                    <button class="text-red-400 hover:text-red-700 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single text-lg" id="btn-copy-monto" data-copy="0.00" title="Copiar Monto exacto"><i class="far fa-copy"></i></button>
+                                    <span
+                                        class="text-primary font-sans font-semibold text-xl sm:text-2xl drop-shadow-sm"
+                                        id="pago-total-bs">Bs. 0.00</span>
+                                    <button
+                                        class="text-red-400 hover:text-red-700 hover:bg-red-50 rounded-lg transition p-1 sm:p-2 copy-btn-single text-lg"
+                                        id="btn-copy-monto" data-copy="0.00" title="Copiar Monto exacto"><i
+                                            class="far fa-copy"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -867,8 +1228,9 @@
                 </div>
 
                 <button id="btn-completar-pedido"
-                    class="w-full bg-green-500 text-white font-bold py-4 rounded-full hover:bg-green-600 transition shadow-lg shadow-green-500/30 text-lg flex items-center justify-center mt-6">
-                    <i class="fab fa-whatsapp text-2xl mr-2"></i> Reportar Pago en WhatsApp
+                    class="w-full bg-green-500 text-white font-bold py-4 rounded-full hover:bg-green-600 transition shadow-lg shadow-green-500/30 text-lg flex items-center justify-center mt-6 group">
+                    <i class="fab fa-whatsapp text-2xl mr-2 group-hover:scale-110 transition-transform"></i> Reportar
+                    Pago en WhatsApp
                 </button>
             </div>
         </div>
@@ -906,7 +1268,9 @@
                     <span>Desarrollado con</span>
                     <i class="fas fa-heart text-red-500 animate-pulse"></i>
                     <span>por</span>
-                    <a href="https://github.com/wydex28" target="_blank" class="text-primary hover:text-green-400 font-bold transition flex items-center gap-1 hover:-translate-y-0.5 hover:scale-105" title="Creador: wydex28">
+                    <a href="https://github.com/wydex28" target="_blank"
+                        class="text-primary hover:text-green-400 font-bold transition flex items-center gap-1 hover:-translate-y-0.5 hover:scale-105"
+                        title="Creador: wydex28">
                         <i class="fab fa-github text-sm"></i> wydex28
                     </a>
                 </div>
@@ -985,21 +1349,21 @@
             var deliveryMarker = null;
 
             // Funciones de Distancia Haversine
-            function deg2rad(deg) { return deg * (Math.PI/180); }
+            function deg2rad(deg) { return deg * (Math.PI / 180); }
             function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-                var R = 6371; 
-                var dLat = deg2rad(lat2-lat1);  
-                var dLon = deg2rad(lon2-lon1); 
-                var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-                        Math.sin(dLon/2) * Math.sin(dLon/2); 
-                return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+                var R = 6371;
+                var dLat = deg2rad(lat2 - lat1);
+                var dLon = deg2rad(lon2 - lon1);
+                var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
             }
 
             function updateDeliveryCost(lat, lng) {
                 var dist = getDistanceFromLatLonInKm(STORE_LAT, STORE_LNG, lat, lng);
                 var cost = dist * DELIVERY_RATE_PER_KM;
-                
+
                 orderConfig.distance = dist;
                 orderConfig.deliveryCost = cost;
                 orderConfig.lat = lat;
@@ -1010,11 +1374,11 @@
                 $('#delivery-cost').html(`Bs. ${bsCost.toFixed(2)}<br><span class="text-xs text-gray-500 font-sans tracking-normal opacity-80">Ref: $${cost.toFixed(2)}</span>`);
 
                 var currentTotalStr = '';
-                if(cart.length > 0) {
-                   var baseTotal = cart.reduce((acc, current) => acc + (current.price * current.qty), 0);
-                   var finalTotal = baseTotal + cost;
-                   let bsFinalTotal = finalTotal * bcvRate;
-                   currentTotalStr = `- Total Orden: Bs. ${bsFinalTotal.toFixed(2)}`;
+                if (cart.length > 0) {
+                    var baseTotal = cart.reduce((acc, current) => acc + (current.price * current.qty), 0);
+                    var finalTotal = baseTotal + cost;
+                    let bsFinalTotal = finalTotal * bcvRate;
+                    currentTotalStr = `- Total Orden: Bs. ${bsFinalTotal.toFixed(2)}`;
                 }
                 $('#delivery-total-btn').text(currentTotalStr);
 
@@ -1044,14 +1408,14 @@
                     iconSize: [32, 32],
                     iconAnchor: [16, 16]
                 });
-                L.marker([STORE_LAT, STORE_LNG], {icon: storeIcon}).addTo(deliveryMap).bindPopup("<b>Sabores Y&B</b>").openPopup();
+                L.marker([STORE_LAT, STORE_LNG], { icon: storeIcon }).addTo(deliveryMap).bindPopup("<b>Sabores Y&B</b>").openPopup();
 
                 // Icono cliente
                 var clientIcon = L.divIcon({
                     html: '<div class="text-orange-500 text-3xl drop-shadow-md -mt-8 -ml-3"><i class="fas fa-map-marker-alt"></i></div>',
                     className: 'client-marker-icon'
                 });
-                deliveryMarker = L.marker([STORE_LAT, STORE_LNG], {icon: clientIcon, draggable: true, zIndexOffset: 1000}).addTo(deliveryMap);
+                deliveryMarker = L.marker([STORE_LAT, STORE_LNG], { icon: clientIcon, draggable: true, zIndexOffset: 1000 }).addTo(deliveryMap);
                 updateDeliveryCost(STORE_LAT, STORE_LNG);
 
                 deliveryMarker.on('dragend', function (e) {
@@ -1059,7 +1423,7 @@
                     updateDeliveryCost(coords.lat, coords.lng);
                 });
 
-                deliveryMap.on('click', function(e) {
+                deliveryMap.on('click', function (e) {
                     deliveryMarker.setLatLng(e.latlng);
                     updateDeliveryCost(e.latlng.lat, e.latlng.lng);
                 });
@@ -1228,7 +1592,7 @@
                     });
 
                     // Add Delivery Row if active
-                    if(orderConfig.type === 'delivery' && orderConfig.deliveryCost >= 0) {
+                    if (orderConfig.type === 'delivery' && orderConfig.deliveryCost >= 0) {
                         totalPrice += orderConfig.deliveryCost;
                         let bsDelPrice = (orderConfig.deliveryCost * bcvRate).toFixed(2);
                         html += `
@@ -1252,13 +1616,12 @@
                 let bsTotal = (totalPrice * bcvRate).toFixed(2);
                 $('#cart-total').html(`Bs. ${bsTotal}<br><span class="text-xs text-gray-400 mt-1 block">Ref: $${totalPrice.toFixed(2)}</span>`);
 
-                // Actualizar sección de pago dinámicamente si está visible
-                if (!$('#pagos').hasClass('hidden')) {
-                    $('#pago-total-bs').text(`Bs. ${bsTotal}`);
-                    $('#btn-copy-monto').attr('data-copy', bsTotal);
-                    var copyText = `Pago Móvil Sabores Y&B\nBanco: Venezuela (0102)\nTel: 04161071344\nCI: V-12993940\nMonto: Bs. ${bsTotal}`;
-                    $('#btn-copy-data').attr('data-copy', copyText);
-                }
+                // Actualizar sección de pago dinámicamente
+                $('#pago-total-bs').text(`Bs. ${bsTotal}`);
+                $('#btn-copy-monto').attr('data-copy', bsTotal);
+                var copyText = `Pago Móvil Sabores Y&B\nBanco: Venezuela (0102)\nTel: 04161071344\nCI: V-12993940\nMonto: Bs. ${bsTotal}`;
+                $('#btn-copy-data').attr('data-copy', copyText);
+                $('#btn-copy-all-final').attr('data-copy', copyText);
 
                 var badge = $('#cart-badge');
                 badge.text(totalItems);
@@ -1270,14 +1633,14 @@
                 }
             }
             // Logica para añadir/quitar cantidad directamente en el carro
-            $(document).on('click', '.cart-qty-plus', function() {
+            $(document).on('click', '.cart-qty-plus', function () {
                 var index = $(this).data('index');
                 cart[index].qty++;
                 playPopSound();
                 updateCartUI();
             });
 
-            $(document).on('click', '.cart-qty-minus', function() {
+            $(document).on('click', '.cart-qty-minus', function () {
                 var index = $(this).data('index');
                 if (cart[index].qty > 1) {
                     cart[index].qty--;
@@ -1293,9 +1656,9 @@
                 var btn = $(this);
                 var index = btn.data('index');
                 var row = btn.closest('.cart-item-row');
-                
+
                 playDeleteSound();
-                
+
                 // Animación de confeti rojo
                 var rect = btn[0].getBoundingClientRect();
                 var x = (rect.left + (rect.width / 2)) / window.innerWidth;
@@ -1458,7 +1821,7 @@
                     }, 10);
                     return;
                 }
-                
+
                 // Cerrar carrito
                 $('#cart-dropdown').removeClass('scale-100').addClass('scale-0');
 
@@ -1469,8 +1832,8 @@
                 }, 10);
             }
 
-            $('#btn-comprar').click(function() { showConfigModal(false); });
-            $('#btn-config-order').click(function() { showConfigModal(true); });
+            $('#btn-comprar').click(function () { showConfigModal(false); });
+            $('#btn-config-order').click(function () { showConfigModal(true); });
 
             $('#btn-close-config-modal').click(function () {
                 var modal = $('#config-order-modal');
@@ -1486,12 +1849,12 @@
                 configModal.addClass('opacity-0').find('.scale-100').removeClass('scale-100').addClass('scale-95');
                 setTimeout(() => {
                     configModal.addClass('hidden');
-                    
+
                     orderConfig.type = 'pickup';
                     orderConfig.confirmed = true;
                     orderConfig.deliveryCost = 0;
                     orderConfig.distance = 0;
-                    
+
                     updateCartUI();
                     $('#cart-dropdown').removeClass('scale-0').addClass('scale-100');
                 }, 300);
@@ -1529,7 +1892,7 @@
                 if (orderConfig.deliveryCost < 0.20 && $('#delivery-warning-box').hasClass('hidden')) {
                     $('#delivery-warning-box').removeClass('hidden');
                     $(this).removeClass('bg-orange-500').addClass('bg-red-500').html('Confirmar de todas formas <i class="fas fa-check ml-2"></i>');
-                    
+
                     // Efecto de vibración
                     var btn = $(this);
                     btn.addClass('animate-shake-attention');
@@ -1543,50 +1906,50 @@
                 domModal.addClass('opacity-0').find('.scale-100').removeClass('scale-100').addClass('scale-95');
                 setTimeout(() => {
                     domModal.addClass('hidden');
-                    updateCartUI(); 
-                    
+                    updateCartUI();
+
                     $('#cart-dropdown').removeClass('scale-0').addClass('scale-100');
-                    
+
                     // Reset button style
                     $('#btn-confirm-delivery').removeClass('bg-red-500').addClass('bg-orange-500').html('Confirmar <span id="delivery-total-btn" class="ml-1 text-orange-100 font-normal"></span> <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>');
                 }, 300);
             });
 
-            $('#btn-search-location').click(function() {
+            $('#btn-search-location').click(function () {
                 var query = $('#delivery-search-input').val();
-                if(!query) return;
+                if (!query) return;
                 var $btn = $(this);
                 $btn.html('<i class="fas fa-spinner fa-spin"></i>').prop('disabled', true);
-                
+
                 var searchQuery = query + ", Maracay, Aragua";
                 $.getJSON('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(searchQuery))
-                 .done(function(data) {
-                    if(data && data.length > 0) {
-                        var lat = parseFloat(data[0].lat);
-                        var lon = parseFloat(data[0].lon);
-                        deliveryMap.setView([lat, lon], 15);
-                        deliveryMarker.setLatLng([lat, lon]);
-                        updateDeliveryCost(lat, lon);
-                    } else {
-                        alert("No encontramos ese lugar. Búscalo manualmente deslizando la pantalla.");
-                    }
-                 }).always(function() {
-                    $btn.html('<i class="fas fa-search"></i>').prop('disabled', false);
-                 });
+                    .done(function (data) {
+                        if (data && data.length > 0) {
+                            var lat = parseFloat(data[0].lat);
+                            var lon = parseFloat(data[0].lon);
+                            deliveryMap.setView([lat, lon], 15);
+                            deliveryMarker.setLatLng([lat, lon]);
+                            updateDeliveryCost(lat, lon);
+                        } else {
+                            alert("No encontramos ese lugar. Búscalo manualmente deslizando la pantalla.");
+                        }
+                    }).always(function () {
+                        $btn.html('<i class="fas fa-search"></i>').prop('disabled', false);
+                    });
             });
 
-            $('#btn-gps-location').click(function() {
+            $('#btn-gps-location').click(function () {
                 var $btn = $(this);
                 if ("geolocation" in navigator) {
                     $btn.html('<i class="fas fa-spinner fa-spin"></i> Obteniendo satélites...');
-                    navigator.geolocation.getCurrentPosition(function(position) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
                         var lat = position.coords.latitude;
                         var lon = position.coords.longitude;
                         deliveryMap.setView([lat, lon], 16);
                         deliveryMarker.setLatLng([lat, lon]);
                         updateDeliveryCost(lat, lon);
                         $btn.html('<i class="fas fa-check text-green-500"></i> GPS Confirmado');
-                    }, function(error) {
+                    }, function (error) {
                         alert("Activa el GPS de tu celular o dale permisos a Sabores Y&B para encontrar tu ubicación exactita.");
                         $btn.html('<i class="fas fa-crosshairs"></i> Usar mi ubicación actual');
                     }, { enableHighAccuracy: true });
@@ -1628,15 +1991,15 @@
                 // Generar Mensaje de Orden directo (Estandar UTF-8 para WhatsApp)
                 var orderMsg = "👋 ¡Hola, *Sabores Y&B*!\n\n";
                 orderMsg += "📝 *Mi Pedido en la Web:*\n";
-                
-                if(orderConfig.type === 'delivery') {
+
+                if (orderConfig.type === 'delivery') {
                     orderMsg += `🚀 *TIPO DE ORDEN:* ENVÍO (DELIVERY)\n`;
                     orderMsg += `📍 *Ubicación:* https://www.google.com/maps?q=${orderConfig.lat},${orderConfig.lng}\n`;
                     orderMsg += `🛵 *Distancia calculada:* ${orderConfig.distance.toFixed(1)} km\n`;
                 } else {
                     orderMsg += `🏬 *TIPO DE ORDEN:* RETIRO EN LOCAL (PICKUP)\n`;
                 }
-                
+
                 orderMsg += "---------------------------------------\n";
                 var totalPriceUSD = 0;
                 cart.forEach(function (item) {
@@ -1645,7 +2008,7 @@
                     totalPriceUSD += (item.price * item.qty);
                 });
 
-                if(orderConfig.type === 'delivery') {
+                if (orderConfig.type === 'delivery') {
                     let costBs = (orderConfig.deliveryCost * bcvRate).toFixed(2);
                     totalPriceUSD += orderConfig.deliveryCost;
                     orderMsg += `\n🛵 *Servicio Delivery:* Bs. ${costBs} ($${orderConfig.deliveryCost.toFixed(2)})\n`;
@@ -1656,7 +2019,7 @@
                 orderMsg += `💰 *TOTAL A PAGAR: Bs. ${bsTotalOrder}*\n`;
                 orderMsg += `💵 *(Ref: $${totalPriceUSD.toFixed(2)})*\n`;
                 orderMsg += `📊 _Tasa BCV del día: Bs. ${bcvRate.toFixed(2)}_\n\n`;
-                orderMsg += `✅ Envíame la disponibilidad para procesar la compra. ¡Quedo atento(a)!`;
+                orderMsg += `✅ Envíame la disponibilidad para poder realizar el pago. ¡Quedo atento(a)!`;
 
                 var waNumber = "584128853518"; // Número de WhatsApp Real
                 var waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(orderMsg)}`;
@@ -1668,7 +2031,7 @@
 
                 // Copiar los datos del pago móvil directamente al portapapeles del cliente
                 if (navigator.clipboard) {
-                    navigator.clipboard.writeText(copyText).catch(function(err) {});
+                    navigator.clipboard.writeText(copyText).catch(function (err) { });
                 }
 
                 // Abrir en WhatsApp
@@ -1684,19 +2047,19 @@
                 $('html, body').animate({
                     scrollTop: $("#pagos").offset().top - 80
                 }, 800, 'swing');
-                
+
                 // Expiración de sesión y Cronómetro (20 minutos)
                 var timeLeft = 20 * 60; // 1200 seconds
                 $('#payment-timer').text("20:00");
-                
-                if(window.paymentInterval) clearInterval(window.paymentInterval);
-                
-                window.paymentInterval = setInterval(function() {
+
+                if (window.paymentInterval) clearInterval(window.paymentInterval);
+
+                window.paymentInterval = setInterval(function () {
                     timeLeft--;
                     var m = Math.floor(timeLeft / 60);
                     var s = timeLeft % 60;
                     $('#payment-timer').text((m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s);
-                    
+
                     if (timeLeft <= 0) {
                         clearInterval(window.paymentInterval);
                         alert("⏱️ Tu sesión de pago ha expirado. La página se recargará por seguridad para evitar errores con los precios y montos a transferir.");
@@ -1706,26 +2069,37 @@
             });
 
             // Logica para copiar datos de pago
-            $('#btn-copy-data').click(function () {
-                var textToCopy = $(this).attr('data-copy');
+            $('#btn-copy-data, #btn-copy-all-final').click(function () {
+                var textToCopy = $('#btn-copy-data').attr('data-copy');
                 var $btn = $(this);
-                var $textSpan = $('#text-copy-data');
-                var $icon = $btn.find('i');
+                var isFinal = $btn.attr('id') === 'btn-copy-all-final';
 
                 navigator.clipboard.writeText(textToCopy).then(function () {
-                    // Success visual feedback
-                    $btn.removeClass('bg-white text-red-600 hover:bg-red-600 hover:text-white border-red-200');
-                    $btn.addClass('bg-green-500 text-white border-green-500');
-                    $icon.removeClass('fa-copy').addClass('fa-check-circle');
-                    $textSpan.text('¡Datos copiados!');
+                    if (isFinal) {
+                        var originalHtml = $btn.html();
+                        $btn.html('<i class="fas fa-check text-green-500"></i> ¡Todo copiado!');
+                        $btn.addClass('bg-green-50 border-green-200');
+                        setTimeout(() => {
+                            $btn.html(originalHtml);
+                            $btn.removeClass('bg-green-50 border-green-200');
+                        }, 2500);
+                    } else {
+                        var $textSpan = $('#text-copy-data');
+                        var $icon = $btn.find('i');
+                        // Success visual feedback
+                        $btn.removeClass('bg-white text-red-600 hover:bg-red-600 hover:text-white border-red-200');
+                        $btn.addClass('bg-green-500 text-white border-green-500');
+                        $icon.removeClass('fa-copy').addClass('fa-check-circle');
+                        $textSpan.text('¡Datos copiados!');
 
-                    setTimeout(function () {
-                        // Revert visual change after 2.5s
-                        $btn.removeClass('bg-green-500 text-white border-green-500');
-                        $btn.addClass('bg-white text-red-600 hover:bg-red-600 hover:text-white border-red-200');
-                        $icon.removeClass('fa-check-circle').addClass('fa-copy');
-                        $textSpan.text('Copiar datos del pago');
-                    }, 2500);
+                        setTimeout(function () {
+                            // Revert visual change after 2.5s
+                            $btn.removeClass('bg-green-500 text-white border-green-500');
+                            $btn.addClass('bg-white text-red-600 hover:bg-red-600 hover:text-white border-red-200');
+                            $icon.removeClass('fa-check-circle').addClass('fa-copy');
+                            $textSpan.text('Copiar datos del pago');
+                        }, 2500);
+                    }
                 }).catch(function (err) {
                     alert("No se pudo copiar el texto. Inténtalo manualmente.");
                 });
@@ -1741,7 +2115,7 @@
                         setTimeout(function () {
                             $icon.removeClass('fas fa-check text-green-500 scale-125').addClass('far fa-copy');
                         }, 1300);
-                    }).catch(function(err){});
+                    }).catch(function (err) { });
                 }
             });
 
@@ -1771,36 +2145,108 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(err => {});
+                navigator.serviceWorker.register('./sw.js').catch(err => { });
             });
         }
 
         let deferredPrompt;
-        const installBtn = document.getElementById('pwa-install-btn');
+        const installModal = document.getElementById('install-pwa-modal');
+        const installNowBtn = document.getElementById('btn-pwa-install-now');
+        const closeModalBtn = document.getElementById('btn-pwa-close-modal');
+        const androidView = document.getElementById('android-install-view');
+        const iosView = document.getElementById('ios-install-view');
+
+        // Detectar si ya está instalada
+        const isAppInstalled = () => {
+            return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        }
+
+        const isIOS = () => {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        };
+
+        const showInstallModal = () => {
+            if (isAppInstalled()) return;
+            if (sessionStorage.getItem('pwa-modal-dismissed')) return;
+
+            // Prioritize iOS Guide if on iOS, else Auto-Prompt
+            if (isIOS()) {
+                androidView.classList.add('hidden');
+                iosView.classList.remove('hidden');
+            } else if (deferredPrompt) {
+                androidView.classList.remove('hidden');
+                iosView.classList.add('hidden');
+            } else {
+                return;
+            }
+
+            installModal.classList.remove('hidden');
+            installModal.classList.add('flex');
+            setTimeout(() => {
+                installModal.classList.remove('opacity-0');
+                if (installModal.querySelector('.transition-transform')) {
+                    installModal.querySelector('.transition-transform').classList.remove('scale-95');
+                    installModal.querySelector('.transition-transform').classList.add('scale-100');
+                }
+            }, 10);
+        };
+
+        const hideInstallModal = () => {
+            installModal.classList.add('opacity-0');
+            installModal.querySelector('.scale-100').classList.remove('scale-100');
+            installModal.querySelector('.transition-transform').classList.add('scale-95');
+            setTimeout(() => {
+                installModal.classList.add('hidden');
+                installModal.classList.remove('flex');
+            }, 300);
+        };
 
         window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('PWA: beforeinstallprompt fired');
+            // Prevent the mini-infobar from appearing on mobile
             e.preventDefault();
+            // Stash the event so it can be triggered later.
             deferredPrompt = e;
-            installBtn.classList.remove('hidden');
-            installBtn.classList.add('flex');
+
+            // Show the install modal after a delay
+            setTimeout(showInstallModal, 3000);
         });
 
-        installBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    // Install aceptada
-                }
-                deferredPrompt = null;
-                installBtn.classList.remove('flex');
-                installBtn.classList.add('hidden');
+        // iOS doesn't have beforeinstallprompt, so we trigger manually
+        if (isIOS() && !isAppInstalled()) {
+            console.log('PWA: iOS detected, showing manual guide');
+            setTimeout(showInstallModal, 3000);
+        }
+
+        installNowBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) {
+                console.warn('PWA: No deferredPrompt available for native install.');
+                return;
             }
+
+            // Show the native install prompt
+            deferredPrompt.prompt();
+
+            // Wait for the user to respond to the prompt
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`PWA: User response to install prompt: ${outcome}`);
+
+            if (outcome === 'accepted') {
+                hideInstallModal();
+            }
+
+            // Clear the deferredPrompt so it can only be used once
+            deferredPrompt = null;
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            console.log('PWA: User dismissed the install modal');
+            sessionStorage.setItem('pwa-modal-dismissed', 'true');
+            hideInstallModal();
         });
 
         window.addEventListener('appinstalled', () => {
-            installBtn.classList.remove('flex');
-            installBtn.classList.add('hidden');
+            hideInstallModal();
             deferredPrompt = null;
         });
     </script>

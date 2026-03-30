@@ -19,10 +19,11 @@
     <link rel="icon" type="image/png" href="assets/images/logo.png">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#00A859">
-    <link rel="apple-touch-icon" href="assets/images/logo.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Mobile Optimization -->
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Sabores">
+    <meta name="apple-mobile-web-app-title" content="Sabores Y&B">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -155,14 +156,51 @@
 
 <body class="font-sans antialiased overflow-x-hidden relative">
 
-    <!-- Floating Install App Button -->
-    <button id="pwa-install-btn"
-        class="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 bg-white p-1 rounded-full shadow-2xl transition-transform hover:scale-110 hidden items-center justify-center border-2 border-primary group animate-shake-attention">
-        <img src="assets/images/logo-maskable.png" alt="Instalar Sabores Y&B"
-            class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover group-hover:rotate-12 transition-transform duration-300">
-        <span
-            class="absolute -top-3 -right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm animate-pulse">Instalar</span>
-    </button>
+    <!-- PWA Installation Modal (Onboarding) -->
+    <div id="install-pwa-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-[2.5rem] p-8 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300 relative overflow-hidden text-center border border-orange-100">
+            <!-- Decorative blur background -->
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-accent/10 rounded-full blur-3xl"></div>
+            
+            <div class="relative z-10">
+                <h2 class="text-2xl font-display font-medium text-textMain mb-2">¡Sabores Y&B en el Inicio de tu dispositivo!</h2>
+                
+                <!-- Company Logo -->
+                <div class="flex justify-center mb-6">
+                    <img src="assets/images/logo.png" alt="Sabores Y&B" class="w-20 h-20 object-contain drop-shadow-md">
+                </div>
+
+                <!-- Android Specific Section -->
+                <div id="android-install-view" class="hidden animate-in fade-in zoom-in duration-300">
+                    <p class="text-gray-600 mb-8 text-sm leading-relaxed font-medium">Instala nuestra App para pedir más rápido y recibir notificaciones de tus empanadas.</p>
+                    <button id="btn-pwa-install-now" class="w-full bg-gradient-to-r from-primary to-green-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-95 transition-all text-base mb-3">
+                        Instalar aplicación
+                    </button>
+                </div>
+
+                <!-- iOS Specific Section -->
+                <div id="ios-install-view" class="hidden animate-in fade-in zoom-in duration-300">
+                    <p class="text-gray-600 mb-6 text-sm leading-relaxed font-medium">Instala nuestra App para pedir más rápido.</p>
+                    
+                    <div class="p-4 bg-blue-50 border border-blue-100 rounded-2xl text-left mb-6">
+                        <p class="text-xs text-blue-700 font-medium mb-3 leading-relaxed text-center">
+                            Sigue estos pasos en tu iPhone/iPad:
+                        </p>
+                        <ol class="text-[11px] text-blue-600 space-y-2 list-decimal list-inside ml-1 font-medium">
+                            <li>Presiona el botón <span class="bg-white px-1.5 py-0.5 rounded border border-blue-200">Compartir <i class="far fa-share-square"></i></span></li>
+                            <li>Selecciona <span class="bg-white px-1.5 py-0.5 rounded border border-blue-200">"Añadir a la pantalla de inicio" <i class="far fa-plus-square"></i></span></li>
+                            <li>Pulsa <span class="font-bold text-blue-800 underline">Añadir</span> en la esquina superior.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <button id="btn-pwa-close-modal" class="w-full bg-gray-50 text-gray-400 font-semibold py-3 rounded-2xl hover:bg-gray-100 transition-colors text-sm">
+                    Luego
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Navbar -->
     <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-40 top-0 left-0 transition-all duration-300"
@@ -469,31 +507,86 @@
         }
 
         let deferredPrompt;
-        const installBtn = document.getElementById('pwa-install-btn');
+        const installModal = document.getElementById('install-pwa-modal');
+        const installNowBtn = document.getElementById('btn-pwa-install-now');
+        const closeModalBtn = document.getElementById('btn-pwa-close-modal');
+        const androidView = document.getElementById('android-install-view');
+        const iosView = document.getElementById('ios-install-view');
+
+        // Detectar si ya está instalada
+        const isAppInstalled = () => {
+             return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        }
+
+        const isIOS = () => {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        };
+
+        const showInstallModal = () => {
+            if (isAppInstalled()) return;
+            if (sessionStorage.getItem('pwa-modal-dismissed')) return;
+
+            // Prioritize iOS Guide if on iOS, else Auto-Prompt
+            if (isIOS()) {
+                androidView.classList.add('hidden');
+                iosView.classList.remove('hidden');
+            } else if (deferredPrompt) {
+                androidView.classList.remove('hidden');
+                iosView.classList.add('hidden');
+            } else {
+                return;
+            }
+
+            installModal.classList.remove('hidden');
+            installModal.classList.add('flex');
+            setTimeout(() => {
+                installModal.classList.remove('opacity-0');
+                if (installModal.querySelector('.transition-transform')) {
+                    installModal.querySelector('.transition-transform').classList.remove('scale-95');
+                    installModal.querySelector('.transition-transform').classList.add('scale-100');
+                }
+            }, 10);
+        };
+
+        const hideInstallModal = () => {
+            installModal.classList.add('opacity-0');
+            installModal.querySelector('.scale-100').classList.remove('scale-100');
+            installModal.querySelector('.transition-transform').classList.add('scale-95');
+            setTimeout(() => {
+                installModal.classList.add('hidden');
+                installModal.classList.remove('flex');
+            }, 300);
+        };
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            installBtn.classList.remove('hidden');
-            installBtn.classList.add('flex');
+            setTimeout(showInstallModal, 3000);
         });
 
-        installBtn.addEventListener('click', async () => {
+        // Trigger para iOS manualmente
+        if (isIOS() && !isAppInstalled()) {
+             setTimeout(showInstallModal, 3000);
+        }
+
+        installNowBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
-                    // Install aceptada
+                    hideInstallModal();
                 }
                 deferredPrompt = null;
-                installBtn.classList.remove('flex');
-                installBtn.classList.add('hidden');
             }
         });
 
+        closeModalBtn.addEventListener('click', () => {
+            sessionStorage.setItem('pwa-modal-dismissed', 'true');
+            hideInstallModal();
+        });
+
         window.addEventListener('appinstalled', () => {
-            installBtn.classList.remove('flex');
-            installBtn.classList.add('hidden');
+            hideInstallModal();
             deferredPrompt = null;
         });
     </script>
