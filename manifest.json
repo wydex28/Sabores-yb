@@ -4,17 +4,17 @@
   "description": "Las Mejores Empanadas Venezolanas y Bebidas Refrescantes",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#FDFFFC",
+  "background_color": "#FFFFFF",
   "theme_color": "#00A859",
   "icons": [
     {
-      "src": "assets/images/brand/logo.png",
+      "src": "assets/images/brand/logo-solid.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "assets/images/brand/logo.png",
+      "src": "assets/images/brand/logo-solid.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
