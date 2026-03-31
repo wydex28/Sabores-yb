@@ -3,7 +3,7 @@ const OFFLINE_URL = './offline.html';
 
 const urlsToCache = [
   OFFLINE_URL,
-  './assets/images/logo.png'
+  './assets/images/brand/logo.png'
 ];
 
 // Instalar Service Worker y cachear solo página de "Sin Conexión"

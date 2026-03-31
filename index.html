@@ -11,19 +11,19 @@
     <meta name="author" content="Sabores Y&B">
     <meta property="og:title" content="Sabores Y&B | Las Mejores Empanadas Venezolanas">
     <meta property="og:description" content="Pide online las mejores empanadas venezolanas y bebidas refrescantes.">
-    <meta property="og:image" content="assets/images/logo.png">
+    <meta property="og:image" content="assets/images/brand/logo.png">
     <meta property="og:type" content="website">
     <title>Sabores Y&B | Las Mejores Empanadas Venezolanas</title>
 
     <!-- Favicon & PWA -->
-    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="icon" type="image/png" href="assets/images/brand/logo.png">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#00A859">
     <!-- Mobile Optimization -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Sabores Y&B">
-    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/brand/logo.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -174,13 +174,13 @@
 
                 <!-- Company Logo -->
                 <div class="flex justify-center mb-6">
-                    <img src="assets/images/logo.png" alt="Sabores Y&B" class="w-20 h-20 object-contain drop-shadow-md">
+                    <img src="assets/images/brand/logo.png" alt="Sabores Y&B" class="w-28 h-28 object-contain drop-shadow-md hover:scale-105 transition-transform duration-500">
                 </div>
 
                 <!-- Android Specific Section -->
                 <div id="android-install-view" class="hidden animate-in fade-in zoom-in duration-300">
                     <p class="text-gray-600 mb-8 text-sm leading-relaxed font-medium">Instala nuestra App para pedir más
-                        rápido y recibir notificaciones de tus empanadas.</p>
+                        rápido y disfrutar de la mejor experiencia.</p>
                     <button id="btn-pwa-install-now"
                         class="w-full bg-gradient-to-r from-primary to-green-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-95 transition-all text-base mb-3">
                         Instalar aplicación
@@ -355,7 +355,7 @@
     <!-- Modal de Delivery (Mapa) -->
     <div id="delivery-modal"
         class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[70] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl p-5 sm:p-8 max-w-lg w-full shadow-2xl flex flex-col max-h-[90vh]">
+        <div class="bg-white rounded-3xl p-5 sm:p-8 max-w-xl w-full shadow-2xl flex flex-col max-h-[95vh] overflow-y-auto">
             <h3 class="text-xl font-display text-textMain mb-3 flex items-center justify-between">
                 <div><i class="fas fa-map-marked-alt text-orange-500 mr-2"></i>Destino de Envío</div>
                 <div
@@ -382,7 +382,27 @@
             </button>
 
             <div id="delivery-map"
-                class="w-full h-48 sm:h-56 bg-gray-200 rounded-xl mb-4 relative z-0 border border-gray-200 shadow-inner">
+                class="w-full h-[500px] bg-gray-200 rounded-xl mb-4 relative z-0 border border-gray-200 shadow-inner">
+            </div>
+
+            <!-- Datos de Contacto (Side by Side) -->
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <div class="relative">
+                    <label class="text-[10px] text-gray-400 font-bold uppercase tracking-wide ml-1 mb-1 block">Tu Nombre</label>
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-orange-400 text-sm"></i>
+                        <input type="text" id="delivery-name" placeholder="Juan P."
+                            class="w-full border border-gray-200 rounded-xl pl-8 pr-2 py-2 text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 bg-gray-50/50">
+                    </div>
+                </div>
+                <div class="relative">
+                    <label class="text-[10px] text-gray-400 font-bold uppercase tracking-wide ml-1 mb-1 block">Tu Celular</label>
+                    <div class="relative">
+                        <i class="fas fa-phone absolute left-3 top-1/2 -translate-y-1/2 text-orange-400 text-sm"></i>
+                        <input type="tel" id="delivery-phone" placeholder="0412..."
+                            class="w-full border border-gray-200 rounded-xl pl-8 pr-2 py-2 text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 bg-gray-50/50">
+                    </div>
+                </div>
             </div>
 
             <div class="bg-orange-50/80 border border-orange-100 rounded-xl p-3 mb-4 flex justify-between items-center"
@@ -390,7 +410,8 @@
                 <div>
                     <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wide">Costo Estimado</p>
                     <p class="text-xs text-gray-600 mt-0.5"><i class="fas fa-route text-gray-400 mr-1"></i>Distancia:
-                        <span id="delivery-distance" class="font-bold text-gray-800">0.00</span> km</p>
+                        <span id="delivery-distance" class="font-bold text-gray-800">0.00</span> km
+                    </p>
                 </div>
                 <div class="text-right">
                     <p id="delivery-cost" class="font-sans font-semibold text-lg sm:text-xl text-orange-600">$0.00</p>
@@ -432,7 +453,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="about.html" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
-                    <img class="h-14 w-auto drop-shadow-md nav-logo" src="assets/images/logo.png"
+                    <img class="h-20 w-auto drop-shadow-md nav-logo hover:scale-105 transition-transform duration-300" src="assets/images/brand/logo.png"
                         alt="Sabores Y&B Logo">
                     <span class="font-display tracking-wide text-xl text-primary drop-shadow-sm hidden sm:block">Sabores
                         Y&B</span>
@@ -519,7 +540,8 @@
                         </div>
                         <div class="ml-3">
                             <p class="text-sm text-amber-800 font-medium">
-                                <b>Nota:</b> Las imágenes de la web son referenciales. ¡Muy pronto tendremos fotos reales de nuestras deliciosas empanadas!
+                                <b>Nota:</b> Las imágenes de la web son referenciales. ¡Muy pronto tendremos fotos
+                                reales de nuestras deliciosas empanadas!
                             </p>
                         </div>
                     </div>
@@ -540,7 +562,7 @@
                     <!-- Item: Carne Mechada -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/carne_mechada.png" alt="Carne Mechada"
+                            <img src="assets/images/empanadas/carne_mechada.png" alt="Carne Mechada"
                                 class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
@@ -575,7 +597,7 @@
                     <!-- Item: Jamón con Queso -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/jamon_queso.png" alt="Jamón con Queso"
+                            <img src="assets/images/empanadas/jamon_queso.png" alt="Jamón con Queso"
                                 class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
@@ -610,7 +632,7 @@
                     <!-- Item: Pollo -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/pollo.png" alt="Pollo" class="w-full h-full object-cover ">
+                            <img src="assets/images/empanadas/pollo.png" alt="Pollo" class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
                             <h4
@@ -644,7 +666,7 @@
                     <!-- Item: Carne Molida -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/carne_molida.png" alt="Carne Molida"
+                            <img src="assets/images/empanadas/carne_molida.png" alt="Carne Molida"
                                 class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
@@ -679,7 +701,7 @@
                     <!-- Item: Queso blanco (Llanero) -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/queso_blanco.png" alt="Queso blanco (Llanero)"
+                            <img src="assets/images/empanadas/queso_blanco.png" alt="Queso blanco (Llanero)"
                                 class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
@@ -715,7 +737,7 @@
                     <!-- Item: Pabellón -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/pabellon.png" alt="Pabellón" class="w-full h-full object-cover ">
+                            <img src="assets/images/empanadas/pabellon.png" alt="Pabellón" class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
                             <h4
@@ -749,7 +771,7 @@
                     <!-- Item: Guiso Navideño -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/navideno.png" alt="Guiso Navideño"
+                            <img src="assets/images/empanadas/navideno.png" alt="Guiso Navideño"
                                 class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
@@ -784,7 +806,7 @@
                     <!-- Item: Macabí (Pescado) -->
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/macabi.png" alt="Macabí (Pescado)"
+                            <img src="assets/images/empanadas/macabi.png" alt="Macabí (Pescado)"
                                 class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
@@ -836,8 +858,9 @@
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
                             <div
                                 class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial</div>
-                            <img src="assets/images/pelua.png" alt="Mechada con Queso (Pelúa)"
+                                <i class="fas fa-crown mr-1"></i> Especial
+                            </div>
+                            <img src="assets/images/empanadas/pelua.png" alt="Mechada con Queso (Pelúa)"
                                 class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
@@ -876,8 +899,9 @@
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
                             <div
                                 class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial</div>
-                            <img src="assets/images/molida_queso.png" alt="Molida con Queso"
+                                <i class="fas fa-crown mr-1"></i> Especial
+                            </div>
+                            <img src="assets/images/empanadas/molida_queso.png" alt="Molida con Queso"
                                 class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
@@ -916,8 +940,9 @@
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
                             <div
                                 class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial</div>
-                            <img src="assets/images/catira.png" alt="Pollo con Queso (Catira)"
+                                <i class="fas fa-crown mr-1"></i> Especial
+                            </div>
+                            <img src="assets/images/empanadas/catira.png" alt="Pollo con Queso (Catira)"
                                 class="w-full h-full object-cover ">
                         </div>
                         <div class="p-3 sm:p-5">
@@ -956,8 +981,9 @@
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
                             <div
                                 class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial</div>
-                            <img src="assets/images/domino.png" alt="Caraota con Queso (Dominó)"
+                                <i class="fas fa-crown mr-1"></i> Especial
+                            </div>
+                            <img src="assets/images/empanadas/domino.png" alt="Caraota con Queso (Dominó)"
                                 class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
@@ -996,8 +1022,9 @@
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
                             <div
                                 class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial</div>
-                            <img src="assets/images/gordon_blue_mechada.png" alt="Gordon Blue de Mechada"
+                                <i class="fas fa-crown mr-1"></i> Especial
+                            </div>
+                            <img src="assets/images/empanadas/gordon_blue_mechada.png" alt="Gordon Blue de Mechada"
                                 class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
@@ -1036,8 +1063,9 @@
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
                             <div
                                 class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial</div>
-                            <img src="assets/images/gordon_blue_pollo.png" alt="Gordon Blue de Pollo"
+                                <i class="fas fa-crown mr-1"></i> Especial
+                            </div>
+                            <img src="assets/images/empanadas/gordon_blue_pollo.png" alt="Gordon Blue de Pollo"
                                 class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
@@ -1239,7 +1267,7 @@
     <!-- Footer -->
     <footer class="bg-textMain py-8 text-white text-center">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <img src="assets/images/logo.png" alt="Sabores Y&B"
+            <img src="assets/images/brand/logo.png" alt="Sabores Y&B"
                 class="h-16 mx-auto mb-4 brightness-0 invert opacity-90 footer-logo">
             <h5 class="text-2xl font-display mb-2 text-primary">Sabores Y&B</h5>
             <p class="text-gray-400 mb-6 max-w-sm mx-auto text-sm">Hechas con amor desde nuestra familia para la tuya.
@@ -1261,6 +1289,9 @@
             </div>
 
             <div class="border-t border-gray-700 pt-6 flex flex-col items-center justify-center">
+                <button id="btn-test-notification" class="mb-4 text-[10px] text-gray-500 hover:text-primary transition underline decoration-1">
+                    <i class="fas fa-bell mr-1"></i> Probar Notificación de las 7AM (Vista previa)
+                </button>
                 <div class="text-xs text-gray-500 text-center">
                     &copy; 2026 Sabores Y&B. Todos los derechos reservados.
                 </div>
@@ -1341,7 +1372,7 @@
 
         $(document).ready(function () {
             // Delivery Global State
-            var orderConfig = { type: 'pickup', distance: 0, deliveryCost: 0, lat: null, lng: null, confirmed: false };
+            var orderConfig = { type: 'pickup', distance: 0, deliveryCost: 0, lat: null, lng: null, confirmed: false, clientName: '', clientPhone: '' };
             const STORE_LAT = 10.2586;
             const STORE_LNG = -67.5856;
             const DELIVERY_RATE_PER_KM = 0.43;
@@ -1403,7 +1434,7 @@
 
                 // Icono tienda
                 var storeIcon = L.divIcon({
-                    html: '<div class="w-8 h-8 bg-white border-2 border-primary rounded-full shadow-lg flex items-center justify-center p-1"><img src="assets/images/logo.png" class="w-full h-full object-cover"></div>',
+                    html: '<div class="w-8 h-8 bg-white border-2 border-primary rounded-full shadow-lg flex items-center justify-center p-1"><img src="assets/images/brand/logo.png" class="w-full h-full object-cover"></div>',
                     className: 'store-marker-icon',
                     iconSize: [32, 32],
                     iconAnchor: [16, 16]
@@ -1900,6 +1931,16 @@
                     return;
                 }
 
+                var cName = $('#delivery-name').val().trim();
+                var cPhone = $('#delivery-phone').val().trim();
+
+                if (!cName || !cPhone) {
+                    alert("Por favor, ingresa tu nombre y celular para coordinar el envío.");
+                    return;
+                }
+
+                orderConfig.clientName = cName;
+                orderConfig.clientPhone = cPhone;
                 orderConfig.type = 'delivery';
                 orderConfig.confirmed = true;
                 var domModal = $('#delivery-modal');
@@ -1908,7 +1949,7 @@
                     domModal.addClass('hidden');
                     updateCartUI();
 
-                    $('#cart-dropdown').removeClass('scale-0').addClass('scale-100');
+                    showConfigModal(false);
 
                     // Reset button style
                     $('#btn-confirm-delivery').removeClass('bg-red-500').addClass('bg-orange-500').html('Confirmar <span id="delivery-total-btn" class="ml-1 text-orange-100 font-normal"></span> <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>');
@@ -1990,10 +2031,12 @@
 
                 // Generar Mensaje de Orden directo (Estandar UTF-8 para WhatsApp)
                 var orderMsg = "👋 ¡Hola, *Sabores Y&B*!\n\n";
-                orderMsg += "📝 *Mi Pedido en la Web:*\n";
+                orderMsg += "📝 *¡NUEVO PEDIDO DESDE LA WEB!*:\n";
 
                 if (orderConfig.type === 'delivery') {
                     orderMsg += `🚀 *TIPO DE ORDEN:* ENVÍO (DELIVERY)\n`;
+                    orderMsg += `👤 *Cliente:* ${orderConfig.clientName}\n`;
+                    orderMsg += `📞 *Celular:* ${orderConfig.clientPhone}\n`;
                     orderMsg += `📍 *Ubicación:* https://www.google.com/maps?q=${orderConfig.lat},${orderConfig.lng}\n`;
                     orderMsg += `🛵 *Distancia calculada:* ${orderConfig.distance.toFixed(1)} km\n`;
                 } else {
@@ -2133,6 +2176,41 @@
                 $('html, body').animate({
                     scrollTop: $(target).offset().top - 80
                 }, 600, 'swing');
+            });
+
+            // Logica para probar notificación local
+            $('#btn-test-notification').click(function () {
+                if (!("Notification" in window)) {
+                    alert("Este navegador no soporta notificaciones de escritorio.");
+                } else if (Notification.permission === "granted") {
+                    const notification = new Notification("¡Es hora de una empanada! 🥟", {
+                        body: "Crujientes, calientes y deliciosas. ¡Pide la tuya ahora en Sabores Y&B!",
+                        icon: "assets/images/brand/logo.png",
+                        image: "assets/images/brand/logo-solid.png"
+                    });
+                    notification.onclick = function () {
+                        window.focus();
+                        this.close();
+                    };
+                } else if (Notification.permission !== "denied") {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === "granted") {
+                            const notification = new Notification("¡Es hora de una empanada! 🥟", {
+                                body: "Crujientes, calientes y deliciosas. ¡Pide la tuya ahora en Sabores Y&B!",
+                                icon: "assets/images/brand/logo.png",
+                                image: "assets/images/brand/logo-solid.png"
+                            });
+                            notification.onclick = function () {
+                                window.focus();
+                                this.close();
+                            };
+                        } else {
+                            alert("Permiso de notificación denegado. Actívalo en la configuración de la página.");
+                        }
+                    });
+                } else {
+                    alert("Permiso de notificación denegado. Actívalo en la configuración de la página.");
+                }
             });
         });
 

@@ -11,19 +11,19 @@
     <meta property="og:title" content="Sabores Y&B | Nuestra Historia">
     <meta property="og:description"
         content="Descubre cómo nació Sabores Y&B, una tradición familiar de las mejores empanadas.">
-    <meta property="og:image" content="assets/images/logo.png">
+    <meta property="og:image" content="assets/images/brand/logo.png">
     <meta property="og:type" content="website">
     <title>Sabores Y&B | Nuestra Historia</title>
 
     <!-- Favicon & PWA -->
-    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="icon" type="image/png" href="assets/images/brand/logo.png">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#00A859">
     <!-- Mobile Optimization -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Sabores Y&B">
-    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/brand/logo.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -157,45 +157,56 @@
 <body class="font-sans antialiased overflow-x-hidden relative">
 
     <!-- PWA Installation Modal (Onboarding) -->
-    <div id="install-pwa-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-[2.5rem] p-8 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300 relative overflow-hidden text-center border border-orange-100">
+    <div id="install-pwa-modal"
+        class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div
+            class="bg-white rounded-[2.5rem] p-8 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300 relative overflow-hidden text-center border border-orange-100">
             <!-- Decorative blur background -->
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
             <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-accent/10 rounded-full blur-3xl"></div>
-            
+
             <div class="relative z-10">
-                <h2 class="text-2xl font-display font-medium text-textMain mb-2">¡Sabores Y&B en el Inicio de tu dispositivo!</h2>
-                
+                <h2 class="text-2xl font-display font-medium text-textMain mb-2">¡Sabores Y&B en el Inicio de tu
+                    dispositivo!</h2>
+
                 <!-- Company Logo -->
                 <div class="flex justify-center mb-6">
-                    <img src="assets/images/logo.png" alt="Sabores Y&B" class="w-20 h-20 object-contain drop-shadow-md">
+                    <img src="assets/images/brand/logo.png" alt="Sabores Y&B" class="w-28 h-28 object-contain drop-shadow-md hover:scale-105 transition-transform duration-500">
                 </div>
 
                 <!-- Android Specific Section -->
                 <div id="android-install-view" class="hidden animate-in fade-in zoom-in duration-300">
-                    <p class="text-gray-600 mb-8 text-sm leading-relaxed font-medium">Instala nuestra App para pedir más rápido y recibir notificaciones de tus empanadas.</p>
-                    <button id="btn-pwa-install-now" class="w-full bg-gradient-to-r from-primary to-green-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-95 transition-all text-base mb-3">
+                    <p class="text-gray-600 mb-8 text-sm leading-relaxed font-medium">Instala nuestra App para pedir más
+                        rápido y recibir notificaciones.</p>
+                    <button id="btn-pwa-install-now"
+                        class="w-full bg-gradient-to-r from-primary to-green-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-95 transition-all text-base mb-3">
                         Instalar aplicación
                     </button>
                 </div>
 
                 <!-- iOS Specific Section -->
                 <div id="ios-install-view" class="hidden animate-in fade-in zoom-in duration-300">
-                    <p class="text-gray-600 mb-6 text-sm leading-relaxed font-medium">Instala nuestra App para pedir más rápido.</p>
-                    
+                    <p class="text-gray-600 mb-6 text-sm leading-relaxed font-medium">Instala nuestra App para pedir más
+                        rápido.</p>
+
                     <div class="p-4 bg-blue-50 border border-blue-100 rounded-2xl text-left mb-6">
                         <p class="text-xs text-blue-700 font-medium mb-3 leading-relaxed text-center">
                             Sigue estos pasos en tu iPhone/iPad:
                         </p>
                         <ol class="text-[11px] text-blue-600 space-y-2 list-decimal list-inside ml-1 font-medium">
-                            <li>Presiona el botón <span class="bg-white px-1.5 py-0.5 rounded border border-blue-200">Compartir <i class="far fa-share-square"></i></span></li>
-                            <li>Selecciona <span class="bg-white px-1.5 py-0.5 rounded border border-blue-200">"Añadir a la pantalla de inicio" <i class="far fa-plus-square"></i></span></li>
-                            <li>Pulsa <span class="font-bold text-blue-800 underline">Añadir</span> en la esquina superior.</li>
+                            <li>Presiona el botón <span
+                                    class="bg-white px-1.5 py-0.5 rounded border border-blue-200">Compartir <i
+                                        class="far fa-share-square"></i></span></li>
+                            <li>Selecciona <span class="bg-white px-1.5 py-0.5 rounded border border-blue-200">"Añadir a
+                                    la pantalla de inicio" <i class="far fa-plus-square"></i></span></li>
+                            <li>Pulsa <span class="font-bold text-blue-800 underline">Añadir</span> en la esquina
+                                superior.</li>
                         </ol>
                     </div>
                 </div>
 
-                <button id="btn-pwa-close-modal" class="w-full bg-gray-50 text-gray-400 font-semibold py-3 rounded-2xl hover:bg-gray-100 transition-colors text-sm">
+                <button id="btn-pwa-close-modal"
+                    class="w-full bg-gray-50 text-gray-400 font-semibold py-3 rounded-2xl hover:bg-gray-100 transition-colors text-sm">
                     Luego
                 </button>
             </div>
@@ -207,8 +218,8 @@
         id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <a href="about.html" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
-                    <img class="h-14 w-auto drop-shadow-md nav-logo" src="assets/images/logo.png"
+                <a href="index.html" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
+                    <img class="h-20 w-auto drop-shadow-md nav-logo hover:scale-105 transition-transform duration-300" src="assets/images/brand/logo.png"
                         alt="Sabores Y&B Logo">
                     <span class="font-display tracking-wide text-xl text-primary drop-shadow-sm hidden sm:block">Sabores
                         Y&B</span>
@@ -228,7 +239,7 @@
                 <div class="hidden md:flex space-x-8">
                     <a href="index.html" class="text-gray-800 hover:text-primary font-semibold transition">Menú</a>
                     <a href="about.html"
-                        class="text-gray-800 hover:text-primary font-semibold transition border-b-2 border-primary hidden">Nuestra
+                        class="text-gray-800 hover:text-primary font-semibold transition border-b-2 border-primary">Nuestra
                         Historia</a>
                 </div>
                 <div class="md:hidden flex items-center">
@@ -267,7 +278,7 @@
         <button id="close-mobile-menu" class="absolute top-6 right-8 text-4xl text-gray-800"><i
                 class="fas fa-times"></i></button>
         <a href="index.html" class="text-textMain hover:text-primary transition">Menú</a>
-        <a href="about.html" class="text-textMain hover:text-primary transition hidden">Nuestra Historia</a>
+        <a href="about.html" class="text-textMain hover:text-primary transition">Nuestra Historia</a>
     </div>
 
     <!-- Hero Section -->
@@ -301,7 +312,7 @@
                     <div
                         class="absolute inset-0 bg-secondary rounded-full transform -rotate-6 scale-105 opacity-50 blur-xl">
                     </div>
-                    <img src="assets/images/pabellon.png" alt="Empanada de Pabellón"
+                    <img src="assets/images/empanadas/pabellon.png" alt="Empanada de Pabellón"
                         class="relative rounded-3xl shadow-2xl object-cover h-[500px] w-full border-4 border-white transform hover:scale-[1.02] transition duration-500">
 
                     <!-- Floating badge -->
@@ -339,7 +350,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div class="order-2 md:order-1 reveal">
-                    <img src="assets/images/logo.png" alt="Sabores Y&B" class="w-full max-w-md mx-auto drop-shadow-2xl">
+                    <img src="assets/images/brand/logo.png" alt="Sabores Y&B" class="w-full max-w-md mx-auto drop-shadow-2xl">
                 </div>
                 <div class="order-1 md:order-2 reveal text-lg text-gray-700 space-y-6">
                     <p>
@@ -373,7 +384,7 @@
     <!-- Footer -->
     <footer class="bg-textMain py-8 text-white text-center">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <img src="assets/images/logo.png" alt="Sabores Y&B"
+            <img src="assets/images/brand/logo.png" alt="Sabores Y&B"
                 class="h-16 mx-auto mb-4 brightness-0 invert opacity-90 footer-logo">
             <h5 class="text-2xl font-display mb-2 text-primary">Sabores Y&B</h5>
             <p class="text-gray-400 mb-6 max-w-sm mx-auto text-sm">Hechas con amor desde nuestra familia para la tuya.
@@ -395,6 +406,9 @@
             </div>
 
             <div class="border-t border-gray-700 pt-6 flex flex-col items-center justify-center">
+                <button id="btn-test-notification" class="mb-4 text-[10px] text-gray-500 hover:text-primary transition underline decoration-1">
+                    <i class="fas fa-bell mr-1"></i> Probar Notificación de las 7AM (Vista previa)
+                </button>
                 <div class="text-xs text-gray-500 text-center">
                     &copy; 2026 Sabores Y&B. Todos los derechos reservados.
                 </div>
@@ -402,7 +416,9 @@
                     <span>Desarrollado con</span>
                     <i class="fas fa-heart text-red-500 animate-pulse"></i>
                     <span>por</span>
-                    <a href="https://github.com/wydex28" target="_blank" class="text-primary hover:text-green-400 font-bold transition flex items-center gap-1 hover:-translate-y-0.5 hover:scale-105" title="Creador: wydex28">
+                    <a href="https://github.com/wydex28" target="_blank"
+                        class="text-primary hover:text-green-400 font-bold transition flex items-center gap-1 hover:-translate-y-0.5 hover:scale-105"
+                        title="Creador: wydex28">
                         <i class="fab fa-github text-sm"></i> wydex28
                     </a>
                 </div>
@@ -496,13 +512,48 @@
                     }, 600, 'swing');
                 }
             });
+
+            // Logica para probar notificación local
+            $('#btn-test-notification').click(function () {
+                if (!("Notification" in window)) {
+                    alert("Este navegador no soporta notificaciones de escritorio.");
+                } else if (Notification.permission === "granted") {
+                    const notification = new Notification("¡Es hora de una empanada! 🥟", {
+                        body: "Crujientes, calientes y deliciosas. ¡Pide la tuya ahora en Sabores Y&B!",
+                        icon: "assets/images/brand/logo.png",
+                        image: "assets/images/brand/logo-solid.png"
+                    });
+                    notification.onclick = function () {
+                        window.focus();
+                        this.close();
+                    };
+                } else if (Notification.permission !== "denied") {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === "granted") {
+                            const notification = new Notification("¡Es hora de una empanada! 🥟", {
+                                body: "Crujientes, calientes y deliciosas. ¡Pide la tuya ahora en Sabores Y&B!",
+                                icon: "assets/images/brand/logo.png",
+                                image: "assets/images/brand/logo-solid.png"
+                            });
+                            notification.onclick = function () {
+                                window.focus();
+                                this.close();
+                            };
+                        } else {
+                            alert("Permiso de notificación denegado. Actívalo en la configuración de la página.");
+                        }
+                    });
+                } else {
+                    alert("Permiso de notificación denegado. Actívalo en la configuración de la página.");
+                }
+            });
         });
     </script>
     <!-- Service Worker Registration & PWA Install -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(err => {});
+                navigator.serviceWorker.register('./sw.js').catch(err => { });
             });
         }
 
@@ -515,7 +566,7 @@
 
         // Detectar si ya está instalada
         const isAppInstalled = () => {
-             return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
         }
 
         const isIOS = () => {
@@ -566,7 +617,7 @@
 
         // Trigger para iOS manualmente
         if (isIOS() && !isAppInstalled()) {
-             setTimeout(showInstallModal, 3000);
+            setTimeout(showInstallModal, 3000);
         }
 
         installNowBtn.addEventListener('click', async () => {
