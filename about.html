@@ -441,13 +441,27 @@
     <script src="assets/js/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            // Splash hide logic
-            $(window).on('load', function() {
+            // Logica para mostrar splash SOLO en modo APP instalada
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            
+            function hideSplash() {
                 setTimeout(function() {
                     $('#pwa-splash').addClass('opacity-0 pointer-events-none');
-                    setTimeout(() => $('#pwa-splash').addClass('hidden'), 700);
-                }, 1800);
-            });
+                    setTimeout(() => $('#pwa-splash').addClass('hidden'), 600);
+                }, 1500);
+            }
+
+            if (!isStandalone) {
+                // Si es navegador normal, ocultar de inmediato sin animación
+                $('#pwa-splash').addClass('hidden');
+            } else {
+                // Si es App, esperar a que cargue todo para quitarlo
+                if (document.readyState === 'complete') {
+                    hideSplash();
+                } else {
+                    $(window).on('load', hideSplash);
+                }
+            }
 
             // Tasa BCV Logic
             let bcvRate = 1.0;
