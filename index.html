@@ -2215,36 +2215,46 @@
             $('#btn-test-notification').click(function () {
                 if (!("Notification" in window)) {
                     alert("Este navegador no soporta notificaciones de escritorio.");
-                } else if (Notification.permission === "granted") {
-                    const notification = new Notification("¡Es hora de una empanada! 🥟", {
-                        body: "Crujientes, calientes y deliciosas. ¡Pide la tuya ahora en Sabores Y&B!",
-                        icon: "assets/images/brand/logo.png",
-                        image: "assets/images/brand/logo-solid.png"
-                    });
-                    notification.onclick = function () {
-                        window.focus();
-                        this.close();
-                    };
+                    return;
+                }
+
+                if (Notification.permission === "granted") {
+                    sendTestNotification();
                 } else if (Notification.permission !== "denied") {
                     Notification.requestPermission().then(permission => {
-                        if (permission === "granted") {
-                            const notification = new Notification("¡Es hora de una empanada! 🥟", {
-                                body: "Crujientes, calientes y deliciosas. ¡Pide la tuya ahora en Sabores Y&B!",
-                                icon: "assets/images/brand/logo.png",
-                                image: "assets/images/brand/logo-solid.png"
-                            });
-                            notification.onclick = function () {
-                                window.focus();
-                                this.close();
-                            };
-                        } else {
-                            alert("Permiso de notificación denegado. Actívalo en la configuración de la página.");
-                        }
+                        if (permission === "granted") sendTestNotification();
                     });
                 } else {
                     alert("Permiso de notificación denegado. Actívalo en la configuración de la página.");
                 }
             });
+
+            function sendTestNotification() {
+                const title = "¡Es hora de una empanada! 🥟";
+                const options = {
+                    body: "Crujientes, calientes y deliciosas. ¡Pide la tuya ahora en Sabores Y&B!",
+                    icon: "assets/images/brand/logo.png",
+                    image: "assets/images/brand/logo-solid.png",
+                    badge: "assets/images/brand/logo.png",
+                    vibrate: [200, 100, 200],
+                    tag: 'test-notification',
+                    renotify: true
+                };
+
+                if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.ready.then(registration => {
+                        registration.showNotification(title, options);
+                    });
+                } else {
+                    // Fallback for desktop or non-SW env
+                    try {
+                        const n = new Notification(title, options);
+                        n.onclick = () => { window.focus(); n.close(); };
+                    } catch (e) {
+                        console.error("Error enviando notificación:", e);
+                    }
+                }
+            }
         });
 
         // Add slow bounce to utility
