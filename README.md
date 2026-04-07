@@ -1,50 +1,59 @@
-<div align="center">
-  <img src="assets/images/logo.png" alt="Sabores Y&B Logo" width="200"/>
-  <h1>Sabores Y&B</h1>
-  <p><strong>Las Mejores Empanadas Venezolanas y Bebidas Refrescantes</strong></p>
-</div>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
----
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-Bienvenido al repositorio oficial del proyecto Web de **Sabores Y&B**. Se trata de una landing page transaccional y catálogo de menú, optimizada para ventas locales y procesamientos de órdenes directamente por **WhatsApp**.
+## About Laravel
 
-El sitio se enfoca en ofrecer la mejor experiencia de compra móvil (UX), contando con carrito de compras reactivo, integración en tiempo real del tipo de cambio (BCV), validaciones de disponibilidad del local y de horarios.
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## 🚀 Características Principales
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-* **Responsive Design:** Orientado a Mobile-First para ofrecer a los clientes la mejor experiencia desde sus teléfonos.
-* **Carrito Interactivo:** Lógica en Javascript puro que gestiona el subtotal, total e inventario de productos. 
-* **Tasa BCV Dinámica:** Conectado directamente a la API de `DolarApi` para actualizar en tiempo real el precio de facturación final usando el convertidor a Bolívares.
-* **Integración WhatsApp:** Auto-redacción del desglose del pedido (cantidades, detalles y tipos de moneda) en un mensaje formateado listo para ser enviado al comercio local.
-* **Validación de Horario:** El sistema interactúa directamente con el reloj del cliente impidiendo que se cursen pedidos fuera del horario de atención laboral o durante días libres.
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## 🛠️ Tecnologías Utilizadas
+## Learning Laravel
 
-* **HTML5:** Estructura semántica simple, lista para SEO.
-* **Tailwind CSS (CDN):** Estilo moderno, utilidad CSS avanzada y soporte rápido para prototipado.
-* **JavaScript (Puro + jQuery):** Control del DOM, lógica del carro de compras y peticiones asíncronas para el BCV.
-* **Google Fonts:** Tipografías vibrantes *Lilita One* (títulos) y *Outfit* (cuerpos de texto).
-* **FontAwesome:** Iconografía y estética escalable.
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
 
-## 📂 Estructura del Proyecto
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-```text
-/
-├── assets/                     # Todos los recursos estáticos del sistema
-│   └── images/                 # Imágenes optimizadas para los productos
-├── index.html                  # Catálogo de menú (Página Principal)
-├── nosotros.html               # Historia y origen de la marca (Sobre nosotros)
-└── README.md                   # Documentación principal
-```
+## Laravel Sponsors
 
-*Nota: La estructura mantiene explícitamente ambos archivos `.html` (`index` y `nosotros`) en la raíz del proyecto para cumplir con los estándares de indexado e interlinking habitual en plataformas simples de alojamiento como GitHub Pages o Vercel.*
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-## ⚙️ Cómo visualizar localmente
+### Premium Partners
 
-Solamente necesitas abrir o arrastrar el archivo `index.html` a cualquier navegador moderno (Google Chrome, Firefox, Edge, Safari), ya que se trata de un proyecto estático Front-end, ¡no requiere Node.js, PHP ni librerías compiladas locales para funcionar!
+- **[Vehikl](https://vehikl.com)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Redberry](https://redberry.international/laravel-development)**
+- **[Active Logic](https://activelogic.com)**
 
----
+## Contributing
 
-<div align="center">
-  <p>Desarrollado con ❤️ para <b>Sabores Y&B</b>.</p>
-</div>
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+
+## Code of Conduct
+
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

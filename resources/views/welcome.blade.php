@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 
 <head>
@@ -11,19 +11,19 @@
     <meta name="author" content="Sabores Y&B">
     <meta property="og:title" content="Sabores Y&B | Las Mejores Empanadas Venezolanas">
     <meta property="og:description" content="Pide online las mejores empanadas venezolanas y bebidas refrescantes.">
-    <meta property="og:image" content="assets/images/brand/logo.png">
+    <meta property="og:image" content="/images/brand/logo.png">
     <meta property="og:type" content="website">
     <title>Sabores Y&B | Las Mejores Empanadas Venezolanas</title>
 
     <!-- Favicon & PWA -->
-    <link rel="icon" type="image/png" href="assets/images/brand/logo.png">
-    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="/images/brand/logo.png">
+    <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#00A859">
     <!-- Mobile Optimization -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Sabores Y&B">
-    <link rel="apple-touch-icon" href="assets/images/brand/logo.png">
+    <link rel="apple-touch-icon" href="/images/brand/logo.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,8 +31,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Lilita+One&display=swap"
         rel="stylesheet">
 
+    <!-- SweetAlert2 -->
+    <style>
+    .swal2-popup { border-radius: 2rem !important; font-family: 'Outfit', sans-serif !important; border: 4px solid #fefefe !important; }
+    .swal2-title { font-family: 'Lilita One', cursive !important; color: #24140a !important; font-size: 1.8rem !important; }
+    .swal2-confirm { background-color: #00A859 !important; border-radius: 1rem !important; font-weight: 800 !important; padding: 0.8rem 2rem !important; box-shadow: 0 10px 15px -3px rgba(0, 168, 89, 0.2) !important; }
+    .swal2-cancel { border-radius: 1rem !important; font-weight: 600 !important; }
+</style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <!-- Tailwind CSS (Local) -->
-    <script src="assets/js/tailwindcss.js"></script>
+    <script src="/js/tailwindcss.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -66,7 +75,7 @@
     </script>
 
     <!-- FontAwesome for Icons (Local) -->
-    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="/css/all.min.css">
 
     <!-- Custom CSS Base -->
     <style>
@@ -162,7 +171,7 @@
     <!-- Splash Screen / Loading View (App launch simulation) -->
     <div id="pwa-splash" class="fixed inset-0 bg-white z-[1000] flex flex-col items-center justify-center transition-opacity duration-700">
         <div class="flex flex-col items-center animate-pulse">
-            <img src="assets/images/brand/logo.png" alt="Sabores Y&B" class="w-48 h-48 object-contain mb-4">
+            <img src="/images/brand/logo.png" alt="Sabores Y&B" class="w-48 h-48 object-contain mb-4">
             <h1 class="text-3xl font-display text-textMain tracking-wide">Sabores Y&B</h1>
         </div>
         <div class="absolute bottom-12 left-0 w-full text-center">
@@ -185,7 +194,7 @@
 
                 <!-- Company Logo -->
                 <div class="flex justify-center mb-6">
-                    <img src="assets/images/brand/logo.png" alt="Sabores Y&B" class="w-28 h-28 object-contain drop-shadow-md hover:scale-105 transition-transform duration-500">
+                    <img src="/images/brand/logo.png" alt="Sabores Y&B" class="w-28 h-28 object-contain drop-shadow-md hover:scale-105 transition-transform duration-500">
                 </div>
 
                 <!-- Android Specific Section -->
@@ -464,7 +473,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="about.html" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
-                    <img class="h-20 w-auto drop-shadow-md nav-logo hover:scale-105 transition-transform duration-300" src="assets/images/brand/logo.png"
+                    <img class="h-20 w-auto drop-shadow-md nav-logo hover:scale-105 transition-transform duration-300" src="/images/brand/logo.png"
                         alt="Sabores Y&B Logo">
                     <span class="font-display tracking-wide text-xl text-primary drop-shadow-sm hidden sm:block">Sabores
                         Y&B</span>
@@ -559,617 +568,59 @@
                 </div>
             </div>
 
-            <!-- Empanadas Clásicas Category -->
+            <!-- Dynamic Menu Section -->
+            @foreach($products as $category => $items)
             <div class="mb-20">
                 <div class="flex items-center gap-4 mb-10 reveal">
-                    <i class="fas fa-fire text-3xl text-primary"></i>
-                    <h3 class="text-3xl font-display text-textMain">Empanadas Clásicas</h3>
+                    <i class="fas 
+                        @if($category == 'Empanadas Fritas' || str_contains($category, 'Clásicas')) fa-fire text-primary
+                        @elseif($category == 'Empanadas Especiales' || str_contains($category, 'Horneadas')) fa-star text-accent
+                        @elseif($category == 'Bebidas') fa-glass-water text-dark
+                        @else fa-utensils text-gray-500
+                        @endif
+                    text-3xl"></i>
+                    <h3 class="text-3xl font-display text-textMain">{{ $category }}</h3>
                     <div class="h-px bg-gray-200 flex-grow"></div>
                 </div>
 
-                <div
-                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6">
-
-                    <!-- Item: Carne Mechada -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6">
+                    @foreach($items as $product)
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/empanadas/carne_mechada.png" alt="Carne Mechada"
-                                class="w-full h-full object-cover ">
+                            @if(str_contains($category, 'Especial'))
+                                <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                    <i class="fas fa-crown mr-1"></i> Especial
+                                </div>
+                            @endif
+                            <!-- Product Image -->
+                            <img src="{{ $product->image_path ? asset('storage/' . $product->image_path) : 'assets/images/brand/logo.png' }}" alt="{{ $product->title }}" class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Carne Mechada</h4>
+                            <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">{{ $product->title }}</h4>
                             <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.50</span></div>
+                                <div><span class="price-display font-display text-base sm:text-xl text-accent block" data-dolar="{{ $product->price }}"><i class="fas fa-spinner fa-spin text-sm"></i></span><span class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref: ${{ number_format($product->price, 2) }}</span></div>
                             </div>
                             <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
-                                        data-target="qty-mechada">-</button>
-                                    <input type="number" id="qty-mechada"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
-                                        data-target="qty-mechada">+</button>
+                                <div class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
+                                    <button class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn" data-target="qty-prod-{{ $product->id }}">-</button>
+                                    <input type="number" id="qty-prod-{{ $product->id }}" class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none" value="1" min="1" readonly>
+                                    <button class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn" data-target="qty-prod-{{ $product->id }}">+</button>
                                 </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-mechada" data-name="Carne Mechada" data-price="1.50">Añadir</button>
+                                <button class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]" data-qty="qty-prod-{{ $product->id }}" data-name="{{ $product->title }}" data-price="{{ $product->price }}">Añadir</button>
                             </div>
                         </div>
                     </div>
-                    <!-- Item: Jamón con Queso -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/empanadas/jamon_queso.png" alt="Jamón con Queso"
-                                class="w-full h-full object-cover ">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Jamón con Queso</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.50</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
-                                        data-target="qty-jamonq">-</button>
-                                    <input type="number" id="qty-jamonq"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
-                                        data-target="qty-jamonq">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-jamonq" data-name="Jamón con Queso" data-price="1.50">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item: Pollo -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/empanadas/pollo.png" alt="Pollo" class="w-full h-full object-cover ">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Pollo</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.50</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
-                                        data-target="qty-pollo">-</button>
-                                    <input type="number" id="qty-pollo"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
-                                        data-target="qty-pollo">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-pollo" data-name="Pollo" data-price="1.50">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item: Carne Molida -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/empanadas/carne_molida.png" alt="Carne Molida"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Carne Molida</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.50</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
-                                        data-target="qty-molida">-</button>
-                                    <input type="number" id="qty-molida"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
-                                        data-target="qty-molida">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-molida" data-name="Carne Molida" data-price="1.50">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item: Queso blanco (Llanero) -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/empanadas/queso_blanco.png" alt="Queso blanco (Llanero)"
-                                class="w-full h-full object-cover ">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Queso blanco (Llanero)</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.50</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
-                                        data-target="qty-quesobl">-</button>
-                                    <input type="number" id="qty-quesobl"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
-                                        data-target="qty-quesobl">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-quesobl" data-name="Queso blanco (Llanero)"
-                                    data-price="1.50">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item: Pabellón -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/empanadas/pabellon.png" alt="Pabellón" class="w-full h-full object-cover ">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Pabellón (Mechada, Caraotas y Queso)</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.50</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
-                                        data-target="qty-pabellon">-</button>
-                                    <input type="number" id="qty-pabellon"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
-                                        data-target="qty-pabellon">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-pabellon" data-name="Pabellón" data-price="1.50">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item: Guiso Navideño -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/empanadas/navideno.png" alt="Guiso Navideño"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Guiso Navideño</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.50</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
-                                        data-target="qty-navideno">-</button>
-                                    <input type="number" id="qty-navideno"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
-                                        data-target="qty-navideno">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-navideno" data-name="Guiso Navideño" data-price="1.50">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item: Macabí (Pescado) -->
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <img src="assets/images/empanadas/macabi.png" alt="Macabí (Pescado)"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Macabí (Pescado)</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.50"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.50</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-accent counter-btn"
-                                        data-target="qty-macabi">-</button>
-                                    <input type="number" id="qty-macabi"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-white transition-colors text-primary counter-btn"
-                                        data-target="qty-macabi">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-macabi" data-name="Macabí (Pescado)" data-price="1.50">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
+            @endforeach
 
-            <!-- Empanadas Especiales Category -->
-            <div class="mb-20">
-                <div class="flex items-center gap-4 mb-10 reveal">
-                    <i class="fas fa-star text-3xl text-accent"></i>
-                    <h3 class="text-3xl font-display text-textMain">Empanadas Especiales</h3>
-                    <div class="h-px bg-gray-400 opacity-20 flex-grow"></div>
-                </div>
-
-                <div
-                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6">
-
-                    <!-- Item: Mechada con Queso (Pelúa) -->
-                    <div
-                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div
-                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial
-                            </div>
-                            <img src="assets/images/empanadas/pelua.png" alt="Mechada con Queso (Pelúa)"
-                                class="w-full h-full object-cover ">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Mechada con Queso (Pelúa)</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.80</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn"
-                                        data-target="qty-esp-pelua">-</button>
-                                    <input type="number" id="qty-esp-pelua"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn"
-                                        data-target="qty-esp-pelua">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-esp-pelua" data-name="Mechada con Queso (Pelúa)"
-                                    data-price="1.80">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item: Molida con Queso -->
-                    <div
-                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div
-                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial
-                            </div>
-                            <img src="assets/images/empanadas/molida_queso.png" alt="Molida con Queso"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Molida con Queso</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.80</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn"
-                                        data-target="qty-esp-molidaq">-</button>
-                                    <input type="number" id="qty-esp-molidaq"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn"
-                                        data-target="qty-esp-molidaq">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-esp-molidaq" data-name="Molida con Queso"
-                                    data-price="1.80">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item: Pollo con Queso (Catira) -->
-                    <div
-                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div
-                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial
-                            </div>
-                            <img src="assets/images/empanadas/catira.png" alt="Pollo con Queso (Catira)"
-                                class="w-full h-full object-cover ">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Pollo con Queso (Catira)</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.80</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn"
-                                        data-target="qty-esp-catira">-</button>
-                                    <input type="number" id="qty-esp-catira"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn"
-                                        data-target="qty-esp-catira">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-esp-catira" data-name="Pollo con Queso (Catira)"
-                                    data-price="1.80">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item: Caraota con Queso (Dominó) -->
-                    <div
-                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div
-                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial
-                            </div>
-                            <img src="assets/images/empanadas/domino.png" alt="Caraota con Queso (Dominó)"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Caraota con Queso (Dominó)</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.80</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn"
-                                        data-target="qty-esp-domino">-</button>
-                                    <input type="number" id="qty-esp-domino"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn"
-                                        data-target="qty-esp-domino">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-esp-domino" data-name="Caraota con Queso (Dominó)"
-                                    data-price="1.80">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item: Gordon Blue de Mechada -->
-                    <div
-                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div
-                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial
-                            </div>
-                            <img src="assets/images/empanadas/gordon_blue_mechada.png" alt="Gordon Blue de Mechada"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Gordon Blue de Mechada</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.80</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn"
-                                        data-target="qty-esp-cbm">-</button>
-                                    <input type="number" id="qty-esp-cbm"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn"
-                                        data-target="qty-esp-cbm">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-esp-cbm" data-name="Gordon Blue de Mechada"
-                                    data-price="1.80">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item: Gordon Blue de Pollo -->
-                    <div
-                        class="bg-orange-50 rounded-3xl overflow-hidden shadow-xl border-2 border-primary/20 food-card reveal">
-                        <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            <div
-                                class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fas fa-crown mr-1"></i> Especial
-                            </div>
-                            <img src="assets/images/empanadas/gordon_blue_pollo.png" alt="Gordon Blue de Pollo"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 sm:p-5">
-                            <h4
-                                class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">
-                                Gordon Blue de Pollo</h4>
-                            <div class="flex flex-col items-center justify-center text-center mb-2 sm:mb-4">
-                                <div><span class="price-display font-display text-base sm:text-xl text-accent block"
-                                        data-dolar="1.80"><i class="fas fa-spinner fa-spin text-sm"></i></span><span
-                                        class="text-[9px] sm:text-xs text-gray-400 block -mt-1 sm:mt-0">Ref:
-                                        $1.80</span></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <div
-                                    class="flex items-center bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all hover:border-gray-300 w-1/2">
-                                    <button
-                                        class="qty-btn minus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-accent counter-btn"
-                                        data-target="qty-esp-cbp">-</button>
-                                    <input type="number" id="qty-esp-cbp"
-                                        class="w-10 text-center bg-white border-x border-gray-200 font-bold text-base px-0 py-1.5 focus:ring-0 outline-none"
-                                        value="1" min="1" readonly>
-                                    <button
-                                        class="qty-btn plus flex-1 py-1.5 text-base font-bold hover:bg-gray-100 transition-colors text-primary counter-btn"
-                                        data-target="qty-esp-cbp">+</button>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn w-1/2 bg-primary text-white font-bold py-2 text-xs sm:text-sm rounded-full hover:bg-green-600 transition shadow-md flex items-center justify-center text-center leading-[1.1]"
-                                    data-qty="qty-esp-cbp" data-name="Gordon Blue de Pollo"
-                                    data-price="1.80">Añadir</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            @if($products->isEmpty())
+            <div class="text-center text-gray-500 py-10">
+                <i class="fas fa-box-open text-5xl mb-4 text-gray-300"></i>
+                <p class="text-lg">Pronto subiremos nuestros deliciosos productos.</p>
             </div>
-
-            <!-- Bebidas Category -->
-            <div>
-                <div class="flex items-center gap-4 mb-10 reveal">
-                    <i class="fas fa-glass-water text-3xl text-dark"></i>
-                    <h3 class="text-3xl font-display text-textMain">Refrescos y Jugos</h3>
-                    <div class="h-px bg-gray-200 flex-grow"></div>
-                </div>
-
-                <div
-                    class="bg-gray-50 border-2 border-dashed border-gray-200 rounded-3xl p-8 sm:p-12 text-center reveal">
-                    <div
-                        class="w-16 h-16 bg-gray-200 text-gray-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 hover:scale-110 transition-transform">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h4 class="text-xl sm:text-2xl font-bold text-gray-500 mb-2">Próximamente</h4>
-                    <p class="text-sm text-gray-400">Estamos preparando las mejores opciones para refrescarte.</p>
-                </div>
-            </div>
-
-            <!-- Dulces Category -->
-            <div class="mt-16">
-                <div class="flex items-center gap-4 mb-10 reveal">
-                    <i class="fas fa-candy-cane text-3xl text-pink-500"></i>
-                    <h3 class="text-3xl font-display text-textMain">Chucherías y Dulces</h3>
-                    <div class="h-px bg-gray-200 flex-grow"></div>
-                </div>
-
-                <div
-                    class="bg-pink-50 border-2 border-dashed border-pink-200 rounded-3xl p-8 sm:p-12 text-center reveal">
-                    <div
-                        class="w-16 h-16 bg-pink-100 text-pink-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 hover:rotate-12 transition-transform">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <h4 class="text-xl sm:text-2xl font-bold text-pink-600 mb-2">Próximamente</h4>
-                    <p class="text-sm text-pink-500/80">Muy pronto endulzaremos tus pedidos con las mejores chucherías.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Conveniencia Category -->
-            <div class="mt-16">
-                <div class="flex items-center gap-4 mb-10 reveal">
-                    <i class="fas fa-shopping-basket text-3xl text-indigo-500"></i>
-                    <h3 class="text-3xl font-display text-textMain">Artículos de Conveniencia</h3>
-                    <div class="h-px bg-gray-200 flex-grow"></div>
-                </div>
-
-                <div
-                    class="bg-indigo-50 border-2 border-dashed border-indigo-200 rounded-3xl p-8 sm:p-12 text-center reveal">
-                    <div
-                        class="w-16 h-16 bg-indigo-100 text-indigo-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 hover:scale-110 transition-transform">
-                        <i class="fas fa-box-open"></i>
-                    </div>
-                    <h4 class="text-xl sm:text-2xl font-bold text-indigo-600 mb-2">Próximamente</h4>
-                    <p class="text-sm text-indigo-500/80">Pronto encontrarás productos básicos para tu día a día y
-                        hogar.</p>
-                </div>
-            </div>
+            @endif
 
         </div>
     </section>
@@ -1278,7 +729,7 @@
     <!-- Footer -->
     <footer class="bg-textMain py-8 text-white text-center">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <img src="assets/images/brand/logo.png" alt="Sabores Y&B"
+            <img src="/images/brand/logo.png" alt="Sabores Y&B"
                 class="h-16 mx-auto mb-4 brightness-0 invert opacity-90 footer-logo">
             <h5 class="text-2xl font-display mb-2 text-primary">Sabores Y&B</h5>
             <p class="text-gray-400 mb-6 max-w-sm mx-auto text-sm">Hechas con amor desde nuestra familia para la tuya.
@@ -1300,9 +751,14 @@
             </div>
 
             <div class="border-t border-gray-700 pt-6 flex flex-col items-center justify-center">
-                <button id="btn-test-notification" class="mb-4 text-[10px] text-gray-500 hover:text-primary transition underline decoration-1">
-                    <i class="fas fa-bell mr-1"></i> Probar Notificación de las 7AM (Vista previa)
-                </button>
+                <div class="flex flex-wrap justify-center gap-4 mb-4">
+                    <button id="btn-test-notification" class="text-[10px] text-gray-500 hover:text-primary transition underline decoration-1">
+                        <i class="fas fa-bell mr-1"></i> Probar Notificación de las 7AM
+                    </button>
+                    <a href="/admin/login" class="text-[10px] text-gray-500 hover:text-primary transition underline decoration-1 border-l border-gray-700 pl-4">
+                        <i class="fas fa-user-shield mr-1"></i> Panel Admin
+                    </a>
+                </div>
                 <div class="text-xs text-gray-500 text-center">
                     &copy; 2026 Sabores Y&B. Todos los derechos reservados.
                 </div>
@@ -1322,11 +778,11 @@
 
     <!-- Scripts -->
     <!-- Confetti Local -->
-    <script src="assets/js/confetti.browser.min.js"></script>
+    <script src="/js/confetti.browser.min.js"></script>
     <!-- Leaflet JS Local -->
-    <script src="assets/js/leaflet.js"></script>
+    <script src="/js/leaflet.js"></script>
     <!-- jQuery Local -->
-    <script src="assets/js/jquery.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
     <script>
         // Audio Helper for "Pop" sound
         let audioCtx;
@@ -1467,7 +923,7 @@
 
                 // Icono tienda
                 var storeIcon = L.divIcon({
-                    html: '<div class="w-8 h-8 bg-white border-2 border-primary rounded-full shadow-lg flex items-center justify-center p-1"><img src="assets/images/brand/logo.png" class="w-full h-full object-cover"></div>',
+                    html: '<div class="w-8 h-8 bg-white border-2 border-primary rounded-full shadow-lg flex items-center justify-center p-1"><img src="/images/brand/logo.png" class="w-full h-full object-cover"></div>',
                     className: 'store-marker-icon',
                     iconSize: [32, 32],
                     iconAnchor: [16, 16]
@@ -1968,7 +1424,7 @@
                 var cPhone = $('#delivery-phone').val().trim();
 
                 if (!cName || !cPhone) {
-                    alert("Por favor, ingresa tu nombre y celular para coordinar el envío.");
+                    Swal.fire({ title: "Sabores Y&B", text: "Por favor, ingresa tu nombre y celular para coordinar el envío.", icon: "info" });
                     return;
                 }
 
@@ -2005,7 +1461,7 @@
                             deliveryMarker.setLatLng([lat, lon]);
                             updateDeliveryCost(lat, lon);
                         } else {
-                            alert("No encontramos ese lugar. Búscalo manualmente deslizando la pantalla.");
+                            Swal.fire({ title: "ðŸ“ Lugar no encontrado", text: "BÃºscalo manualmente deslizando en el mapa.", icon: "warning" });
                         }
                     }).always(function () {
                         $btn.html('<i class="fas fa-search"></i>').prop('disabled', false);
@@ -2024,11 +1480,11 @@
                         updateDeliveryCost(lat, lon);
                         $btn.html('<i class="fas fa-check text-green-500"></i> GPS Confirmado');
                     }, function (error) {
-                        alert("Activa el GPS de tu celular o dale permisos a Sabores Y&B para encontrar tu ubicación exactita.");
+                        Swal.fire({ title: "ðŸ”Œ GPS Desconectado", text: "Activa el GPS o danos permiso para encontrarte rÃ¡pido.", icon: "warning" });
                         $btn.html('<i class="fas fa-crosshairs"></i> Usar mi ubicación actual');
                     }, { enableHighAccuracy: true });
                 } else {
-                    alert("Tu navegador no puede conseguir el GPS automático.");
+                    Swal.fire({ title: "ðŸš« Error GPS", text: "Tu navegador no permite obtener la ubicaciÃ³n automÃ¡tica.", icon: "error" });
                 }
             });
 
@@ -2138,7 +1594,7 @@
 
                     if (timeLeft <= 0) {
                         clearInterval(window.paymentInterval);
-                        alert("⏱️ Tu sesión de pago ha expirado. La página se recargará por seguridad para evitar errores con los precios y montos a transferir.");
+                        Swal.fire({ title: "Sabores Y&B", text: "⏱️ Tu sesión de pago ha expirado. La página se recargará por seguridad para evitar errores con los precios y montos a transferir.", icon: "info" });
                         window.location.reload();
                     }
                 }, 1000);
@@ -2177,7 +1633,7 @@
                         }, 2500);
                     }
                 }).catch(function (err) {
-                    alert("No se pudo copiar el texto. Inténtalo manualmente.");
+                    Swal.fire({ title: "Â¡Ups!", text: "No se pudo copiar el texto. IntÃ©ntalo manualmente.", icon: "error" });
                 });
             });
 
@@ -2214,7 +1670,7 @@
             // Logica para probar notificación local
             $('#btn-test-notification').click(function () {
                 if (!("Notification" in window)) {
-                    alert("Este navegador no soporta notificaciones de escritorio.");
+                    Swal.fire({ title: "No compatible", text: "Este navegador no soporta notificaciones de escritorio.", icon: "warning", confirmButtonColor: "#FFBF69" });
                     return;
                 }
 
@@ -2225,7 +1681,7 @@
                         if (permission === "granted") sendTestNotification();
                     });
                 } else {
-                    alert("Permiso de notificación denegado. Actívalo en la configuración de la página.");
+                    Swal.fire({ title: "Sabores Y&B", text: "Permiso de notificación denegado. Actívalo en la configuración de la página.", icon: "info" });
                 }
             });
 
@@ -2233,9 +1689,9 @@
                 const title = "¡Es hora de una empanada! 🥟";
                 const options = {
                     body: "Crujientes, calientes y deliciosas. ¡Pide la tuya ahora en Sabores Y&B!",
-                    icon: "assets/images/brand/logo-solid.png",
-                    image: "assets/images/brand/logo-solid.png",
-                    badge: "assets/images/brand/logo-solid.png",
+                    icon: "/images/brand/logo-solid.png",
+                    image: "/images/brand/logo-solid.png",
+                    badge: "/images/brand/logo-solid.png",
                     vibrate: [200, 100, 200],
                     tag: 'test-notification',
                     renotify: true
@@ -2266,7 +1722,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(err => { });
+                navigator.serviceWorker.register('/sw.js').catch(err => { });
             });
         }
 
