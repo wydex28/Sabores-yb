@@ -1,11 +1,11 @@
 @extends('admin.layout')
 
 @section('content')
-<div class="max-w-md mx-auto mt-20">
-    <div class="text-center mb-10">
-        <img src="/images/brand/logo.png" alt="Logo" class="h-24 mx-auto mb-6">
+<div class="max-w-md mx-auto mt-2">
+    <div class="text-center mb-8">
+        <img src="/images/brand/logo.png" alt="Logo" class="h-24 mx-auto mb-4">
         <h2 class="text-4xl font-display text-textMain tracking-tight">Acceso Restringido</h2>
-        <p class="text-gray-500 font-medium">Solo para administradores de Sabores Y&B</p>
+        <p class="text-gray-500 font-medium">Solo para administradores de {{ $appName }}</p>
     </div>
 
     <div class="bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden transform transition hover:shadow-2xl">

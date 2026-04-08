@@ -7,24 +7,24 @@
         <p class="text-gray-500 font-medium">Completa los datos para añadirlo al menú digital.</p>
     </div>
 
-    <div class="bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
+    <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-gray-300/40 border border-gray-100 overflow-hidden">
         <div class="p-8 sm:p-12">
             <form method="POST" action="{{ route('admin.store') }}" enctype="multipart/form-data" class="space-y-8">
                 @csrf
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="md:col-span-2">
-                        <label class="block text-gray-500 text-xs font-bold uppercase tracking-widest mb-3 ml-1">Nombre del Producto</label>
+                        <label class="block text-primary text-xs font-bold uppercase tracking-widest mb-3 ml-1">Nombre del Producto</label>
                         <input type="text" name="title" placeholder="Ej. Empanada de Mechada" class="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 px-6 text-textMain font-bold focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition" required>
                     </div>
                     
                     <div class="md:col-span-2">
-                        <label class="block text-gray-500 text-xs font-bold uppercase tracking-widest mb-3 ml-1">Descripción corta</label>
+                        <label class="block text-primary text-xs font-bold uppercase tracking-widest mb-3 ml-1">Descripción corta</label>
                         <textarea name="description" placeholder="Ingredientes o detalles especiales..." rows="3" class="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 px-6 text-textMain font-bold focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition"></textarea>
                     </div>
                     
                     <div>
-                        <label class="block text-gray-500 text-xs font-bold uppercase tracking-widest mb-3 ml-1">Precio (Ref. USD)</label>
+                        <label class="block text-primary text-xs font-bold uppercase tracking-widest mb-3 ml-1">Precio (Ref. USD)</label>
                         <div class="relative">
                             <span class="absolute left-6 top-1/2 -translate-y-1/2 font-bold text-gray-400">$</span>
                             <input type="number" step="0.01" name="price" placeholder="1.50" class="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-6 text-textMain font-bold focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition" required>
@@ -32,25 +32,32 @@
                     </div>
 
                     <div>
-                        <label class="block text-gray-500 text-xs font-bold uppercase tracking-widest mb-3 ml-1">Categoría</label>
-                        <select name="category" class="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 px-6 text-textMain font-bold focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition appearance-none" required>
-                            <option value="Empanadas Fritas">Empanadas Fritas</option>
-                            <option value="Empanadas Especiales">Empanadas Especiales</option>
-                            <option value="Bebidas">Bebidas</option>
-                            <option value="Otros">Otros</option>
+                        <label class="block text-primary text-xs font-bold uppercase tracking-widest mb-3 ml-1">Categoría</label>
+                        <select name="category_id" class="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 px-6 text-textMain font-bold focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition appearance-none" required>
+                            <option value="">Selecciona una categoría...</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
                         </select>
                     </div>
 
-                    <div class="md:col-span-2">
-                        <label class="block text-gray-500 text-xs font-bold uppercase tracking-widest mb-3 ml-1">Imagen del Producto</label>
+                    <div class="md:col-span-1">
+                        <label class="block text-primary text-xs font-bold uppercase tracking-widest mb-3 ml-1">Imagen del Producto</label>
                         <div class="relative group">
                             <input type="file" name="image" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*">
                             <div class="w-full bg-gray-50 border-2 border-dashed border-gray-200 rounded-2xl py-8 px-6 text-center group-hover:border-primary/50 transition group-hover:bg-primary/5">
                                 <i class="fas fa-cloud-upload-alt text-3xl text-gray-300 mb-2 group-hover:text-primary transition"></i>
-                                <p class="text-sm text-gray-400 font-bold group-hover:text-primary transition">Haz clic o arrastra una imagen aquí</p>
-                                <p class="text-[10px] text-gray-300 uppercase tracking-tighter mt-1">PNG, JPG hasta 2MB</p>
+                                <p class="text-sm text-gray-400 font-bold group-hover:text-primary transition">Pulsa para subir</p>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="md:col-span-1 flex items-center justify-center pt-8">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" name="is_active" class="sr-only peer" checked>
+                            <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"></div>
+                            <span class="ms-3 text-xs font-bold text-gray-400 uppercase tracking-widest">¿Producto Visible?</span>
+                        </label>
                     </div>
                 </div>
 

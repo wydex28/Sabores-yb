@@ -14,6 +14,12 @@ class Product extends Model
         'description',
         'price',
         'image_path',
-        'category'
+        'category',
+        'category_id'
     ];
+
+    public function category_rel()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }

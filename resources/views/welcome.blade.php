@@ -1,29 +1,41 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 
 <head>
+    @php 
+        $primaryColor = \App\Models\Setting::get('primary_color', '#00A859');
+        $secondaryColor = \App\Models\Setting::get('secondary_color', '#FFBF69');
+        $logo = \App\Models\Setting::get('logo');
+        $favicon = \App\Models\Setting::get('favicon');
+        $appName = \App\Models\Setting::get('app_name', 'Sabores Y&B');
+        $address = \App\Models\Setting::get('address', 'Maracay, Venezuela');
+        $mapsLink = \App\Models\Setting::get('maps_link', 'https://maps.app.goo.gl/q1pFAsYWsYEuoX4i6');
+        $schedule = \App\Models\Setting::get('schedule', 'Lunes a Sábado de 6:00 am a 1:00 pm');
+        $slogan = \App\Models\Setting::get('slogan', 'Hechas con amor desde nuestra familia para la tuya.');
+        $instagramUser = \App\Models\Setting::get('instagram_user', 'saboresyb');
+        $whatsappNumber = \App\Models\Setting::get('whatsapp_number', '584128853518');
+        $notificationMsg = \App\Models\Setting::get('notification_msg', 'Crujientes, calientes y deliciosas. ¡Pide la tuya ahora!');
+    @endphp
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Sabores Y&B ofrece las mejores empanadas venezolanas y bebidas refrescantes. Pide online y disfruta del auténtico sabor tradicional.">
-    <meta name="keywords"
-        content="empanadas, comida venezolana, sabores y&b, empanadas de mechada, pastelitos, delivery de comida, venezuela, comida rápida">
-    <meta name="author" content="Sabores Y&B">
-    <meta property="og:title" content="Sabores Y&B | Las Mejores Empanadas Venezolanas">
-    <meta property="og:description" content="Pide online las mejores empanadas venezolanas y bebidas refrescantes.">
-    <meta property="og:image" content="/images/brand/logo.png">
+    <meta name="description" content="{{ $appName }} ofrece las mejores empanadas y productos frescos.">
+    <meta name="keywords" content="empanadas, comida, delivery, {{ $appName }}, {{ $address }}">
+    <meta name="author" content="{{ $appName }}">
+    <meta property="og:title" content="{{ $appName }} | Sabor Tradicional">
+    <meta property="og:description" content="Pide online las mejores empanadas y productos frescos en {{ $address }}.">
+    <meta property="og:image" content="{{ $logo ? asset('storage/' . $logo) : '/images/brand/logo.png' }}">
     <meta property="og:type" content="website">
-    <title>Sabores Y&B | Las Mejores Empanadas Venezolanas</title>
+    <title>{{ $appName }}</title>
 
     <!-- Favicon & PWA -->
-    <link rel="icon" type="image/png" href="/images/brand/logo.png">
+    <link rel="icon" type="image/png" href="{{ $favicon ? asset('storage/' . $favicon) : ($logo ? asset('storage/' . $logo) : '/images/brand/logo.png') }}">
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#00A859">
+    <meta name="theme-color" content="{{ $primaryColor }}">
     <!-- Mobile Optimization -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Sabores Y&B">
-    <link rel="apple-touch-icon" href="/images/brand/logo.png">
+    <meta name="apple-mobile-web-app-title" content="{{ $appName }}">
+    <link rel="apple-touch-icon" href="{{ $logo ? asset('storage/' . $logo) : '/images/brand/logo.png' }}">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +47,7 @@
     <style>
     .swal2-popup { border-radius: 2rem !important; font-family: 'Outfit', sans-serif !important; border: 4px solid #fefefe !important; }
     .swal2-title { font-family: 'Lilita One', cursive !important; color: #24140a !important; font-size: 1.8rem !important; }
-    .swal2-confirm { background-color: #00A859 !important; border-radius: 1rem !important; font-weight: 800 !important; padding: 0.8rem 2rem !important; box-shadow: 0 10px 15px -3px rgba(0, 168, 89, 0.2) !important; }
+    .swal2-confirm { background-color: {{ $primaryColor }} !important; border-radius: 1rem !important; font-weight: 800 !important; padding: 0.8rem 2rem !important; box-shadow: 0 10px 15px -3px rgba(0, 168, 89, 0.2) !important; }
     .swal2-cancel { border-radius: 1rem !important; font-weight: 600 !important; }
 </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -47,8 +59,8 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#00A859',    /* Green (Logo) */
-                        secondary: '#FFBF69',  /* Light Orange */
+                        primary: '{{ $primaryColor }}',    /* Green (Logo) */
+                        secondary: '{{ $secondaryColor }}',  /* Light Orange */
                         accent: '#E71D36',     /* Redish */
                         dark: '#2EC4B6',       /* Teal accent */
                         light: '#FDFFFC',      /* Off White */
@@ -74,8 +86,8 @@
         }
     </script>
 
-    <!-- FontAwesome for Icons (Local) -->
-    <link rel="stylesheet" href="/css/all.min.css">
+    <!-- FontAwesome for Icons (CDN para garantizar nuevos iconos como X) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom CSS Base -->
     <style>
@@ -171,13 +183,48 @@
     <!-- Splash Screen / Loading View (App launch simulation) -->
     <div id="pwa-splash" class="fixed inset-0 bg-white z-[1000] flex flex-col items-center justify-center transition-opacity duration-700">
         <div class="flex flex-col items-center animate-pulse">
-            <img src="/images/brand/logo.png" alt="Sabores Y&B" class="w-48 h-48 object-contain mb-4">
-            <h1 class="text-3xl font-display text-textMain tracking-wide">Sabores Y&B</h1>
+            <img src="{{ $logo ? asset('storage/' . $logo) : '/images/brand/logo.png' }}" alt="{{ $appName }}" class="w-48 h-48 object-contain mb-4">
+            <h1 class="text-3xl font-display text-textMain tracking-wide">{{ $appName }}</h1>
         </div>
         <div class="absolute bottom-12 left-0 w-full text-center">
             <p class="text-gray-300 text-[10px] font-mono tracking-widest">VERSION 1.0.0</p>
         </div>
     </div>
+
+    <!-- Branch Selection Modal (Multi-site) -->
+    @if($branches->count() > 1)
+    <div id="branch-selector-modal" class="fixed inset-0 z-[900] bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-[2.5rem] w-full max-w-md p-8 shadow-2xl transform transition-all scale-95 opacity-0 duration-300 flex flex-col items-center text-center">
+            <div class="w-24 h-24 bg-secondary/20 rounded-full flex items-center justify-center mb-6">
+                <img src="/images/icons/location-marker.png" alt="Sede" class="w-16 h-16 object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/854/854878.png'">
+            </div>
+            
+            <h2 class="text-2xl font-display text-textMain mb-2">Selecciona la sede más cercana a tu domicilio</h2>
+            <p class="text-gray-400 text-sm mb-8">Entregas más rápidas y promociones especiales.</p>
+
+            <button onclick="autoSelectNearestBranch()" class="w-full bg-secondary hover:bg-orange-500 text-white font-extra-bold py-4 rounded-2xl shadow-lg shadow-secondary/20 transition mb-6 flex items-center justify-center gap-2">
+                <i class="fas fa-location-arrow"></i>
+                Escoger sede más cercana
+            </button>
+
+            <div class="w-full border-t border-gray-100 pt-6">
+                <div class="relative w-full">
+                    <select id="branch-list-select" onchange="selectBranch(this.value)" class="w-full bg-gray-50 border border-gray-200 rounded-2xl py-4 px-6 text-textMain font-bold appearance-none outline-none focus:ring-2 focus:ring-secondary/30 transition cursor-pointer">
+                        <option value="">Selecciona una sede</option>
+                        @foreach($branches as $branch)
+                        <option value="{{ $branch->id }}" data-lat="{{ $branch->lat }}" data-lng="{{ $branch->lng }}" data-name="{{ $branch->name }}" data-whatsapp="{{ $branch->whatsapp }}" data-address="{{ $branch->address }}">
+                            {{ $branch->name }} - Delivery - PickUp
+                        </option>
+                        @endforeach
+                    </select>
+                    <div class="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 
     <!-- PWA Installation Modal (Onboarding) -->
     <div id="install-pwa-modal"
@@ -189,12 +236,12 @@
             <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-accent/10 rounded-full blur-3xl"></div>
 
             <div class="relative z-10">
-                <h2 class="text-2xl font-display font-medium text-textMain mb-2">¡Sabores Y&B en el Inicio de tu
+                <h2 class="text-2xl font-display font-medium text-textMain mb-2">¡{{ $appName }} en el Inicio de tu
                     dispositivo!</h2>
 
                 <!-- Company Logo -->
                 <div class="flex justify-center mb-6">
-                    <img src="/images/brand/logo.png" alt="Sabores Y&B" class="w-28 h-28 object-contain drop-shadow-md hover:scale-105 transition-transform duration-500">
+                    <img src="{{ $logo ? asset('storage/' . $logo) : '/images/brand/logo.png' }}" alt="{{ $appName }}" class="w-28 h-28 object-contain drop-shadow-md hover:scale-105 transition-transform duration-500">
                 </div>
 
                 <!-- Android Specific Section -->
@@ -288,8 +335,7 @@
                 <i class="fas fa-store-slash"></i>
             </div>
             <h3 class="text-2xl font-display text-textMain text-center mb-2">¡Estamos Cerrados!</h3>
-            <p class="text-gray-600 text-center mb-6 text-base">Nuestro horario de atención es de <b>Lunes a Sábado de
-                    6:00 am a 1:00 pm</b>. Por favor, realiza tu pedido dentro de este horario.</p>
+            <p class="text-gray-600 text-center mb-6 text-base">Nuestro horario de atención es: <b>{{ $schedule }}</b>. Por favor, realiza tu pedido dentro de este horario.</p>
             <button id="btn-close-store-modal"
                 class="w-full bg-primary text-white font-bold py-3 rounded-full hover:bg-green-700 transition shadow-lg flex justify-center items-center mb-2">
                 Entendido
@@ -472,11 +518,10 @@
         id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <a href="about.html" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
-                    <img class="h-20 w-auto drop-shadow-md nav-logo hover:scale-105 transition-transform duration-300" src="/images/brand/logo.png"
-                        alt="Sabores Y&B Logo">
-                    <span class="font-display tracking-wide text-xl text-primary drop-shadow-sm hidden sm:block">Sabores
-                        Y&B</span>
+                <a href="#menu" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
+                    <img class="h-20 w-auto drop-shadow-md nav-logo hover:scale-105 transition-transform duration-300" src="{{ $logo ? asset('storage/' . $logo) : '/images/brand/logo.png' }}"
+                        alt="{{ $appName }} Logo">
+                    <span class="font-display tracking-wide text-xl text-primary drop-shadow-sm hidden sm:block">{{ $appName }}</span>
                 </a>
 
                 <!-- Navbar BCV Rate Display -->
@@ -511,19 +556,24 @@
                 class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-4 text-xs sm:text-sm font-bold text-white sm:whitespace-nowrap sm:overflow-x-auto scrollbar-hide">
                 <div class="flex flex-row items-center gap-2">
                     <span id="schedule-text" class="flex items-center gap-1.5">
-                        <i class="fas fa-clock text-white/80"></i> Lunes a Sábado de 6:00 am a 1:00 pm
+                        <i class="fas fa-clock text-white/80"></i> {{ $schedule }}
                     </span>
                     <span id="store-status-badge"
                         class="px-2 py-0.5 text-[9px] sm:text-[10px] rounded-full uppercase tracking-wider font-extrabold shadow-sm transition-colors duration-300"></span>
                 </div>
                 <span class="opacity-30 hidden sm:inline">|</span>
-                <a href="https://maps.app.goo.gl/q1pFAsYWsYEuoX4i6" target="_blank"
+                <a id="branch-banner-link" href="{{ $mapsLink }}" target="_blank"
                     class="flex items-center gap-1.5 hover:text-white/80 transition group">
                     <i class="fas fa-map-marker-alt text-red-500/80 group-hover:animate-bounce"></i>
-                    <span
+                    <span id="branch-banner-text"
                         class="underline decoration-2 underline-offset-4 decoration-red-500/30 group-hover:decoration-red-500">Ubícanos
-                        en Maracay</span>
+                        en {{ $address }}</span>
                 </a>
+                @if($branches->count() > 1)
+                <button onclick="showBranchSelector()" class="ml-2 text-[10px] bg-white/20 hover:bg-white/40 px-2 py-0.5 rounded-md transition border border-white/20 whitespace-nowrap">
+                    Cambiar Sede <i class="fas fa-sync-alt ml-1 text-[8px]"></i>
+                </button>
+                @endif
             </div>
         </div>
     </nav>
@@ -569,31 +619,28 @@
             </div>
 
             <!-- Dynamic Menu Section -->
-            @foreach($products as $category => $items)
+            @foreach($categories as $category)
+            @if($category->products->count() > 0)
             <div class="mb-20">
                 <div class="flex items-center gap-4 mb-10 reveal">
-                    <i class="fas 
-                        @if($category == 'Empanadas Fritas' || str_contains($category, 'Clásicas')) fa-fire text-primary
-                        @elseif($category == 'Empanadas Especiales' || str_contains($category, 'Horneadas')) fa-star text-accent
-                        @elseif($category == 'Bebidas') fa-glass-water text-dark
-                        @else fa-utensils text-gray-500
-                        @endif
-                    text-3xl"></i>
-                    <h3 class="text-3xl font-display text-textMain">{{ $category }}</h3>
+                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-white shadow-lg" style="background-color: {{ $category->color }}">
+                        <i class="{{ $category->icon ?: 'fas fa-utensils' }} text-xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-display text-textMain">{{ $category->name }}</h3>
                     <div class="h-px bg-gray-200 flex-grow"></div>
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6">
-                    @foreach($items as $product)
+                    @foreach($category->products as $product)
                     <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 food-card reveal">
                         <div class="relative h-28 sm:h-36 lg:h-40 overflow-hidden bg-gray-100">
-                            @if(str_contains($category, 'Especial'))
-                                <div class="absolute top-4 xl:left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                            @if(str_contains(strtolower($category->name), 'especial'))
+                                <div class="absolute top-4 left-4 z-10 bg-gradient-to-r from-accent to-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
                                     <i class="fas fa-crown mr-1"></i> Especial
                                 </div>
                             @endif
                             <!-- Product Image -->
-                            <img src="{{ $product->image_path ? asset('storage/' . $product->image_path) : 'assets/images/brand/logo.png' }}" alt="{{ $product->title }}" class="w-full h-full object-cover">
+                            <img src="{{ $product->image_path ? asset('storage/' . $product->image_path) : '/images/brand/logo.png' }}" alt="{{ $product->title }}" class="w-full h-full object-cover">
                         </div>
                         <div class="p-3 sm:p-5">
                             <h4 class="text-sm sm:text-base font-bold text-center text-textMain mb-1 sm:mb-2 leading-tight min-h-[40px] flex items-center justify-center">{{ $product->title }}</h4>
@@ -613,9 +660,10 @@
                     @endforeach
                 </div>
             </div>
+            @endif
             @endforeach
 
-            @if($products->isEmpty())
+            @if($categories->isEmpty())
             <div class="text-center text-gray-500 py-10">
                 <i class="fas fa-box-open text-5xl mb-4 text-gray-300"></i>
                 <p class="text-lg">Pronto subiremos nuestros deliciosos productos.</p>
@@ -729,38 +777,72 @@
     <!-- Footer -->
     <footer class="bg-textMain py-8 text-white text-center">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <img src="/images/brand/logo.png" alt="Sabores Y&B"
+            <img src="{{ $logo ? asset('storage/' . $logo) : '/images/brand/logo.png' }}" alt="{{ $appName }}"
                 class="h-16 mx-auto mb-4 brightness-0 invert opacity-90 footer-logo">
-            <h5 class="text-2xl font-display mb-2 text-primary">Sabores Y&B</h5>
-            <p class="text-gray-400 mb-6 max-w-sm mx-auto text-sm">Hechas con amor desde nuestra familia para la tuya.
-            </p>
+            <h5 class="text-2xl font-display mb-2 text-primary">{{ $appName }}</h5>
+            <p class="text-gray-400 mb-6 max-w-sm mx-auto text-sm">{{ $slogan }}</p>
+ 
+            <div class="flex justify-center flex-wrap gap-x-8 gap-y-4 text-gray-300 font-bold mb-8 text-sm">
+                @if($instagramUrl)
+                <a href="{{ $instagramUrl }}" target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-instagram text-lg"></i> Instagram
+                </a>
+                @endif
+                
+                @if($tiktokUrl)
+                <a href="{{ $tiktokUrl }}" target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-tiktok text-lg"></i> TikTok
+                </a>
+                @endif
 
-            <div class="flex justify-center flex-wrap gap-6 text-gray-300 font-light mb-6 text-sm">
-                <a href="https://www.instagram.com/saboresyb/" target="_blank" class="hover:text-primary transition"><i
-                        class="fab fa-instagram mr-2"></i>@saboresyb</a>
-                <a href="https://wa.me/584128853518?text=%C2%A1Hola%20Sabores%20Y%26B!%20Quiero%20hacerles%20una%20consulta."
-                    target="_blank" class="hover:text-primary transition"><i class="fab fa-whatsapp mr-2"></i>+58
-                    412-8853518</a>
-            </div>
+                @if($facebookUrl)
+                <a href="{{ $facebookUrl }}" target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-facebook text-lg"></i> Facebook
+                </a>
+                @endif
 
-            <div class="flex justify-center px-4 mb-6 text-sm text-gray-300 font-light text-center">
-                <a href="https://maps.app.goo.gl/q1pFAsYWsYEuoX4i6" target="_blank"
-                    class="hover:text-primary transition max-w-lg">
-                    Los olivos nuevos - Calle Andres Bello - al frente del Colegio Nuestra Señora de las Mercedes
+                @if($youtubeUrl)
+                <a href="{{ $youtubeUrl }}" target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-youtube text-lg"></i> YouTube
+                </a>
+                @endif
+
+                @if($twitterUrl)
+                <a href="{{ $twitterUrl }}" target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-x-twitter text-lg"></i> X (Twitter)
+                </a>
+                @endif
+
+                @if($telegramUrl)
+                <a href="{{ $telegramUrl }}" target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-telegram text-lg"></i> Telegram
+                </a>
+                @endif
+
+                <a href="https://wa.me/{{ str_replace(['+', ' ', '-'], '', $whatsappNumber ?? '') }}?text=%C2%A1Hola%20{{ $appName }}!%20Quiero%20hacerles%20una%20consulta."
+                    target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-whatsapp text-lg"></i> {{ $whatsappNumber ?? '' }}
                 </a>
             </div>
-
+ 
+            <div class="flex justify-center px-4 mb-6 text-sm text-gray-300 font-light text-center">
+                <a id="footer-address-link" href="{{ $mapsLink }}" target="_blank"
+                    class="hover:text-primary transition max-w-lg">
+                    <span id="footer-address-text">{{ $address }}</span>
+                </a>
+            </div>
+ 
             <div class="border-t border-gray-700 pt-6 flex flex-col items-center justify-center">
                 <div class="flex flex-wrap justify-center gap-4 mb-4">
                     <button id="btn-test-notification" class="text-[10px] text-gray-500 hover:text-primary transition underline decoration-1">
-                        <i class="fas fa-bell mr-1"></i> Probar Notificación de las 7AM
+                        <i class="fas fa-bell mr-1"></i> Probar Notificación
                     </button>
                     <a href="/admin/login" class="text-[10px] text-gray-500 hover:text-primary transition underline decoration-1 border-l border-gray-700 pl-4">
                         <i class="fas fa-user-shield mr-1"></i> Panel Admin
                     </a>
                 </div>
                 <div class="text-xs text-gray-500 text-center">
-                    &copy; 2026 Sabores Y&B. Todos los derechos reservados.
+                    &copy; 2026 {{ $appName }}. Todos los derechos reservados.
                 </div>
                 <div class="text-xs text-gray-400 mt-2 flex items-center justify-center gap-1">
                     <span>Desarrollado con</span>
@@ -862,8 +944,21 @@
 
             // Delivery Global State
             var orderConfig = { type: 'pickup', distance: 0, deliveryCost: 0, lat: null, lng: null, confirmed: false, clientName: '', clientPhone: '' };
-            const STORE_LAT = 10.2586;
-            const STORE_LNG = -67.5856;
+            // Sucursales Logic (Dynamic from Database)
+            const APP_BRANCHES = @json($branches);
+            let SELECTED_BRANCH = JSON.parse(localStorage.getItem('selected_branch')) || null;
+
+            // Global Brand Config for Fallback
+            const GLOBAL_CONFIG = {
+                appName: "{{ $appName }}",
+                address: "{{ $address }}",
+                mapsLink: "{{ $mapsLink }}",
+                lat: 10.2586, 
+                lng: -67.5856
+            };
+
+            var STORE_LAT = SELECTED_BRANCH ? parseFloat(SELECTED_BRANCH.lat) : GLOBAL_CONFIG.lat;
+            var STORE_LNG = SELECTED_BRANCH ? parseFloat(SELECTED_BRANCH.lng) : GLOBAL_CONFIG.lng;
             const DELIVERY_RATE_PER_KM = 0.43;
             var deliveryMap = null;
             var deliveryMarker = null;
@@ -913,6 +1008,153 @@
                 }
             }
 
+            function checkBranchSelection() {
+                // Si NO hay sedes o hay SOLO UNA, usamos la config global de Identidad de Marca
+                if (APP_BRANCHES.length <= 1) {
+                    localStorage.removeItem('selected_branch');
+                    SELECTED_BRANCH = null;
+                    updateBranchUI();
+                    return;
+                }
+
+                if (!SELECTED_BRANCH || !APP_BRANCHES.find(b => b.id == SELECTED_BRANCH.id)) {
+                    $('#branch-selector-modal').removeClass('hidden').addClass('flex');
+                    setTimeout(() => {
+                        $('#branch-selector-modal').find('.scale-95').removeClass('scale-95 opacity-0').addClass('scale-100 opacity-100');
+                    }, 50);
+                } else {
+                    updateBranchUI();
+                }
+            }
+
+            window.selectBranch = function(branchId) {
+                if (!branchId) return;
+                const branch = APP_BRANCHES.find(b => b.id == branchId);
+                if (branch) {
+                    localStorage.setItem('selected_branch', JSON.stringify(branch));
+                    SELECTED_BRANCH = branch;
+                    STORE_LAT = parseFloat(branch.lat);
+                    STORE_LNG = parseFloat(branch.lng);
+                    
+                    $('#branch-selector-modal').addClass('opacity-0');
+                    setTimeout(() => {
+                        $('#branch-selector-modal').addClass('hidden').removeClass('flex opacity-0');
+                        updateBranchUI();
+                        // Al seleccionar sede, iniciamos el flujo de PWA
+                        if (typeof window.initPWAFlow === 'function') {
+                            window.initPWAFlow();
+                        }
+                        if (window.deliveryMap) {
+                            deliveryMap.setView([STORE_LAT, STORE_LNG], 13);
+                            if (window.storeMarker) {
+                                storeMarker.setLatLng([STORE_LAT, STORE_LNG]);
+                                storeMarker.setPopupContent(`<b>${branch.name}</b>`);
+                            }
+                        }
+                    }, 300);
+                }
+            };
+
+            function updateBranchUI() {
+                if (SELECTED_BRANCH) {
+                    $('#branch-banner-text').text(`${SELECTED_BRANCH.name}`);
+                    $('#branch-banner-link').attr('href', `https://www.google.com/maps?q=${SELECTED_BRANCH.lat},${SELECTED_BRANCH.lng}`);
+                    
+                    $('#footer-address-text').text(`${SELECTED_BRANCH.address}`);
+                    $('#footer-address-link').attr('href', `https://www.google.com/maps?q=${SELECTED_BRANCH.lat},${SELECTED_BRANCH.lng}`);
+                } else {
+                    // Fallback to Brand Identity module
+                    $('#branch-banner-text').text(`${GLOBAL_CONFIG.appName}`);
+                    $('#branch-banner-link').attr('href', GLOBAL_CONFIG.mapsLink);
+
+                    $('#footer-address-text').text(`${GLOBAL_CONFIG.address}`);
+                    $('#footer-address-link').attr('href', GLOBAL_CONFIG.mapsLink);
+                }
+            }
+
+            window.showBranchSelector = function() {
+                $('#branch-selector-modal').removeClass('hidden').addClass('flex');
+                setTimeout(() => {
+                    $('#branch-selector-modal').find('.scale-95').removeClass('scale-95 opacity-0').addClass('scale-100 opacity-100');
+                }, 10);
+            };
+
+            window.autoSelectNearestBranch = function() {
+                if (!navigator.geolocation) {
+                    Swal.fire({ title: "No compatible", text: "Tu navegador no soporta geolocalización.", icon: "error" });
+                    return;
+                }
+
+                // Verificar si estamos en un contexto seguro (HTTPS)
+                if (!window.isSecureContext && window.location.hostname !== 'localhost') {
+                    Swal.fire({ 
+                        title: "Conexión no segura", 
+                        text: "Para usar la detección automática, la página debe usar HTTPS. Por favor, selecciona tu sede en la lista inferior.", 
+                        icon: "warning" 
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Detectando ubicación...',
+                    text: 'Por favor, permite el acceso al GPS de tu dispositivo.',
+                    allowOutsideClick: false,
+                    didOpen: () => { Swal.showLoading(); }
+                });
+
+                navigator.geolocation.getCurrentPosition(position => {
+                    const userLat = position.coords.latitude;
+                    const userLng = position.coords.longitude;
+                    let nearest = null;
+                    let minDistance = Infinity;
+
+                    APP_BRANCHES.forEach(branch => {
+                        const dist = getDistanceFromLatLonInKm(userLat, userLng, branch.lat, branch.lng);
+                        if (dist < minDistance) {
+                            minDistance = dist;
+                            nearest = branch;
+                        }
+                    });
+
+                    if (nearest) {
+                        Swal.fire({
+                            title: `Sede detectada`,
+                            text: `Hemos encontrado que la sede de "${nearest.name}" es la más cercana a ti.`,
+                            icon: "success",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        selectBranch(nearest.id);
+                    }
+                }, error => {
+                    let errorMsg = "No pudimos acceder a tu ubicación. Por favor, asegúrate de tener el GPS encendido y haber dado permisos.";
+                    if (error.code === 1) errorMsg = "Has denegado el acceso a tu ubicación. Por favor, actívala en la configuración de tu navegador o selecciona manualmente.";
+                    
+                    Swal.fire({ 
+                        title: "Ubicación no disponible", 
+                        text: errorMsg, 
+                        icon: "info",
+                        confirmButtonText: "Entendido",
+                        confirmButtonColor: "#FFBF69"
+                    });
+                }, {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                });
+            };
+ 
+            // Si la sede ya está seleccionada de antes, iniciamos PWA tras un pequeño delay
+            $(document).ready(function() {
+                if (localStorage.getItem('selected_branch')) {
+                    setTimeout(() => {
+                        if (typeof window.initPWAFlow === 'function') window.initPWAFlow();
+                    }, 2000);
+                }
+            });
+ 
+            checkBranchSelection();
+            
             function initLeafletMap() {
                 if (deliveryMap) return;
                 // Maracay center
@@ -923,12 +1165,13 @@
 
                 // Icono tienda
                 var storeIcon = L.divIcon({
-                    html: '<div class="w-8 h-8 bg-white border-2 border-primary rounded-full shadow-lg flex items-center justify-center p-1"><img src="/images/brand/logo.png" class="w-full h-full object-cover"></div>',
+                    html: `<div class="w-8 h-8 bg-white border-2 border-primary rounded-full shadow-lg flex items-center justify-center p-1"><img src="{{ $logo ? asset('storage/' . $logo) : '/images/brand/logo.png' }}" class="w-full h-full object-cover"></div>`,
                     className: 'store-marker-icon',
                     iconSize: [32, 32],
                     iconAnchor: [16, 16]
                 });
-                L.marker([STORE_LAT, STORE_LNG], { icon: storeIcon }).addTo(deliveryMap).bindPopup("<b>Sabores Y&B</b>").openPopup();
+                const branchName = SELECTED_BRANCH ? SELECTED_BRANCH.name : "{{ $appName }}";
+                window.storeMarker = L.marker([STORE_LAT, STORE_LNG], { icon: storeIcon }).addTo(deliveryMap).bindPopup(`<b>${branchName}</b>`).openPopup();
 
                 // Icono cliente
                 var clientIcon = L.divIcon({
@@ -950,12 +1193,14 @@
             }
 
             console.log(
-                "%c🚀 Proyecto Sabores Y&B\n%cDesarrollado por %cwydex28\n%c🔥 Visita mi GitHub: https://github.com/wydex28",
+                "%c🚀 Proyecto {{ $appName }}\n%cDesarrollado por %cwydex28\n%c🔥 Visita mi GitHub: https://github.com/wydex28",
                 "color: #ff5722; font-size: 20px; font-weight: bold; padding-bottom: 5px;",
                 "color: #4CAF50; font-size: 14px;",
                 "color: #2196F3; font-size: 16px; font-weight: bold;",
                 "color: #9e9e9e; font-size: 12px; font-style: italic; margin-top: 5px;"
             );
+
+            checkBranchSelection();
 
             // Tasa BCV Logic
             let bcvRate = 1.0;
@@ -1139,7 +1384,7 @@
                 // Actualizar sección de pago dinámicamente
                 $('#pago-total-bs').text(`Bs. ${bsTotal}`);
                 $('#btn-copy-monto').attr('data-copy', bsTotal);
-                var copyText = `Pago Móvil Sabores Y&B\nBanco: Venezuela (0102)\nTel: 04161071344\nCI: V-12993940\nMonto: Bs. ${bsTotal}`;
+                var copyText = `Pago Móvil {{ $appName }}\nBanco: Venezuela (0102)\nTel: 04161071344\nCI: V-12993940\nMonto: Bs. ${bsTotal}`;
                 $('#btn-copy-data').attr('data-copy', copyText);
                 $('#btn-copy-all-final').attr('data-copy', copyText);
 
@@ -1424,7 +1669,7 @@
                 var cPhone = $('#delivery-phone').val().trim();
 
                 if (!cName || !cPhone) {
-                    Swal.fire({ title: "Sabores Y&B", text: "Por favor, ingresa tu nombre y celular para coordinar el envío.", icon: "info" });
+                    Swal.fire({ title: "{{ $appName }}", text: "Por favor, ingresa tu nombre y celular para coordinar el envío.", icon: "info" });
                     return;
                 }
 
@@ -1519,7 +1764,8 @@
                 }, 300);
 
                 // Generar Mensaje de Orden directo (Estandar UTF-8 para WhatsApp)
-                var orderMsg = "👋 ¡Hola, *Sabores Y&B*!\n\n";
+                const branchName = SELECTED_BRANCH ? SELECTED_BRANCH.name : "{{ $appName }}";
+                var orderMsg = `👋 ¡Hola, *${branchName}*!\n\n`;
                 orderMsg += "📝 *¡NUEVO PEDIDO DESDE LA WEB!*:\n";
 
                 if (orderConfig.type === 'delivery') {
@@ -1553,11 +1799,12 @@
                 orderMsg += `📊 _Tasa BCV del día: Bs. ${bcvRate.toFixed(2)}_\n\n`;
                 orderMsg += `✅ Envíame la disponibilidad para poder realizar el pago. ¡Quedo atento(a)!`;
 
-                var waNumber = "584128853518"; // Número de WhatsApp Real
+                let waNumber = SELECTED_BRANCH ? SELECTED_BRANCH.whatsapp : "{{ $whatsappNumber }}";
+                waNumber = waNumber.replace(/\+/g, '').trim(); 
                 var waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(orderMsg)}`;
 
                 // Store formatted data for copy button
-                var copyText = `Pago Móvil Sabores Y&B\nBanco: Venezuela (0102)\nTel: 04161071344\nCI: V-12993940\nMonto: Bs. ${bsTotalOrder}`;
+                var copyText = `Pago Móvil {{ $appName }}\nBanco: Venezuela (0102)\nTel: 04161071344\nCI: V-12993940\nMonto: Bs. ${bsTotalOrder}`;
                 $('#btn-copy-data').attr('data-copy', copyText);
                 $('#btn-copy-monto').attr('data-copy', bsTotalOrder);
 
@@ -1594,7 +1841,7 @@
 
                     if (timeLeft <= 0) {
                         clearInterval(window.paymentInterval);
-                        Swal.fire({ title: "Sabores Y&B", text: "⏱️ Tu sesión de pago ha expirado. La página se recargará por seguridad para evitar errores con los precios y montos a transferir.", icon: "info" });
+                        Swal.fire({ title: "{{ $appName }}", text: "⏱️ Tu sesión de pago ha expirado. La página se recargará por seguridad para evitar errores con los precios y montos a transferir.", icon: "info" });
                         window.location.reload();
                     }
                 }, 1000);
@@ -1652,8 +1899,10 @@
             });
 
             $('#btn-completar-pedido').click(function () {
-                var waNumber = "584128853518"; // Oficial
-                var compMsg = "¡Listo! Ya realicé el pago de mi pedido. Te mando la imagen del comprobante por acá 📸.";
+                let waNumber = SELECTED_BRANCH ? SELECTED_BRANCH.whatsapp : "{{ $whatsappNumber }}";
+                waNumber = waNumber.replace(/\+/g, '').trim();
+                var branchName = SELECTED_BRANCH ? SELECTED_BRANCH.name : "{{ $appName }}";
+                var compMsg = `¡Listo! Ya realicé el pago de mi pedido para la sede *${branchName}*. Te mando la imagen del comprobante por acá 📸.`;
                 var waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(compMsg)}`;
                 window.open(waLink, '_blank');
             });
@@ -1681,14 +1930,14 @@
                         if (permission === "granted") sendTestNotification();
                     });
                 } else {
-                    Swal.fire({ title: "Sabores Y&B", text: "Permiso de notificación denegado. Actívalo en la configuración de la página.", icon: "info" });
+                    Swal.fire({ title: "{{ $appName }}", text: "Permiso de notificación denegado. Actívalo en la configuración de la página.", icon: "info" });
                 }
             });
 
             function sendTestNotification() {
-                const title = "¡Es hora de una empanada! 🥟";
+                const title = "¡Es hora de {{ $appName }}! 🥟";
                 const options = {
-                    body: "Crujientes, calientes y deliciosas. ¡Pide la tuya ahora en Sabores Y&B!",
+                    body: "{{ $notificationMsg }}",
                     icon: "/images/brand/logo-solid.png",
                     image: "/images/brand/logo-solid.png",
                     badge: "/images/brand/logo-solid.png",
@@ -1778,20 +2027,26 @@
             }, 300);
         };
 
+        window.initPWAFlow = () => {
+            console.log('PWA: Iniciando flujo de invitación...');
+            if (deferredPrompt) {
+                setTimeout(showInstallModal, 500);
+            } else if (isIOS() && !isAppInstalled()) {
+                setTimeout(showInstallModal, 500);
+            }
+        };
+
         window.addEventListener('beforeinstallprompt', (e) => {
             console.log('PWA: beforeinstallprompt fired');
-            // Prevent the mini-infobar from appearing on mobile
             e.preventDefault();
-            // Stash the event so it can be triggered later.
             deferredPrompt = e;
-
-            // Show the install modal after a delay
-            setTimeout(showInstallModal, 3000);
+            if (localStorage.getItem('selected_branch')) {
+                setTimeout(showInstallModal, 3000);
+            }
         });
 
-        // iOS doesn't have beforeinstallprompt, so we trigger manually
-        if (isIOS() && !isAppInstalled()) {
-            console.log('PWA: iOS detected, showing manual guide');
+        if (isIOS() && !isAppInstalled() && localStorage.getItem('selected_branch')) {
+            console.log('PWA: iOS detected and branch selected');
             setTimeout(showInstallModal, 3000);
         }
 

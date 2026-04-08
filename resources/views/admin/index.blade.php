@@ -1,95 +1,74 @@
 @extends('admin.layout')
 
 @section('content')
-<div class="mb-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-    <div>
-        <h2 class="text-4xl font-display text-textMain tracking-tight">Gestión de Productos</h2>
-        <p class="text-gray-500 font-medium">Administra el menú digital que ven tus clientes.</p>
-    </div>
-    <a href="{{ route('admin.create') }}" class="bg-primary hover:bg-green-600 text-white font-bold py-3 px-8 rounded-2xl shadow-lg shadow-primary/20 transition transform hover:-translate-y-0.5 flex items-center gap-2">
-        <i class="fas fa-plus"></i> Añadir Producto
-    </a>
+<div class="mb-10 text-center">
+    <h2 class="text-3xl sm:text-4xl font-display text-textMain tracking-tight">Menú de Gestión</h2>
+    <p class="text-gray-500 font-medium italic text-sm">{{ $appName }} - Sistema Dinámico</p>
 </div>
 
-<div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-    <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-100">
-            <thead class="bg-gray-50/50">
-                <tr>
-                    <th class="px-8 py-5 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Imagen</th>
-                    <th class="px-8 py-5 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Producto</th>
-                    <th class="px-8 py-5 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Categoría</th>
-                    <th class="px-8 py-5 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Precio</th>
-                    <th class="px-8 py-5 text-right text-xs font-bold text-gray-400 uppercase tracking-widest">Acciones</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-100">
-                @forelse($products as $product)
-                <tr class="hover:bg-gray-50/50 transition">
-                    <td class="px-8 py-5 whitespace-nowrap">
-                        <div class="relative h-14 w-14 rounded-2xl overflow-hidden bg-gray-100 border border-gray-100 shadow-sm">
-                            @if($product->image_path)
-                                <img src="{{ asset('storage/' . $product->image_path) }}" class="h-full w-full object-cover">
-                            @else
-                                <div class="flex items-center justify-center h-full w-full bg-gray-50 text-gray-300">
-                                    <i class="fas fa-image text-xl"></i>
-                                </div>
-                            @endif
-                        </div>
-                    </td>
-                    <td class="px-8 py-5 whitespace-nowrap">
-                        <div class="text-base font-bold text-textMain">{{ $product->title }}</div>
-                    </td>
-                    <td class="px-8 py-5 whitespace-nowrap">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-secondary/10 text-orange-600">
-                            {{ $product->category }}
-                        </span>
-                    </td>
-                    <td class="px-8 py-5 whitespace-nowrap">
-                        <div class="text-lg font-display text-accent tracking-tighter">${{ number_format($product->price, 2) }}</div>
-                    </td>
-                    <td class="px-8 py-5 whitespace-nowrap text-right text-sm font-medium">
-                        <div class="flex justify-end gap-2">
-                            <a href="{{ route('admin.edit', $product) }}" class="bg-dark/10 text-dark hover:bg-dark hover:text-white h-10 w-10 flex items-center justify-center rounded-xl transition shadow-sm" title="Editar">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <form action="{{ route('admin.destroy', $product) }}" method="POST" class="inline-block" 
-                                onsubmit="event.preventDefault(); Swal.fire({
-                                    title: '¿Eliminar ' + '{{ $product->title }}' + '?',
-                                    text: 'Esta acción no se puede deshacer.',
-                                    icon: 'warning',
-                                    showCancelButton: true,
-                                    confirmButtonColor: '#E71D36',
-                                    cancelButtonColor: '#24140a',
-                                    confirmButtonText: '¡Sí, borrar!',
-                                    cancelButtonText: 'No, cancelar'
-                                }).then((result) => {
-                                    if (result.isConfirmed) { this.submit(); }
-                                })">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-accent/10 text-accent hover:bg-accent hover:text-white h-10 w-10 flex items-center justify-center rounded-xl transition shadow-sm" title="Eliminar">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="5" class="px-8 py-20 text-center">
-                        <div class="flex flex-col items-center gap-4">
-                            <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center text-gray-200 text-4xl">
-                                <i class="fas fa-box-open"></i>
-                            </div>
-                            <div class="text-gray-400 font-medium">Aún no hay productos registrados.</div>
-                            <a href="{{ route('admin.create') }}" class="text-primary font-bold hover:underline">¡Agrega tu primer producto ahora!</a>
-                        </div>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+<div class="grid grid-cols-2 gap-4 sm:gap-8 max-w-4xl mx-auto px-2 sm:px-0">
+    <!-- Productos -->
+    <a href="{{ route('admin.products.index') }}" class="group bg-white p-6 sm:p-10 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 hover:border-primary/30 transition transform hover:-translate-y-1 flex flex-col items-center text-center">
+        <div class="w-16 h-16 sm:w-24 sm:h-24 bg-primary/10 rounded-2xl sm:rounded-3xl flex items-center justify-center text-primary mb-4 sm:mb-6 group-hover:bg-primary group-hover:text-white transition shadow-sm">
+            <i class="fas fa-box text-2xl sm:text-4xl"></i>
+        </div>
+        <h3 class="text-sm sm:text-2xl font-display text-textMain tracking-wide">Productos</h3>
+    </a>
+
+    <!-- Categorías -->
+    <a href="{{ route('categories.index') }}" class="group bg-white p-6 sm:p-10 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 hover:border-secondary/30 transition transform hover:-translate-y-1 flex flex-col items-center text-center">
+        <div class="w-16 h-16 sm:w-24 sm:h-24 bg-secondary/10 rounded-2xl sm:rounded-3xl flex items-center justify-center text-orange-500 mb-4 sm:mb-6 group-hover:bg-secondary group-hover:text-white transition shadow-sm">
+            <i class="fas fa-tags text-2xl sm:text-4xl"></i>
+        </div>
+        <h3 class="text-sm sm:text-2xl font-display text-textMain tracking-wide">Categorías</h3>
+    </a>
+
+    <!-- Usuarios (Admins) -->
+    <a href="{{ route('users.index') }}" class="group bg-white p-6 sm:p-10 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 hover:border-dark/30 transition transform hover:-translate-y-1 flex flex-col items-center text-center">
+        <div class="w-16 h-16 sm:w-24 sm:h-24 bg-dark/10 rounded-2xl sm:rounded-3xl flex items-center justify-center text-dark mb-4 sm:mb-6 group-hover:bg-dark group-hover:text-white transition shadow-sm">
+            <i class="fas fa-user-shield text-2xl sm:text-4xl"></i>
+        </div>
+        <h3 class="text-sm sm:text-2xl font-display text-textMain tracking-wide">Administradores</h3>
+    </a>
+
+    <!-- Clientes -->
+    <a href="{{ route('customers.index') }}" class="group bg-white p-6 sm:p-10 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 hover:border-primary/30 transition transform hover:-translate-y-1 flex flex-col items-center text-center">
+        <div class="w-16 h-16 sm:w-24 sm:h-24 bg-primary/10 rounded-2xl sm:rounded-3xl flex items-center justify-center text-primary mb-4 sm:mb-6 group-hover:bg-primary group-hover:text-white transition shadow-sm">
+            <i class="fas fa-user-friends text-2xl sm:text-4xl"></i>
+        </div>
+        <h3 class="text-sm sm:text-2xl font-display text-textMain tracking-wide">Clientes</h3>
+    </a>
+
+    <!-- Ordenes -->
+    <a href="{{ route('orders.index') }}" class="group bg-white p-6 sm:p-10 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 hover:border-accent/30 transition transform hover:-translate-y-1 flex flex-col items-center text-center">
+        <div class="w-16 h-16 sm:w-24 sm:h-24 bg-accent/10 rounded-2xl sm:rounded-3xl flex items-center justify-center text-accent mb-4 sm:mb-6 group-hover:bg-accent group-hover:text-white transition shadow-sm">
+            <i class="fas fa-shopping-cart text-2xl sm:text-4xl"></i>
+        </div>
+        <h3 class="text-sm sm:text-2xl font-display text-textMain tracking-wide">Órdenes</h3>
+    </a>
+
+    <!-- Biblioteca de Iconos -->
+    <a href="{{ route('admin.icons') }}" class="group bg-white p-6 sm:p-10 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 hover:border-dark/30 transition transform hover:-translate-y-1 flex flex-col items-center text-center">
+        <div class="w-16 h-16 sm:w-24 sm:h-24 bg-dark/10 rounded-2xl sm:rounded-3xl flex items-center justify-center text-dark mb-4 sm:mb-6 group-hover:bg-dark group-hover:text-white transition shadow-sm">
+            <i class="fas fa-icons text-2xl sm:text-4xl"></i>
+        </div>
+        <h3 class="text-sm sm:text-2xl font-display text-textMain tracking-wide">Galería Iconos</h3>
+    </a>
+    <!-- Módulos Dinámicos -->
+    @php $dynamicModules = \App\Models\Module::all(); @endphp
+    @foreach($dynamicModules as $module)
+    <a href="{{ route('admin.modules.index', $module->name) }}" class="group bg-white p-6 sm:p-10 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 transition transform hover:-translate-y-1 flex flex-col items-center text-center" style="border-color: {{ $module->color }}20">
+        <div class="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mb-4 sm:mb-6 group-hover:text-white transition shadow-sm" style="background-color: {{ $module->color }}15; color: {{ $module->color }}; --hover-bg: {{ $module->color }}">
+            <i class="{{ $module->icon }} text-2xl sm:text-4xl"></i>
+        </div>
+        <h3 class="text-sm sm:text-2xl font-display text-textMain tracking-wide">{{ $module->name }}</h3>
+        
+        <style>
+            .group:hover div[style*="--hover-bg"] {
+                background-color: {{ $module->color }} !important;
+            }
+        </style>
+    </a>
+    @endforeach
 </div>
 @endsection

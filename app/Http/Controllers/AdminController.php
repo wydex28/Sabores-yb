@@ -3,19 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function dashboard()
+    {
+        return view('admin.index');
+    }
+
     public function index()
     {
         $products = Product::all();
-        return view('admin.index', compact('products'));
+        return view('admin.products', compact('products'));
     }
 
     public function create()
     {
-        return view('admin.create');
+        $categories = Category::all();
+        return view('admin.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -25,8 +32,11 @@ class AdminController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'image' => 'nullable|image|max:2048',
-            'category' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        $validated['is_active'] = $request->has('is_active');
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
@@ -35,12 +45,13 @@ class AdminController extends Controller
 
         Product::create($validated);
 
-        return redirect()->route('admin.index')->with('success', 'Producto creado con éxito.');
+        return redirect()->route('admin.products.index')->with('success', 'Producto creado con éxito.');
     }
 
     public function edit(Product $product)
     {
-        return view('admin.edit', compact('product'));
+        $categories = Category::all();
+        return view('admin.edit', compact('product', 'categories'));
     }
 
     public function update(Request $request, Product $product)
@@ -50,8 +61,11 @@ class AdminController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'image' => 'nullable|image|max:2048',
-            'category' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        $validated['is_active'] = $request->has('is_active');
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
@@ -60,12 +74,12 @@ class AdminController extends Controller
 
         $product->update($validated);
 
-        return redirect()->route('admin.index')->with('success', 'Producto actualizado.');
+        return redirect()->route('admin.products.index')->with('success', 'Producto actualizado.');
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('admin.index')->with('success', 'Producto eliminado.');
+        return redirect()->route('admin.products.index')->with('success', 'Producto eliminado.');
     }
 }

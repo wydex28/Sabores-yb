@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Conoce la historia detrás de Sabores Y&B. Tradición, familia y las mejores empanadas venezolanas hechas con amor.">
-    <meta name="keywords" content="historia sabores y&b, empanadas, familia, tradición venezolana, comida con amor">
-    <meta name="author" content="Sabores Y&B">
-    <meta property="og:title" content="Sabores Y&B | Nuestra Historia">
+        content="Conoce la historia detrás de {{ $appName }}. Tradición, familia y las mejores empanadas venezolanas hechas con amor.">
+    <meta name="keywords" content="historia {{ strtolower($appName) }}, empanadas, familia, tradición venezolana, comida con amor">
+    <meta name="author" content="{{ $appName }}">
+    <meta property="og:title" content="{{ $appName }} | Nuestra Historia">
     <meta property="og:description"
-        content="Descubre cómo nació Sabores Y&B, una tradición familiar de las mejores empanadas.">
-    <meta property="og:image" content="assets/images/brand/logo.png">
+        content="Descubre cómo nació {{ $appName }}, una tradición familiar de las mejores empanadas.">
+    <meta property="og:image" content="/images/brand/logo.png">
     <meta property="og:type" content="website">
-    <title>Sabores Y&B | Nuestra Historia</title>
+    <title>{{ $appName }} | Nuestra Historia</title>
 
     <!-- Favicon & PWA -->
     <link rel="icon" type="image/png" href="assets/images/brand/logo.png">
@@ -22,8 +22,8 @@
     <!-- Mobile Optimization -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Sabores Y&B">
-    <link rel="apple-touch-icon" href="assets/images/brand/logo.png">
+    <meta name="apple-mobile-web-app-title" content="{{ $appName }}">
+    <link rel="apple-touch-icon" href="/images/brand/logo.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,8 +65,8 @@
         }
     </script>
 
-    <!-- FontAwesome for Icons (Local) -->
-    <link rel="stylesheet" href="assets/css/all.min.css">
+    <!-- FontAwesome for Icons (CDN para garantizar nuevos iconos como X) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom CSS Base -->
     <style>
@@ -159,8 +159,8 @@
     <!-- Splash Screen / Loading View (App launch simulation) -->
     <div id="pwa-splash" class="fixed inset-0 bg-white z-[1000] flex flex-col items-center justify-center transition-opacity duration-700">
         <div class="flex flex-col items-center animate-pulse">
-            <img src="assets/images/brand/logo.png" alt="Sabores Y&B" class="w-48 h-48 object-contain mb-4">
-            <h1 class="text-3xl font-display text-textMain tracking-wide">Sabores Y&B</h1>
+            <img src="/images/brand/logo.png" alt="{{ $appName }}" class="w-48 h-48 object-contain mb-4">
+            <h1 class="text-3xl font-display text-textMain tracking-wide">{{ $appName }}</h1>
         </div>
         <div class="absolute bottom-12 left-0 w-full text-center">
             <p class="text-gray-300 text-[10px] font-mono tracking-widest">VERSION 1.0.0</p>
@@ -177,12 +177,12 @@
             <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-accent/10 rounded-full blur-3xl"></div>
 
             <div class="relative z-10">
-                <h2 class="text-2xl font-display font-medium text-textMain mb-2">¡Sabores Y&B en el Inicio de tu
+                <h2 class="text-2xl font-display font-medium text-textMain mb-2">¡{{ $appName }} en el Inicio de tu
                     dispositivo!</h2>
 
                 <!-- Company Logo -->
                 <div class="flex justify-center mb-6">
-                    <img src="assets/images/brand/logo.png" alt="Sabores Y&B" class="w-28 h-28 object-contain drop-shadow-md hover:scale-105 transition-transform duration-500">
+                    <img src="/images/brand/logo.png" alt="{{ $appName }}" class="w-28 h-28 object-contain drop-shadow-md hover:scale-105 transition-transform duration-500">
                 </div>
 
                 <!-- Android Specific Section -->
@@ -229,11 +229,10 @@
         id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <a href="index.html" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
-                    <img class="h-20 w-auto drop-shadow-md nav-logo hover:scale-105 transition-transform duration-300" src="assets/images/brand/logo.png"
-                        alt="Sabores Y&B Logo">
-                    <span class="font-display tracking-wide text-xl text-primary drop-shadow-sm hidden sm:block">Sabores
-                        Y&B</span>
+                <a href="/" class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
+                    <img class="h-20 w-auto drop-shadow-md nav-logo hover:scale-105 transition-transform duration-300" src="/images/brand/logo.png"
+                        alt="{{ $appName }} Logo">
+                    <span class="font-display tracking-wide text-xl text-primary drop-shadow-sm hidden sm:block">{{ $appName }}</span>
                 </a>
 
                 <!-- Navbar BCV Rate Display -->
@@ -309,7 +308,7 @@
                         venezolanas hechas como en casa.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <a href="index.html"
+                        <a href="/"
                             class="px-8 py-4 bg-primary text-white font-bold rounded-full shadow-lg hover:bg-green-600 hover:shadow-primary/50 hover:-translate-y-1 transition-all duration-300 text-center">
                             Ver el Menú Completo
                         </a>
@@ -365,7 +364,7 @@
                 </div>
                 <div class="order-1 md:order-2 reveal text-lg text-gray-700 space-y-6">
                     <p>
-                        <strong class="text-primary font-bold text-xl">Sabores Y&B</strong> nace del corazón de nuestra
+                        <strong class="text-primary font-bold text-xl">{{ $appName }}</strong> nace del corazón de nuestra
                         cocina familiar. Hace más de 20 años, mi mamá preparaba estas mismas empanadas los domingos por
                         la mañana, llenando la casa de un aroma incomparable que despertaba a toda la familia.
                     </p>
@@ -376,7 +375,7 @@
                     </p>
                     <p class="font-semibold text-textMain border-l-4 border-primary pl-4 italic">
                         "No es solo comida, es un viaje a los domingos en familia, es el sabor a hogar en cada
-                        mordisco." - Mamá Y&B
+                        mordisco." - Mamá {{ $appName }}
                     </p>
                 </div>
             </div>
@@ -395,18 +394,53 @@
     <!-- Footer -->
     <footer class="bg-textMain py-8 text-white text-center">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <img src="assets/images/brand/logo.png" alt="Sabores Y&B"
+            <img src="/images/brand/logo.png" alt="{{ $appName }}"
                 class="h-16 mx-auto mb-4 brightness-0 invert opacity-90 footer-logo">
-            <h5 class="text-2xl font-display mb-2 text-primary">Sabores Y&B</h5>
+            <h5 class="text-2xl font-display mb-2 text-primary">{{ $appName }}</h5>
             <p class="text-gray-400 mb-6 max-w-sm mx-auto text-sm">Hechas con amor desde nuestra familia para la tuya.
             </p>
 
-            <div class="flex justify-center flex-wrap gap-6 text-gray-300 font-light mb-6 text-sm">
-                <a href="https://www.instagram.com/saboresyb/" target="_blank" class="hover:text-primary transition"><i
-                        class="fab fa-instagram mr-2"></i>@saboresyb</a>
-                <a href="https://wa.me/584128853518?text=%C2%A1Hola%20Sabores%20Y%26B!%20Quiero%20hacerles%20una%20consulta."
-                    target="_blank" class="hover:text-primary transition"><i class="fab fa-whatsapp mr-2"></i>+58
-                    412-8853518</a>
+            <div class="flex justify-center flex-wrap gap-x-8 gap-y-4 text-gray-300 font-bold mb-8 text-sm">
+                @if($instagramUrl)
+                <a href="{{ $instagramUrl }}" target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-instagram text-lg"></i> Instagram
+                </a>
+                @endif
+                
+                @if($tiktokUrl)
+                <a href="{{ $tiktokUrl }}" target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-tiktok text-lg"></i> TikTok
+                </a>
+                @endif
+
+                @if($facebookUrl)
+                <a href="{{ $facebookUrl }}" target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-facebook text-lg"></i> Facebook
+                </a>
+                @endif
+
+                @if($youtubeUrl)
+                <a href="{{ $youtubeUrl }}" target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-youtube text-lg"></i> YouTube
+                </a>
+                @endif
+
+                @if($twitterUrl)
+                <a href="{{ $twitterUrl }}" target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-x-twitter text-lg"></i> X (Twitter)
+                </a>
+                @endif
+
+                @if($telegramUrl)
+                <a href="{{ $telegramUrl }}" target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-telegram text-lg"></i> Telegram
+                </a>
+                @endif
+
+                <a href="https://wa.me/{{ str_replace(['+', ' ', '-'], '', $whatsappNumber ?? '') }}?text=%C2%A1Hola%20{{ $appName }}!%20Quiero%20hacerles%20una%20consulta."
+                    target="_blank" class="hover:text-primary transition flex items-center gap-2">
+                    <i class="fab fa-whatsapp text-lg"></i> {{ $whatsappNumber ?? '' }}
+                </a>
             </div>
 
             <div class="flex justify-center px-4 mb-6 text-sm text-gray-300 font-light text-center">
@@ -421,7 +455,7 @@
                     <i class="fas fa-bell mr-1"></i> Probar Notificación de las 7AM (Vista previa)
                 </button>
                 <div class="text-xs text-gray-500 text-center">
-                    &copy; 2026 Sabores Y&B. Todos los derechos reservados.
+                    &copy; {{ date('Y') }} {{ $appName }}. Todos los derechos reservados.
                 </div>
                 <div class="text-xs text-gray-400 mt-2 flex items-center justify-center gap-1">
                     <span>Desarrollado con</span>
@@ -567,10 +601,10 @@
             function sendTestNotification() {
                 const title = "¡Es hora de una empanada! 🥟";
                 const options = {
-                    body: "Crujientes, calientes y deliciosas. ¡Pide la tuya ahora en Sabores Y&B!",
-                    icon: "assets/images/brand/logo-solid.png",
-                    image: "assets/images/brand/logo-solid.png",
-                    badge: "assets/images/brand/logo-solid.png",
+                    body: "Crujientes, calientes y deliciosas. ¡Pide la tuya ahora en {{ $appName }}!",
+                    icon: "/images/brand/logo.png",
+                    image: "/images/brand/logo.png",
+                    badge: "/images/brand/logo.png",
                     vibrate: [200, 100, 200],
                     tag: 'test-notification',
                     renotify: true
